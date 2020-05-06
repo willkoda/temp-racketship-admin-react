@@ -1,12 +1,10 @@
 import React from 'react';
 import './App.scss';
-
-import Header from './components/Header/Header';
-
+import AdminTemplate from './templates/AdminTemplate';
 function App() {
     return (
         <div className="App">
-            <Header headerType="admin" />
+            <AdminTemplate />
         </div>
     );
 }
