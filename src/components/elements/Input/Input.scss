@@ -32,7 +32,7 @@ div.Input {
             top: 50%;
             left: 5px;
             transform: translateY(-50%);
-            transition: transform 250ms ease-in-out;
+            transition: transform 250ms ease-in-out, color 300ms ease-in-out;
             transform-origin: left;
         }
         
