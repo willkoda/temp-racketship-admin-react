@@ -1,0 +1,20 @@
+header.AdminHeader {
+    background-color: var(--primary);
+    align-items: center;
+    color: #fff;
+    position: fixed;
+    width: 100%;
+    height: 80px;
+    display: grid;
+    grid-template-columns: repeat(2, auto) 1fr;
+    z-index: 10;
+
+    div.header--text {
+        font-size: 24px;
+    }
+
+    div.button--container {
+        display: flex;
+        justify-content: flex-end;
+    }
+}

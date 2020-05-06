@@ -1,0 +1,41 @@
+@import './assets/style/classes';
+@import './assets/style/margin';
+@import './assets/style/padding';
+@import './assets/style/variables.scss';
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--background-color);
+}
+
+*:not([class^="ti-"]) {
+    font-family: 'Muli', sans-serif, arial;
+}
+
+a {
+    text-decoration: none;
+}
+
+button,
+input[type=submit] {
+    cursor: pointer;
+}
+
+input {
+    filter: none;
+}
+
+p {
+    line-height: 24px;
+    font-size: 14px;
+    color: var(--grey);
+}
+
+ul {
+    list-style: none;
+}

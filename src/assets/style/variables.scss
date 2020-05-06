@@ -1,0 +1,53 @@
+:root {
+    --shadow-type-one: 0 11px 15px -7px rgba(0, 0 , 0, 0.2), 0 24px 38px 3px rgba(0 ,0 ,0 , 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12);
+    --background-color: #f2f3f8;
+
+    --dark-text: #212529;
+    --dark-red: #b71c1c;
+
+    --primary: #1e1e2d;
+
+    --primary-shade-one: #29293D;
+    --primary-shade-two: #181825;
+    --primary-shade-three: #101018;
+    --primary-shade-four: #08080C;
+
+    --base: #ff9900;
+    --accent-one-shade-one: #ffc164;
+    --accent-one-shade-two: #ffb039;
+    --accent-one-shade-three: #c67600;
+
+    --accent-two-shade-one: #ffdb64;
+    --accent-two-shade-two: #ffd239;
+    --accent-two-shade-three: #c69800;
+
+    --accent-three-shade-one: #ff9864;
+    --accent-three-shade-two: #ff7c39;
+    --accent-three-shade-three: #c64300;
+
+    --complement-shade-one: #5387bd;
+    --complement-shade-two: #316dac;
+    --complement-shade-three: #094481;
+
+    --grey: #5f6281;
+    --grey-highlight: #f4f6f9;
+    --light-cyan: #f7fafc;
+
+    --light-grey: #959cb6;
+    --medium-grey: #595d6e;
+
+    --light-background: #fff;
+    --link-color: #1565C0;
+
+    --status--requested--background: rgba(93,120,255,.1);
+    --status--requested--color: #5d78ff;
+
+    --status--success--background: rgba(10,187,135,.1);
+    --status--success--color: #0abb87;
+
+    --status--failure--background: rgba(253,57,122,.1);
+    --status--failure--color: #fd397a;
+
+    --status--pending--background: rgba(255,184,34,.1);
+    --status--pending--color: #ffb822;
+}
