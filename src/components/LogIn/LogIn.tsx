@@ -1,11 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './LogIn.scss';
-import Input from '../elements/Input/Input';
+import Input, {ResultInterface} from '../elements/Input/Input';
 function LogIn() {
+    const [email, setEmail] = useState('');
+
+    const changeHandler = (result: ResultInterface) => {
+        setEmail(result.value);
+    };
 
     const formSubmitHandler = () => {
 
     }
+
     return (
         <div className="LogIn">
             <div className="login--window padding-top-bottom-40 padding-left-right-20">
@@ -14,7 +20,7 @@ function LogIn() {
                 {/* <Heading level="two" alignment="center" text="Log in to your account" margin="margin-bottom-20" size="16px" color="var(--accent-four-shade-two)" /> */}
                 <h1 className="font-weight-400">Log In</h1>
                 <form onSubmit={formSubmitHandler}>
-                    <Input id="email" placeholder="Email" />
+                    <Input id="email" placeholder="Email" value={email} changeCallback={changeHandler} />
                     {/*
 
                     <InputGroup
