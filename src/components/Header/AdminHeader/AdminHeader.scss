@@ -9,6 +9,14 @@ header.AdminHeader {
     grid-template-columns: repeat(2, auto) 1fr;
     z-index: 10;
 
+    div.application--name {
+        font-size: 24px;
+        font-weight: 600;
+        span.colored--text {
+            color:  var(--base);
+        }
+    }
+
     div.header--text {
         font-size: 24px;
     }

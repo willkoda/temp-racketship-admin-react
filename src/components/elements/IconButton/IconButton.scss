@@ -1,0 +1,15 @@
+button.IconButton {
+    background-color: transparent;
+    color: #fff;
+    svg {
+        font-size: 25px;
+    }
+    border-radius: 50%;
+    border: none;
+    padding: 7px;
+    text-transform: uppercase;
+    outline: none;
+    transition: transform 500ms ease-in-out, opacity 500ms ease-in-out;
+    display: flex;
+    align-items: center;
+}
