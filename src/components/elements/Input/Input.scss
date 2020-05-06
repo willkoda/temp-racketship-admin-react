@@ -33,6 +33,8 @@ div.Input {
             transform: translateY(-50%);
             transition: transform 250ms ease-in-out, color 300ms ease-in-out;
             transform-origin: left;
+            color:  var(--light-grey);
+            user-select: none;
         }
         
         span.input--border {
@@ -45,5 +47,11 @@ div.Input {
             transform: scaleX(0);
             transition: transform 260ms ease-in-out;
         }
+    }
+    div.input--error {
+        text-align: left;
+        color: var(--dark-red);
+        font-size: 12px;
+        min-height: 18px;
     }
 }

@@ -13,6 +13,16 @@ div.LogIn {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+
+        h1.main--heading {
+            span {
+                color: var(--primary-shade-one);
+                text-transform: uppercase;
+                &:nth-of-type(2) {
+                    color: var(--accent-three-shade-two);
+                }
+            }
+        }
         
         form {
             width: 100%;
