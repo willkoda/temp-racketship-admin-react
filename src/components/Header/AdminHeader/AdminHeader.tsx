@@ -9,7 +9,7 @@ function AdminHeader() {
     }
     return (
         <header className="AdminHeader padding-left-right-20 padding-top-bottom-15">
-            <IconButton color="#fff" iconElement={<MenuIcon />} clickHandler={clickHandler} margin="margin-right-10" />
+            <IconButton color="#fff" iconElement={<MenuIcon />} clickHandler={clickHandler} margin="margin-right-10" waveColor="rgba(255, 255, 255, 0.8)" />
             <div className="application--name">
                 <span>ADMIN</span>
                 <span className="colored--text">DESK</span>

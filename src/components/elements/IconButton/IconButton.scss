@@ -1,15 +1,38 @@
 button.IconButton {
     background-color: transparent;
     color: #fff;
+    position: relative;
+    overflow: hidden;
     svg {
         font-size: 25px;
     }
-    border-radius: 50%;
     border: none;
     padding: 7px;
     text-transform: uppercase;
     outline: none;
-    transition: transform 500ms ease-in-out, opacity 500ms ease-in-out;
+
     display: flex;
     align-items: center;
+    transition: background-color 500ms ease-in-out;
+    &:active {
+        background-color: rgba(255, 255, 255, 0.4);
+    }
+
+    span.wave {
+        top: 0;
+        left: 0;
+        position: absolute;
+        transform: translate(-50%, -50%) scale(0) ;
+        border-radius: 100%;
+
+        &.wave--animation {
+            animation: waveAnimation 400ms linear;
+        }
+    }
+}
+
+@keyframes waveAnimation {
+    100% {
+        opacity: 0; transform: translate(-50%, -50%) scale(3);
+    }
 }
