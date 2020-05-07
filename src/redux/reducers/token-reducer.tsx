@@ -36,9 +36,6 @@ function reducer(state = initialState, action: ActionInterface) {
             }
 
         case actions.SET_TOKEN:
-            // localStorage.setItem('accessToken', action.payload.accessToken);
-            // localStorage.setItem('clientID', action.payload.clientID);
-            // localStorage.setItem('uid', action.payload.uid);
             storeToken(action.payload);
             return {
                 ...state,
