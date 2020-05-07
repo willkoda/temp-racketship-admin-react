@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './LogIn.scss';
 import Input, {ResultInterface} from '../elements/Input/Input';
 import Button from '../elements/Button/Button';
+import axios from '../../auxiliary/axios';
 
 function LogIn() {
     const initialState = {value: '', valid: false, error: ''}
@@ -24,11 +25,18 @@ function LogIn() {
         }
     };
 
-    const formSubmitHandler = (e: React.FormEvent) => {
+    const formSubmitHandler = async (e: React.FormEvent) => {
         e.preventDefault();
         const data = {
             email: email.value,
             password: password.value
+        }
+        try {
+            const response = await axios.post('/admin/sign_in', data);
+            console.log(response)
+        } catch(error) {
+            console.log(error.response);
+            setEmail({...email, valid: false, error: 'Email or passowrd is incorrect'});
         }
     }
 
@@ -55,7 +63,9 @@ function LogIn() {
                     <Input
                         id="password"
                         inputBorderColor="var(--accent-one-shade-two)"
+                        margin="margin-top-10"
                         placeholder="Password"
+                        type="password"
                         value={password.value}
                         changeCallback={changeHandler}
                         valid={password.valid}
