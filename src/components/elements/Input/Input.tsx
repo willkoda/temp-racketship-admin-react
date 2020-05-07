@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useCallback} from 'react';
 import './Input.scss';
 
 interface Props {
@@ -61,10 +61,10 @@ function Input(props: Props) {
         }
     }
 
-    const focus = () => {
+    const focus = useCallback(() => {
         placeholderRef.current.style.transform = 'translateY(-30px) scale(0.75)';
         placeholderRef.current.style.color = props.inputBorderColor || '#3f51b5'
-    }
+    }, [props.inputBorderColor])
 
     const blur = () => {
         if (props.value.length > 0) return;
@@ -74,7 +74,7 @@ function Input(props: Props) {
 
     useEffect(() => {
         if (props.value.length > 0) focus();
-    }, [props.value])
+    }, [props.value, focus])
 
     return (
         <div className="Input">
