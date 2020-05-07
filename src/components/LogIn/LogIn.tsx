@@ -4,7 +4,17 @@ import Input, {ResultInterface} from '../elements/Input/Input';
 import Button from '../elements/Button/Button';
 import axios from '../../auxiliary/axios';
 
-function LogIn() {
+import {storeSetToken} from '../../auxiliary/dispatch';
+import withStoreConnection from '../../hoc/withStoreConnection';
+import {compose} from 'redux';
+
+import {TokenStateInterface} from '../../redux/reducers/token-reducer';
+
+interface Props {
+    storeSetToken(params: TokenStateInterface): void
+}
+
+function LogIn(props: Props) {
     const initialState = {value: '', valid: false, error: ''}
     const [email, setEmail] = useState({...initialState});
     const [password, setPassword] = useState({...initialState});
@@ -33,10 +43,14 @@ function LogIn() {
         }
         try {
             const response = await axios.post('/admin/sign_in', data);
-            console.log(response)
+            props.storeSetToken({
+                accessToken: response.headers['access-token'],
+                clientID: response.headers['client'],
+                uid: response.headers['uid']
+            })
         } catch(error) {
-            console.log(error.response);
-            setEmail({...email, valid: false, error: 'Email or passowrd is incorrect'});
+            console.log(error);
+            setEmail({...email, valid: false, error: 'Email or password is incorrect'});
         }
     }
 
@@ -78,4 +92,8 @@ function LogIn() {
     )
 }
 
-export default LogIn;
+export default compose(
+    withStoreConnection({dispatchProps: [storeSetToken]})
+)(LogIn);
+
+// export default LogIn;

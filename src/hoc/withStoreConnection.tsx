@@ -11,14 +11,14 @@ import {TokenStateInterface} from '../redux/reducers/token-reducer';
 type indexSignature = {
     [key: string]: any
 };
-export default function withStoreConnection(params: any) {
+export default function withStoreConnection(params: {stateProps?: Array<String>, dispatchProps?: Array<String>}) {
     const mapStateToProps = (state: any) => {
         const storeState: indexSignature = {
             [token]: state[token],
             [user]: state[user]
         }
         if (!params.stateProps) return {};
-        return params.stateProps.reduce((acc: any, curr: any) => {
+        return params.stateProps.reduce((acc: Object, curr: any) => {
             if (Object.prototype.hasOwnProperty.call(storeState, curr)) {
                 return {
                     ...acc,
@@ -38,7 +38,7 @@ export default function withStoreConnection(params: any) {
             // [storeRemoveUser]: () => dispatch({type: 'REMOVE_USER'})
         };
         if (!params.dispatchProps) return {};
-        return params.dispatchProps.reduce((acc: any, curr: any) => {
+        return params.dispatchProps.reduce((acc: Object, curr: any) => {
             if (Object.prototype.hasOwnProperty.call(storeDispatch, curr)) {
                 return {
                     ...acc,
@@ -50,7 +50,7 @@ export default function withStoreConnection(params: any) {
         }, {});
     };
 
-    return function (Component: React.FunctionComponent) {
+    return function (Component: any) {
         function EnhancedComponent(props: any) {
             return <Component {...props} />
         }
