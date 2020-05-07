@@ -38,6 +38,7 @@ function LogIn() {
                 <form onSubmit={formSubmitHandler}>
                     <Input 
                         id="email" 
+                        inputBorderColor="var(--accent-one-shade-two)"
                         placeholder="Email" 
                         value={email.value} 
                         changeCallback={changeHandler} 
@@ -47,6 +48,7 @@ function LogIn() {
 
                     <Input
                         id="password"
+                        inputBorderColor="var(--accent-one-shade-two)"
                         placeholder="Password"
                         value={password.value}
                         changeCallback={changeHandler}

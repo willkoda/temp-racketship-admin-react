@@ -6,10 +6,6 @@ div.Input {
         position: relative;
 
         &:focus-within {
-            span.label--placeholder {
-                color: #3f51b5;
-            }
-
             span.input--border {
                 transform: scaleX(1);
             }
@@ -39,7 +35,6 @@ div.Input {
         
         span.input--border {
             height: 2px;
-            background-color: #3f51b5;
             width: 100%;
             position: absolute;
             bottom: 0;

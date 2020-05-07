@@ -6,6 +6,7 @@ interface Props {
     error?: string;
     id: string;
     inputBackgroundColor?: string;
+    inputBorderColor?: string;
     margin?: string;
     placeholder: string;
     validatedProps?: {
@@ -56,11 +57,13 @@ function Input(props: Props) {
 
     const focus = () => {
         placeholderRef.current.style.transform = 'translateY(-35px) scale(0.75)';
+        placeholderRef.current.style.color = props.inputBorderColor || '#3f51b5'
     }
 
     const blur = () => {
         if (props.value.length > 0) return;
         placeholderRef.current.style.transform = 'translateY(-50%) scale(1)';
+        placeholderRef.current.style.color = 'var(--light-grey)';
     }
 
     return (
@@ -73,12 +76,22 @@ function Input(props: Props) {
                     onBlur={() => blur()}
                     className="padding-top-bottom-10 padding-left-right-5" type="text" id={props.id} 
                     style={{backgroundColor: props.inputBackgroundColor  || 'transparent'}}/>
-                <span ref={placeholderRef} className="label--placeholder">{props.placeholder}</span>
-                <span className="input--border"></span>
-                {/* <div className={`margin-6 input--group--error ${!props.valid ? 'visible' : ''}`} ref={inputError}>{props.error}</div> */}
+                <span 
+                    ref={placeholderRef}
+                    className="label--placeholder"
+                    >{props.placeholder}</span>
+                <span 
+                    className="input--border"
+                    style={{
+                        backgroundColor: props.inputBorderColor || '#3f51b5'
+                    }}
+                    >
+                </span>
             </label>
             <div 
-                className="input--error" style={{margin: '3px 6px', visibility: !props.valid ? 'visible' : 'hidden'}}>{props.error}</div>
+                className="input--error" 
+                style={{margin: '3px 6px', visibility: !props.valid ? 'visible' : 'hidden'}}>
+                {props.error}</div>
         </div>
     )
 }
