@@ -2,11 +2,14 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {
     storeSetToken,
-    storeRemoveToken
+    storeRemoveToken,
+    storeSetUser,
+    storeRemoveUser
 } from '../auxiliary/dispatch';
 import {token, user} from '../auxiliary/state';
 
 import {TokenStateInterface} from '../redux/reducers/token-reducer';
+import {UserStateInterface} from '../redux/reducers/user-reducer';
 
 type indexSignature = {
     [key: string]: any
@@ -34,8 +37,8 @@ export default function withStoreConnection(params: {stateProps?: Array<String>,
         const storeDispatch: indexSignature = {
             [storeSetToken]: (responseObject: TokenStateInterface) => dispatch({type: 'SET_TOKEN', payload: responseObject}),
             [storeRemoveToken]: () => dispatch({type: 'REMOVE_TOKEN'}),
-            // [storeSetUser]: (userInformation) => dispatch({type: 'SET_USER', payload: userInformation}),
-            // [storeRemoveUser]: () => dispatch({type: 'REMOVE_USER'})
+            [storeSetUser]: (userInformation: UserStateInterface) => dispatch({type: 'SET_USER', payload: userInformation}),
+            [storeRemoveUser]: () => dispatch({type: 'REMOVE_USER'})
         };
         if (!params.dispatchProps) return {};
         return params.dispatchProps.reduce((acc: Object, curr: any) => {

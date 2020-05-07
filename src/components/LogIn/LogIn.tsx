@@ -4,14 +4,16 @@ import Input, {ResultInterface} from '../elements/Input/Input';
 import Button from '../elements/Button/Button';
 import axios from '../../auxiliary/axios';
 
-import {storeSetToken} from '../../auxiliary/dispatch';
+import {storeSetToken, storeSetUser} from '../../auxiliary/dispatch';
 import withStoreConnection from '../../hoc/withStoreConnection';
 import {compose} from 'redux';
 
 import {TokenStateInterface} from '../../redux/reducers/token-reducer';
+import {UserStateInterface} from '../../redux/reducers/user-reducer';
 
 interface Props {
-    storeSetToken(params: TokenStateInterface): void
+    storeSetToken(params: TokenStateInterface): void;
+    storeSetUser(params: UserStateInterface): void
 }
 
 function LogIn(props: Props) {
@@ -37,17 +39,30 @@ function LogIn(props: Props) {
 
     const formSubmitHandler = async (e: React.FormEvent) => {
         e.preventDefault();
-        const data = {
+        const requestData = {
             email: email.value,
             password: password.value
         }
         try {
-            const response = await axios.post('/admin/sign_in', data);
+            const response = await axios.post('/admin/sign_in', requestData);
             props.storeSetToken({
                 accessToken: response.headers['access-token'],
                 clientID: response.headers['client'],
                 uid: response.headers['uid']
-            })
+            });
+
+            const {data} = response;
+            props.storeSetUser({
+                email: data.email,
+                firstName: data.first_name,
+                id: data.id,
+                lastName: data.last_name,
+                mobileNumber: data.mobile_number,
+                role: data.role,
+                verified: data.verified,
+                verifiedOn: data.verified_on
+            });
+
         } catch(error) {
             console.log(error);
             setEmail({...email, valid: false, error: 'Email or password is incorrect'});
@@ -93,7 +108,5 @@ function LogIn(props: Props) {
 }
 
 export default compose(
-    withStoreConnection({dispatchProps: [storeSetToken]})
+    withStoreConnection({dispatchProps: [storeSetToken, storeSetUser]})
 )(LogIn);
-
-// export default LogIn;

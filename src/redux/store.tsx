@@ -1,6 +1,6 @@
 import {createStore, combineReducers} from 'redux';
 import tokenReducer from './reducers/token-reducer';
-// import userReducer from './reducers/user-reducer';
+import userReducer from './reducers/user-reducer';
 // import linkedAccountsReducer from './reducers/linked-accounts-reducer';
 
 // import ownerMembersReducer from './reducers/owner/owner-members-reducer';
@@ -12,7 +12,8 @@ import tokenReducer from './reducers/token-reducer';
 // import pageConfigurationReducer from './reducers/page-configuration-reducer';
 
 const mainReducer = combineReducers({
-    token: tokenReducer
+    token: tokenReducer,
+    user: userReducer,
 });
 
 declare global {
