@@ -85,3 +85,16 @@ div.input--group--container {
 .text-align-center {
     text-align: center;
 }
+
+.--wave {
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-color: #fff;
+    transform: translate(-50%, -50%) scale(0) ;
+    border-radius: 50%;
+
+    &.wave--animation {
+        animation: waveAnimation 450ms linear;
+    }
+}

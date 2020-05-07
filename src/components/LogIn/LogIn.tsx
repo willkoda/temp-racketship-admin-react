@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import './LogIn.scss';
 import Input, {ResultInterface} from '../elements/Input/Input';
+import Button from '../elements/Button/Button';
+
 function LogIn() {
     const initialState = {value: '', valid: false, error: ''}
     const [email, setEmail] = useState({...initialState});
@@ -22,8 +24,12 @@ function LogIn() {
         }
     };
 
-    const formSubmitHandler = () => {
-
+    const formSubmitHandler = (e: React.FormEvent) => {
+        e.preventDefault();
+        const data = {
+            email: email.value,
+            password: password.value
+        }
     }
 
     return (
@@ -55,25 +61,7 @@ function LogIn() {
                         valid={password.valid}
                     />
 
-                    <button style={{
-                        backgroundColor: 'var(--accent-three-shade-one)',
-                        color: '#fff',
-                        padding: '12px 10px',
-                        outline: 'none',
-                        fontSize: '14px',
-                        width: '100%',
-                        border: 'none',
-                        boxShadow: '0px 2px 4px 1px rgba(0, 0, 0, 0.2)'
-                    }}>
-                        Log in
-                    </button>
-                    {/*
-                    <div className="block margin-top-20">
-                        <CheckBox id="remember-me" text="Remember me" />
-                        <Link to="/forgot-password" className="forgot--password--link">Forgot your password?</Link>
-                    </div>
-
-                    <Button margin="margin-top-10" text="Log In" buttonType="block" backgroundColor="var(--accent-four-shade-four)" /> */}
+                    <Button text="Log in" backgroundColor="var(--accent-three-shade-one)" />
                 </form>
             </div>
         </div>
