@@ -61,7 +61,7 @@ function LogIn() {
                         valid={password.valid}
                     />
 
-                    <Button text="Log in" backgroundColor="var(--accent-three-shade-one)" />
+                    <Button text="Log in" backgroundColor="accent--three" />
                 </form>
             </div>
         </div>

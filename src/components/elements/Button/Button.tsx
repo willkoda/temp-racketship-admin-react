@@ -21,11 +21,10 @@ function Button(props: Props) {
     }
     return (
         <button 
-            className="Button"
+            className={`Button ${props.backgroundColor}`}
             onClick={handleClick}
             ref={waveElementRef}
             style={{
-                backgroundColor: props.backgroundColor,
                 color: props.color || '#fff',
                 width: props.width || '100%'
             }}>
