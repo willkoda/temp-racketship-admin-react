@@ -1,0 +1,82 @@
+ul.AdminMenu {
+    background-color: var(--primary);
+    min-width: 0px;
+    flex: 0 1 300px;
+    transition: flex 240ms ease-in-out;
+    overflow: hidden;
+    z-index: 5;
+    li {
+        font-size: 14px;
+        &:hover a {
+            color: var(--accent-one-shade-two);
+            &::after {
+                opacity: 0.13;
+            }
+        }
+       
+        // &:first-of-type a {
+        //     padding-top: 10px;
+        // }
+        a {
+            outline: none;
+            font-weight: 300;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            cursor: pointer;
+            position: relative;
+            transition: color 230ms ease-in-out;
+            min-width: 300px;
+
+            &.active {
+                color: var(--accent-one-shade-three);
+            }
+
+            svg {
+                margin-right: 40px;
+            }
+            
+            &::after {
+                content: '';
+                background-color: #fff;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                transition: opacity 230ms ease-in-out;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        position: fixed;
+        bottom: 0;
+        min-width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 20px;
+        li {
+            &:first-of-type a {
+                padding-top: 0;
+            }
+            a {
+                padding:  0;
+                min-width: auto;
+                svg {
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+
+    @media(max-width: 550px) {
+        li {
+            div {
+                display: none;
+            }
+        }
+    }
+}

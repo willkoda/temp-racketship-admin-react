@@ -80,6 +80,7 @@ function Input(props: Props) {
         <div className="Input">
             <label htmlFor={props.id}>
                 <input
+                    autoComplete="off"
                     onChange={(e) => props.changeCallback(changeHandler(e))}
                     onFocus={() => focus()}
                     onBlur={() => blur()}

@@ -6,9 +6,7 @@ interface Props {
 }
 
 function Header(props: Props) {
-    return (
-        <AdminHeader />
-    )
+    return props.headerType === 'admin' ? <AdminHeader /> : null
 }
 
 export default Header;
