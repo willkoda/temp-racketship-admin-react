@@ -44,6 +44,23 @@ div.AdminDashboard {
                 color: var(--medium-grey);
             }
 
+            div.box--border {
+                background-color: rgba(0, 0, 0, 0.15);
+                height: 1px;
+                margin-top: 20px;
+            }
+
+            div.box--details {
+                margin-top: 10px;
+                text-align: left;
+                font-size: 13px;
+                display: flex;
+                align-items: center;
+                svg {
+                    margin-right: 5px;
+                }
+            }
+
             &:first-of-type div.box--main--icon{
                 background-color: #fb8c00;
             }

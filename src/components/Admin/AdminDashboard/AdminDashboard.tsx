@@ -3,13 +3,15 @@ import './AdminDashboard.scss';
 import Container from '../../elements/Container/Container';
 
 import { 
-    Assessment as AssessmentIcon,
-    Dashboard as DashboardIcon,
     People as PeopleIcon,
-    Settings as SettingsIcon,
     LocationCity as LocationCityIcon,
     Assignment as AssignmentIcon,
-    AssignmentTurnedIn as AssignmentTurnedInIcon
+    AssignmentTurnedIn as AssignmentTurnedInIcon,
+
+    NewReleases as NewReleasesIcon,
+    SettingsEthernet as SettingsEthernetIcon,
+    Update as UpdateIcon,
+    ListAlt as ListAltIcon
 } from '@material-ui/icons';
 
 function AdminDashboard() {
@@ -28,6 +30,11 @@ function AdminDashboard() {
                         <div className="box--data">
                             10
                         </div>
+                        <div className="box--border"></div>
+                        <div className="box--details">
+                            <span><NewReleasesIcon /></span>
+                            <span>4 new users</span>
+                        </div>
                     </div>
                     <div className="box">
                         <div className="box--main--icon">
@@ -38,6 +45,11 @@ function AdminDashboard() {
                         </div>
                         <div className="box--data">
                             1
+                        </div>
+                        <div className="box--border"></div>
+                        <div className="box--details">
+                            <span><SettingsEthernetIcon /></span>
+                            <span>1 club active</span>
                         </div>
                     </div>
                     <div className="box">
@@ -50,6 +62,11 @@ function AdminDashboard() {
                         <div className="box--data">
                             6
                         </div>
+                        <div className="box--border"></div>
+                        <div className="box--details">
+                            <span><UpdateIcon /></span>
+                            <span>just updated</span>
+                        </div>
                     </div>
                     <div className="box">
                         <div className="box--main--icon">
@@ -60,6 +77,11 @@ function AdminDashboard() {
                         </div>
                         <div className="box--data">
                             15
+                        </div>
+                        <div className="box--border"></div>
+                        <div className="box--details">
+                            <span><ListAltIcon /></span>
+                            <span>Last 24 hours</span>
                         </div>
                     </div>
                 </div>
