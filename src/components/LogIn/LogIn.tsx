@@ -11,6 +11,8 @@ import {compose} from 'redux';
 import {TokenStateInterface} from '../../redux/reducers/token-reducer';
 import {UserStateInterface} from '../../redux/reducers/user-reducer';
 
+import {useHistory} from 'react-router-dom';
+
 interface Props {
     storeSetToken(params: TokenStateInterface): void;
     storeSetUser(params: UserStateInterface): void
@@ -20,6 +22,7 @@ function LogIn(props: Props) {
     const initialState = {value: '', valid: false, error: ''}
     const [email, setEmail] = useState({...initialState});
     const [password, setPassword] = useState({...initialState});
+    const history = useHistory();
 
     const changeHandler = (result: ResultInterface) => {
         const newState = {...result};
@@ -62,6 +65,8 @@ function LogIn(props: Props) {
                 verified: data.verified,
                 verifiedOn: data.verified_on
             });
+            // history.push()
+            response.data.role === 'admin' ? history.push('/dashboard') : history.push('/');
 
         } catch(error) {
             console.log(error);

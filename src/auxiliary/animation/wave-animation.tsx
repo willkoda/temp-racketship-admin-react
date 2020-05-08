@@ -14,6 +14,7 @@ export function waveAnimation(params: Params) {
     params.waveElementRef.current.appendChild(waveElement);
 
     setTimeout(() => {
+        if (!params.waveElementRef.current) return;
         params.waveElementRef.current.removeChild(waveElement);
     }, 750);
 

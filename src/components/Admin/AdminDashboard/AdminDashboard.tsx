@@ -18,7 +18,7 @@ function AdminDashboard() {
     return (
         <Container paddingOnly={true}>
             <div className="AdminDashboard">
-                <h1 className="text-align-left margin-bottom-40">Dashboard</h1>
+                <h1 className="text-align-left">Dashboard</h1>
                 <div className="box--container">
                     <div className="box">
                         <div className="box--main--icon">
