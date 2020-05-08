@@ -1,6 +1,7 @@
 import React from 'react';
 import './AdminHeader.scss';
 import IconButton from '../../elements/IconButton/IconButton';
+import LogOut from '../../../components/LogOut/LogOut';
 import { Menu as MenuIcon } from '@material-ui/icons';
 
 function AdminHeader() {
@@ -19,7 +20,7 @@ function AdminHeader() {
                 <span className="colored--text">DESK</span>
             </div>
             <div className="button--container">
-                <div>Logout button here</div>
+                <LogOut />
             </div>
         </header>
     )

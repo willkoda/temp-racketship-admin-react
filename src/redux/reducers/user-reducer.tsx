@@ -9,7 +9,7 @@ const nullState: UserStateInterface = {
     verifiedOn: null
 }
 
-const userInformation = JSON.parse(localStorage.getItem('user')!) || nullState;
+const userInformation = JSON.parse(localStorage.getItem('admin--desk--admin__user')!) || nullState;
 
 const initialState: UserStateInterface = {...userInformation};
 
@@ -28,13 +28,13 @@ interface ActionInterface {
 function reducer(state = initialState, action: ActionInterface) {
     switch (action.type) {
         case actions.REMOVE_USER:
-            localStorage.removeItem('user');
+            localStorage.removeItem('admin--desk--admin__user');
             return {
                 ...state,
                 ...nullState
             }
         case actions.SET_USER:
-            localStorage.setItem('user', JSON.stringify(action.payload));
+            localStorage.setItem('admin--desk--admin__user', JSON.stringify(action.payload));
             return {
                 ...state,
                 ...action.payload
@@ -44,7 +44,7 @@ function reducer(state = initialState, action: ActionInterface) {
                 ...state,
                 ...action.payload
             };
-            localStorage.setItem('user', JSON.stringify(newState));
+            localStorage.setItem('admin--desk--admin__user', JSON.stringify(newState));
             return newState;
         }
         default: {

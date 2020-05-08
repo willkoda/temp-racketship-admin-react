@@ -5,6 +5,9 @@ interface Params {
 }
 
 export function waveAnimation(params: Params) {
+    params.waveElementRef.current.style.position = 'relative';
+    params.waveElementRef.current.style.overflow = 'hidden';
+
     const waveElement = document.createElement('span');
     waveElement.style.width = params.waveElementRef.current.offsetWidth / 2 + 'px';
     waveElement.style.height = params.waveElementRef.current.offsetWidth / 2 + 'px';

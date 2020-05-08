@@ -65,7 +65,6 @@ function LogIn(props: Props) {
                 verified: data.verified,
                 verifiedOn: data.verified_on
             });
-            // history.push()
             response.data.role === 'admin' ? history.push('/dashboard') : history.push('/');
 
         } catch(error) {

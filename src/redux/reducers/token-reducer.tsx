@@ -1,7 +1,7 @@
 const initialState: TokenStateInterface = {
-    accessToken: localStorage.getItem('accessToken'),
-    clientID: localStorage.getItem('clientID'),
-    uid: localStorage.getItem('uid')
+    accessToken: localStorage.getItem('admin--desk--admin__accessToken'),
+    clientID: localStorage.getItem('admin--desk--admin__clientID'),
+    uid: localStorage.getItem('admin--desk--admin__uid')
 }
 
 const actions = {
@@ -17,7 +17,7 @@ interface ActionInterface {
 const storeToken = (payload: TokenStateInterface) => {
     Object.entries(payload).forEach(el => {
         if (el[1]) {
-            localStorage.setItem(el[0], el[1])
+            localStorage.setItem('admin--desk--admin__' + el[0], el[1])
         }
     })
 }
@@ -25,9 +25,9 @@ const storeToken = (payload: TokenStateInterface) => {
 function reducer(state = initialState, action: ActionInterface) {
     switch (action.type) {
         case actions.REMOVE_TOKEN:
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('clientID');
-            localStorage.removeItem('uid');
+            localStorage.removeItem('admin--desk--admin__accessToken');
+            localStorage.removeItem('admin--desk--admin__clientID');
+            localStorage.removeItem('admin--desk--admin__uid');
             return {
                 ...state,
                 accessToken: null,
