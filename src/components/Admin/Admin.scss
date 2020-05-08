@@ -2,4 +2,29 @@ div.Admin {
     height: 100%;
     min-height: 100vh;
     display: flex;
+
+    div.admin--content {
+        overflow: auto;
+        flex: 0 1 100%;
+        background-color: var(--background-color);
+        div.owner--club--header {
+            color: var(--owner-complement-shade-one);
+            font-weight: 400;
+            font-size: 25px;
+
+            span.club--id {
+                font-size: 20px;
+            }
+        }
+    }
+
+    div.Container {
+        @media (max-width: 768px) {
+            padding-bottom: 80px;
+        }
+
+        @media (max-width: 500px) {
+            padding-bottom: 65px;
+        }
+    }
 }

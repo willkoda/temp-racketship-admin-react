@@ -82,6 +82,10 @@ div.input--group--container {
     max-width: 700px;
 }
 
+.text-align-left {
+    text-align: left;
+}
+
 .text-align-center {
     text-align: center;
 }
@@ -90,11 +94,6 @@ div.input--group--container {
     top: 0;
     left: 0;
     position: absolute;
-    // background-color: rgba(0, 0, 0, 0.15);
-
-
-    // background-color: #fff;
-    // background-color: rgba(255, 255, 255, 0.4);
     transform: translate(-50%, -50%) scale(0.3);
     border-radius: 50%;
 

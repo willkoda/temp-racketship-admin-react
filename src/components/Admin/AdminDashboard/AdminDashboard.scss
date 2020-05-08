@@ -1,0 +1,64 @@
+div.AdminDashboard {
+    h1 {
+        font-weight: 300;
+        color: var(--medium-grey);
+        font-size: 20px;
+    }
+    div.box--container {
+        display: flex;
+        justify-content: space-between;
+        div.box {
+            flex: 0 1 24%;
+            min-height: 135px;
+            background-color: #fff;
+            position: relative;
+            border-radius: 4px;
+            padding: 15px;
+            text-align: right;
+            color: var(--light-grey);
+            font-weight: 300;
+            box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.15);
+            div.box--main--icon {
+                height: 85px;
+                width: 85px;
+                background: black;
+                position: absolute;
+                left: 20px;
+                top: -20px;
+                border-radius: inherit;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #fff;
+                svg {
+                    font-size: 40px;
+                }
+            }
+
+            div.box--label {
+                font-size: 15px;
+            }
+
+            div.box--data {
+                font-size: 30px;
+                color: var(--medium-grey);
+            }
+
+            &:first-of-type div.box--main--icon{
+                background-color: #fb8c00;
+            }
+
+            &:nth-of-type(2) div.box--main--icon{
+                background-color: #43a047;
+            }
+
+            &:nth-of-type(3) div.box--main--icon{
+                background-color: #e53935;
+            }
+
+            &:nth-of-type(4) div.box--main--icon{
+                background-color: #00acc1;
+            }
+        }
+    }
+}
