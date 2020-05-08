@@ -12,13 +12,12 @@ interface Props {
 }
 
 function IconButton(props: Props) {
-    const waveRef = useRef<HTMLSpanElement>(null!);
     const waveElementRef = useRef<HTMLButtonElement>(null!);
 
     const buttonClass = ['IconButton', props.margin, 'dark'];
 
     const handleClick = (e: React.MouseEvent) => {
-        waveAnimation({event: e, waveRef: waveRef, waveElementRef: waveElementRef});
+        waveAnimation({event: e, waveElementRef: waveElementRef, waveColor: props.waveColor});
     };
 
     return (
@@ -30,7 +29,6 @@ function IconButton(props: Props) {
             ref={waveElementRef}
         >
             {props.iconElement}
-        <span className="--wave" ref={waveRef} style={{backgroundColor: props.waveColor || 'rgba(0, 0, 0, 0.2)'}} ></span>
         </button>
     )
 }

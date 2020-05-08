@@ -90,11 +90,15 @@ div.input--group--container {
     top: 0;
     left: 0;
     position: absolute;
-    background-color: #fff;
-    transform: translate(-50%, -50%) scale(0) ;
+    // background-color: rgba(0, 0, 0, 0.15);
+
+
+    // background-color: #fff;
+    // background-color: rgba(255, 255, 255, 0.4);
+    transform: translate(-50%, -50%) scale(0.3);
     border-radius: 50%;
 
     &.wave--animation {
-        animation: waveAnimation 450ms linear;
+        animation: 600ms linear 1 both waveAnimation;
     }
 }

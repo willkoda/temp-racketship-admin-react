@@ -1,18 +1,21 @@
 interface Params {
     event: React.MouseEvent,
-    waveRef: React.MutableRefObject<HTMLSpanElement>,
-    waveElementRef: React.MutableRefObject<HTMLElement>
+    waveElementRef: React.MutableRefObject<HTMLElement>,
+    waveColor: string
 }
 
 export function waveAnimation(params: Params) {
+    const waveElement = document.createElement('span');
+    waveElement.style.width = params.waveElementRef.current.offsetWidth / 2 + 'px';
+    waveElement.style.height = params.waveElementRef.current.offsetWidth / 2 + 'px';
+    waveElement.style.backgroundColor = params.waveColor;
+    waveElement.classList.add('wave--animation');
+    waveElement.classList.add('--wave');
+    params.waveElementRef.current.appendChild(waveElement);
 
-    params.waveRef.current.style.width = params.waveElementRef.current.offsetWidth / 2 + 'px';
-    params.waveRef.current.style.height = params.waveElementRef.current.offsetWidth / 2 + 'px';    
-
-    params.waveRef.current.classList.remove('wave--animation');
     setTimeout(() => {
-        params.waveRef.current.classList.add('wave--animation');
-    }, 100)
+        params.waveElementRef.current.removeChild(waveElement);
+    }, 750);
 
     const rect = params.waveElementRef.current.getBoundingClientRect();
     const offset = {
@@ -23,6 +26,6 @@ export function waveAnimation(params: Params) {
     const x = (params.event.pageX - offset.left)
     const y = (params.event.pageY - offset.top)
 
-    params.waveRef.current.style.left = `${x}px`;
-    params.waveRef.current.style.top = `${y}px`;
+    waveElement.style.left = `${x}px`;
+    waveElement.style.top = `${y}px`;
 }

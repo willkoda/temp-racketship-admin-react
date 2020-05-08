@@ -7,14 +7,14 @@ interface Props {
     clickCallback?(): void,
     color?: string,
     text: string,
-    width?: string
+    width?: string,
+    waveColor: string
 }
 
 function Button(props: Props) {
-    const waveRef = useRef<HTMLSpanElement>(null!);
     const waveElementRef = useRef<HTMLButtonElement>(null!);
     const handleClick = (e: React.MouseEvent) => {
-        waveAnimation({event: e, waveRef: waveRef, waveElementRef: waveElementRef});
+        waveAnimation({event: e, waveElementRef: waveElementRef, waveColor: props.waveColor});
         if (props.clickCallback) {
             props.clickCallback()
         }
@@ -29,7 +29,6 @@ function Button(props: Props) {
                 width: props.width || '100%'
             }}>
             {props.text}
-            <span className="--wave" ref={waveRef}></span>
         </button>
     )
 }
