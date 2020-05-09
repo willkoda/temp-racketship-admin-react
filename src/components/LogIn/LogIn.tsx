@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './LogIn.scss';
-import Input, {ResultInterface} from '../elements/Input/Input';
-import Button from '../elements/Button/Button';
+import Input, {ResultInterface} from '../../elements/Input/Input';
+import Button from '../../elements/Button/Button';
 import axios from '../../auxiliary/axios';
 
 import {storeSetToken, storeSetUser} from '../../auxiliary/dispatch';
@@ -22,6 +22,8 @@ function LogIn(props: Props) {
     const initialState = {value: '', valid: false, error: ''}
     const [email, setEmail] = useState({...initialState});
     const [password, setPassword] = useState({...initialState});
+    const [timeStamp, setTimeStamp] = useState(0);
+
     const history = useHistory();
 
     const changeHandler = (result: ResultInterface) => {
@@ -42,6 +44,7 @@ function LogIn(props: Props) {
 
     const formSubmitHandler = async (e: React.FormEvent) => {
         e.preventDefault();
+        setTimeStamp(Date.now())
         const requestData = {
             email: email.value,
             password: password.value
@@ -91,7 +94,8 @@ function LogIn(props: Props) {
                         changeCallback={changeHandler} 
                         validatedProps={{email: true}} 
                         valid={email.valid} 
-                        error={email.error} />
+                        error={email.error}
+                        timeStamp={timeStamp} />
 
                     <Input
                         id="password"

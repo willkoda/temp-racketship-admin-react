@@ -4,9 +4,11 @@ import {Switch, Route} from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import AdminMenu from '../Admin/AdminMenu/AdminMenu';
 import AdminDashboard from '../Admin/AdminDashboard/AdminDashboard';
+
+import SideMenuProvider from '../../providers/SideMenuProvider';
 function Admin() {
     return (
-        <React.Fragment>
+        <SideMenuProvider>
             <Header headerType="admin" />
             <div className="Admin padding-top-80">
                 <AdminMenu />
@@ -16,7 +18,7 @@ function Admin() {
                     </Switch>
                 </div>
             </div>
-        </React.Fragment>
+        </SideMenuProvider>
     )
 }
 

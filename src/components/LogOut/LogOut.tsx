@@ -15,7 +15,7 @@ interface Props {
 function LogOut(props: Props) {
     const history = useHistory();
 
-    const clickHandler = (e: React.MouseEvent) => {
+    const clickHandler = () => {
         props.storeRemoveToken();
         props.storeRemoveUser();
         history.push('/')

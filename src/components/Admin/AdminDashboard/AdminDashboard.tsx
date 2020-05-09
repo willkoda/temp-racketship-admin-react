@@ -1,6 +1,6 @@
 import React from 'react';
 import './AdminDashboard.scss';
-import Container from '../../elements/Container/Container';
+import Container from '../../../elements/Container/Container';
 
 import { 
     People as PeopleIcon,

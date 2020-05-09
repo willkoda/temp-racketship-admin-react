@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import './AdminHeader.scss';
-import IconButton from '../../elements/IconButton/IconButton';
+import IconButton from '../../../elements/IconButton/IconButton';
 import LogOut from '../../../components/LogOut/LogOut';
 import { Menu as MenuIcon } from '@material-ui/icons';
+import {SideMenuContext} from '../../../providers/SideMenuProvider';
 
 function AdminHeader() {
+    const context = useContext(SideMenuContext);
     const clickHandler = () => {
-        console.log('Menu click')
+        context.toggleSideMenu();
     }
     return (
         <header className="AdminHeader padding-left-right-20 padding-top-bottom-15">

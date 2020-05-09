@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef, useContext} from 'react';
 import './AdminMenu.scss';
 import {NavLink} from 'react-router-dom';
 
@@ -9,9 +9,22 @@ import {
     Settings as SettingsIcon
 } from '@material-ui/icons';
 
+import {SideMenuContext} from '../../../providers/SideMenuProvider';
+
 function AdminMenu() {
+    const sideMenuRef = useRef<HTMLUListElement>(null!);
+    const context = useContext(SideMenuContext);
+
+    useEffect(() => {
+        if (context.sideMenuVisible) {
+            sideMenuRef.current.style.flex = '0 1 300px';
+        } else {
+            sideMenuRef.current.style.flex = '0 1 0px';
+        }
+    }, [context])
+
     return (
-        <ul className="AdminMenu">
+        <ul className="AdminMenu" ref={sideMenuRef}>
             <li>
                 <NavLink exact to="/dashboard">
                     <DashboardIcon />

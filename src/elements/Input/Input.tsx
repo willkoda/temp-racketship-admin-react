@@ -9,6 +9,7 @@ interface Props {
     inputBorderColor?: string;
     margin?: string;
     placeholder: string;
+    timeStamp?: number;
     type?: string;
     validatedProps?: {
         email?: boolean
@@ -19,6 +20,7 @@ interface Props {
 
 function Input(props: Props) {
     const placeholderRef = useRef<HTMLSpanElement>(null!);
+    const inputErrorRef = useRef<HTMLDivElement>(null!);
 
     const validator = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!props.validatedProps) return {valid: true, error: null};
@@ -76,6 +78,16 @@ function Input(props: Props) {
         if (props.value.length > 0) focus();
     }, [props.value, focus])
 
+    useEffect(() => {
+        inputErrorRef.current.style.opacity = '0';
+        const timeout = setTimeout(() => {
+            inputErrorRef.current.style.opacity = '1';
+        }, 200)
+        return () => {
+            clearTimeout(timeout);
+        }
+    }, [props.timeStamp])
+
     return (
         <div className="Input">
             <label htmlFor={props.id}>
@@ -101,6 +113,7 @@ function Input(props: Props) {
                 </span>
             </label>
             <div 
+                ref={inputErrorRef}
                 className="input--error" 
                 style={{margin: '3px 6px', visibility: !props.valid ? 'visible' : 'hidden'}}>
                 {props.error}</div>
