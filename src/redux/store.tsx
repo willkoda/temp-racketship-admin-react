@@ -1,6 +1,7 @@
 import {createStore, combineReducers} from 'redux';
 import tokenReducer from './reducers/token-reducer';
 import userReducer from './reducers/user-reducer';
+import usersReducer from './reducers/users-reducer';
 // import linkedAccountsReducer from './reducers/linked-accounts-reducer';
 
 // import ownerMembersReducer from './reducers/owner/owner-members-reducer';
@@ -14,6 +15,7 @@ import userReducer from './reducers/user-reducer';
 const mainReducer = combineReducers({
     token: tokenReducer,
     user: userReducer,
+    users: usersReducer
 });
 
 declare global {

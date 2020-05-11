@@ -4,12 +4,15 @@ import {
     storeSetToken,
     storeRemoveToken,
     storeSetUser,
-    storeRemoveUser
+    storeRemoveUser,
+    storeSetUsers,
+    storeRemoveUsers
 } from '../auxiliary/dispatch';
-import {token, user} from '../auxiliary/state';
+import {token, user, users} from '../auxiliary/state';
 
 import {TokenStateInterface} from '../redux/reducers/token-reducer';
 import {UserStateInterface} from '../redux/reducers/user-reducer';
+import {UsersStateInterface} from '../redux/reducers/users-reducer';
 
 type indexSignature = {
     [key: string]: any
@@ -18,7 +21,8 @@ export default function withStoreConnection(params: {stateProps?: Array<String>,
     const mapStateToProps = (state: any) => {
         const storeState: indexSignature = {
             [token]: state[token],
-            [user]: state[user]
+            [user]: state[user],
+            [users]: state[users]
         }
         if (!params.stateProps) return {};
         return params.stateProps.reduce((acc: Object, curr: any) => {
@@ -38,7 +42,10 @@ export default function withStoreConnection(params: {stateProps?: Array<String>,
             [storeSetToken]: (responseObject: TokenStateInterface) => dispatch({type: 'SET_TOKEN', payload: responseObject}),
             [storeRemoveToken]: () => dispatch({type: 'REMOVE_TOKEN'}),
             [storeSetUser]: (userInformation: UserStateInterface) => dispatch({type: 'SET_USER', payload: userInformation}),
-            [storeRemoveUser]: () => dispatch({type: 'REMOVE_USER'})
+            [storeRemoveUser]: () => dispatch({type: 'REMOVE_USER'}),
+
+            [storeSetUsers]: (payload: Partial<UsersStateInterface>) => dispatch({type: 'SET_USERS', payload: payload}),
+            [storeRemoveUsers]: () => dispatch({type: 'REMOVE_USERS'})
         };
         if (!params.dispatchProps) return {};
         return params.dispatchProps.reduce((acc: Object, curr: any) => {

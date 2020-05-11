@@ -26,8 +26,8 @@ interface Props {
 function Table(props: Props) {
     return (
         <div className={`table--container Table ${props.margin}`}>
+            <LinearProgress className="progress--indicator" style={{visibility: props.progressIndicatorVisible ? 'visible' : 'hidden'}} />
             <div className="table--content">
-                <LinearProgress className="progress--indicator" style={{visibility: props.progressIndicatorVisible ? 'visible' : 'hidden'}} />
                 <div className="table--container">
                     <table>
                         <thead>

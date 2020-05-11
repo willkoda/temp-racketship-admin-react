@@ -1,13 +1,12 @@
 div.Table {
-    padding: 15px;
     background-color: #f5f5f5;
-    
     @media(max-width: 500px) {
         padding: 5px;
     }
 
     div.table--content {
         border-radius: 4px;
+        box-shadow: var(--shadow-type-one);
         div.progress--indicator {
             border-top-left-radius: 2px;
             border-top-right-radius: 2px;
@@ -17,6 +16,8 @@ div.Table {
             overflow: auto;
             bottom: 15px;
             font-size: 13px;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
             
             div.pagination--controls {
                 min-height: 55px;
@@ -59,14 +60,13 @@ div.Table {
             max-height: 680px;
             position: relative;
             z-index: 1;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
             table {
                 width: 100%;
                 border-collapse: separate;
                 background-color: #fff;
                 border-spacing: 0;
-                box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-                    0px 1px 1px 0px rgba(0, 0, 0, 0.14),
-                    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
                 thead tr {
                     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
                 }

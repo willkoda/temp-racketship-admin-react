@@ -1,20 +1,81 @@
-import React from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './Admin.scss';
 import {Switch, Route} from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import AdminMenu from '../Admin/AdminMenu/AdminMenu';
 import AdminDashboard from '../Admin/AdminDashboard/AdminDashboard';
+import AdminUsers from '../Admin/AdminUsers/AdminUsers';
 
 import SideMenuProvider from '../../providers/SideMenuProvider';
-function Admin() {
+import axios from '../../auxiliary/axios';
+
+import {users} from '../../auxiliary/state';
+import {storeSetUsers} from '../../auxiliary/dispatch';
+import {compose} from 'redux';
+import withStoreConnection from '../../hoc/withStoreConnection';
+
+import {UsersStateInterface} from '../../redux/reducers/users-reducer';
+
+import Table from '../../elements/Table/Table';
+
+interface Props {
+    storeSetUsers(params: Partial<UsersStateInterface>): void;
+    users: UsersStateInterface;
+}
+
+function Admin(props: Props) {
+    const {storeSetUsers} = props;
+    const retrieveUsers = useCallback(async (url) => {
+        try {
+            storeSetUsers({
+                progressIndicatorVisible: true
+            })
+            const response = await axios.get(url);
+            const users = response.data.users.map((el: any) => {
+                return Object.entries(el).map(e => ({key: e[0], value: e[1]})).reduce((acc: any, curr: any) => {
+                    const key = curr.key.split('_')
+                        .map((word: string, index: number) => index > 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word)
+                        .join('');
+                    acc[key] = curr.value
+                    return acc;
+                }, {})
+            })
+            const pagination = {
+                nextUrl: response.data.pagination.next_url,
+                previousUrl: response.data.pagination.previous_url,
+                currentPage: response.data.pagination.current,
+                pages: response.data.pagination.pages,
+                totalCount: response.data.pagination.count
+            }
+            storeSetUsers({
+                users: users,
+                pagination: pagination
+            })
+            setTimeout(() => {
+                storeSetUsers({
+                    progressIndicatorVisible: false
+                })
+            }, 500)
+        } catch(error) {
+            console.log(error)
+        }
+    }, [storeSetUsers]);
+
+    useEffect(() => {
+        console.log('ef')
+        retrieveUsers('/v1/users');
+    }, [retrieveUsers]);
+    
+
     return (
         <SideMenuProvider>
             <Header headerType="admin" />
             <div className="Admin padding-top-80">
-                <AdminMenu />
+            <AdminMenu />
                 <div className="admin--content">
                     <Switch>
                         <Route exact path="/dashboard" component={AdminDashboard}/>
+                        <Route path="/dashboard/users" render={() => <AdminUsers retrieveUsers={retrieveUsers} />} />
                     </Switch>
                 </div>
             </div>
@@ -22,4 +83,7 @@ function Admin() {
     )
 }
 
-export default Admin;
+export default compose(
+    withStoreConnection({stateProps: [users], dispatchProps: [storeSetUsers]})
+)(Admin)
+// export default Admin;
