@@ -16,8 +16,6 @@ import withStoreConnection from '../../hoc/withStoreConnection';
 
 import {UsersStateInterface} from '../../redux/reducers/users-reducer';
 
-import Table from '../../elements/Table/Table';
-
 interface Props {
     storeSetUsers(params: Partial<UsersStateInterface>): void;
     users: UsersStateInterface;
@@ -62,7 +60,6 @@ function Admin(props: Props) {
     }, [storeSetUsers]);
 
     useEffect(() => {
-        console.log('ef')
         retrieveUsers('/v1/users');
     }, [retrieveUsers]);
     
@@ -86,4 +83,3 @@ function Admin(props: Props) {
 export default compose(
     withStoreConnection({stateProps: [users], dispatchProps: [storeSetUsers]})
 )(Admin)
-// export default Admin;

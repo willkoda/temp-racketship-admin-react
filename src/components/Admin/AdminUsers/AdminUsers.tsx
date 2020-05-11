@@ -11,15 +11,18 @@ import {UsersStateInterface} from '../../../redux/reducers/users-reducer';
 
 interface Props {
     users: UsersStateInterface;
+    retrieveUsers(url: string): void;
 }
 
-function AdminUsers(props: Props) {
-    // const previousPageClickHandler = () => {
-    //     props.retrieveMembers(`/members?page=${props.ownerMembers.pagination.currentPage - 1}&q=${encodeURIComponent(searchQuery)}`);
-    // }
-    // const nextPageClickHandler = () => {
-    //     props.retrieveMembers(`/members?page=${props.ownerMembers.pagination.currentPage + 1}&q=${encodeURIComponent(searchQuery)}`);
-    // }
+function AdminUsers (props: Props) {
+    const previousPageClickHandler = () => {
+        // define search query inside retrieve users for encode uri component
+        props.retrieveUsers(`/v1/users?page=${props.users.pagination.currentPage - 1}&q=${encodeURIComponent('')}`);
+    }
+    const nextPageClickHandler = () => {
+        // define search query inside retrieve users for encode uri component
+        props.retrieveUsers(`/v1/users?page=${props.users.pagination.currentPage + 1}&q=${encodeURIComponent('')}`);
+    }
     return (
         <Container paddingOnly={true}>
              <Table
@@ -39,8 +42,8 @@ function AdminUsers(props: Props) {
                     currentPage: props.users.pagination.currentPage,
                     totalCount: props.users.pagination.totalCount
                 }}
-                previousPageClickHandler={() => 'previous'}
-                nextPageClickHandler={() => 'next'}
+                previousPageClickHandler={previousPageClickHandler}
+                nextPageClickHandler={nextPageClickHandler}
                 progressIndicatorVisible={props.users.progressIndicatorVisible}
             />
         </Container>
@@ -49,4 +52,4 @@ function AdminUsers(props: Props) {
 
 export default compose(
     withStoreConnection({stateProps: [users]})
-)(AdminUsers);
+)(AdminUsers)
