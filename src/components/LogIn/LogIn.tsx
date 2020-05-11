@@ -50,7 +50,7 @@ function LogIn(props: Props) {
             password: password.value
         }
         try {
-            const response = await axios.post('/admin/sign_in', requestData);
+            const response = await axios.post('/auth/sign_in', requestData);
             props.storeSetToken({
                 accessToken: response.headers['access-token'],
                 clientID: response.headers['client'],
