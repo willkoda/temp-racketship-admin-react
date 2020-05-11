@@ -86,6 +86,18 @@ function AdminDashboard() {
                     </div>
                 </div>
             </div>
+
+            {/* <Table
+                headers={['name', 'type', 'test']}
+                content={[['Monk', 'wanderer', 'yes']]}
+                pagination={{
+                    pages: 1,
+                    currentPage: 1,
+                    totalCount: 1
+                }}
+                previousPageClickHandler={() => 'previous'}
+                nextPageClickHandler={() => 'next'}
+            /> */}
         </Container>
     )
 }

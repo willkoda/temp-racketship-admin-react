@@ -1,0 +1,195 @@
+div.Table {
+    padding: 15px;
+    background-color: #f5f5f5;
+    
+    @media(max-width: 500px) {
+        padding: 5px;
+    }
+
+    div.table--content {
+        border-radius: 4px;
+        div.progress--indicator {
+            border-top-left-radius: 2px;
+            border-top-right-radius: 2px;
+        }
+        div.table--pagination {
+            left: 0;
+            overflow: auto;
+            bottom: 15px;
+            font-size: 13px;
+            
+            div.pagination--controls {
+                min-height: 55px;
+                border-top: 1px solid rgba(0, 0, 0, 0.2);
+                background-color: #fff;
+                white-space: nowrap;
+                overflow: auto;
+                display: flex;
+                width: 100%;
+                align-items: center;
+                direction: rtl;
+                font-weight: 300;
+                position: relative;
+                z-index: 1;
+                &::after {
+                    content: '';
+                    min-height: 10px;
+                    min-width: 25px;
+                }
+                button  {
+                    min-width: 39px;
+                    color: rgba(0, 0, 0, 0.65);
+                    &:disabled {
+                        color: rgba(0, 0, 0, 0.2);
+                        cursor: auto;
+                    }
+                }
+
+                div.page--tracker {
+                    display: grid;
+                    grid-template-columns: repeat(3, max-content);
+                    
+                    grid-gap: 0 7px;
+                    font-weight: 300;
+                }
+            }
+        }
+        div.table--container  {
+            overflow: auto;
+            max-height: 680px;
+            position: relative;
+            z-index: 1;
+            table {
+                width: 100%;
+                border-collapse: separate;
+                background-color: #fff;
+                border-spacing: 0;
+                box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+                    0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+                    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+                thead tr {
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+                }
+
+                @media (max-width: 1000px) {
+                    width: 1000px;
+                }
+
+                tbody tr {
+                    transition: background-color 280ms ease-in-out;
+                    &:hover {
+                        background-color: rgba(0, 0, 0, 0.04);
+                    }
+                }
+                
+                th, td {
+                    padding: 20px;
+                    text-align: left;
+                }
+                th {
+                    z-index: 5;
+                    font-weight: 400;
+                    color: var(--dark-text);
+                    position: sticky;
+                    top: 0;
+                    background-color: #fff;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+                }
+
+                td {
+                    font-size: 14px;
+                    font-weight: 300;
+                }
+
+                tbody {
+                    div.status {
+                        display: inline-block;
+                        text-align: center;
+                        padding: 7px 5px;
+                        min-width: 90px;
+                        font-weight: 400;
+                        border-radius: 4px;
+                        font-size: 13px;
+                        &.requested {
+                            background-color: var(--status--requested--background);
+                            color:  var(--status--requested--color);
+                        }
+                        &.completed {
+                            background-color: var(--status--success--background);
+                            color:  var(--status--success--color);
+                        }
+                        &.failed {
+                            background-color: var(--status--failure--background);
+                            color:  var(--status--failure--color);
+                        }
+                        &.verified, 
+                        &.chips_sent,
+                        &.flagged {
+                            background-color: var(--status--pending--background);
+                            color:  var(--status--pending--color);
+                        }
+                    }
+
+                    div.text--image--icon {
+                        display: flex;
+                        align-items: center;
+                        img {
+                            width: 35px;
+                            margin-right: 6px;
+                        }
+                        div.text {
+                            font-weight: 700;
+                            color: var(--medium-grey);
+                            font-size: 20px;
+                        }
+                    }
+
+                    div.text--image {
+                        display: flex;
+                        align-items: center;
+                        font-size: 12px;
+                        img {
+                            width: 40px;
+                            margin-right: 10px;
+                        }
+
+                        div.text {
+                            div:first-of-type {
+                                font-size: 13px;
+                                font-weight: 400;
+                            }
+                        }
+                    }
+
+                    div.text--icon {
+                        display: flex;
+                        align-items: center;
+                        div.icon {
+                            color: #fff;
+                            background-color: var(--status--success--color);
+                            display: inline-block;
+                            height: 20px;
+                            display: inline-flex;
+                            width: 30px;
+                            height: 30px;
+                            border-radius: 50%;
+                            align-items: center;
+                            justify-content: center;
+                            margin-right: 10px;
+                            svg {
+                                font-size: 20px;
+                            }
+                        }
+
+                        div.text {
+                            font-weight: 700;
+                            color: var(--medium-grey);
+                            font-size: 18px;
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
+}

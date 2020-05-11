@@ -3,7 +3,7 @@ import './IconButton.scss';
 import {waveAnimation} from '../../auxiliary/animation/wave-animation';
 
 interface Props {
-    color: string,
+    color?: string,
     clickHandler(): void,
     disabled?: boolean,
     iconElement: JSX.Element,
@@ -13,7 +13,6 @@ interface Props {
 
 function IconButton(props: Props) {
     const waveElementRef = useRef<HTMLButtonElement>(null!);
-
     const buttonClass = ['IconButton', props.margin, 'dark'];
 
     const handleClick = (e: React.MouseEvent) => {
