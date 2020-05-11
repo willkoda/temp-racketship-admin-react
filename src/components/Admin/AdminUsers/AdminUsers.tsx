@@ -30,7 +30,6 @@ function AdminUsers (props: Props) {
     const searchCallback =  async (result: {eventType: string, value: string}) => {
         switch (result.eventType) {
             case 'immediate':
-                    // setSearchQuery(result.value)
                     props.storeSetUsers({
                         searchQuery: result.value
                     })
@@ -48,7 +47,6 @@ function AdminUsers (props: Props) {
 
     return (
         <Container paddingOnly={true}>
-            <SearchInput searchCallback={searchCallback} id="filter-members" value={props.users.searchQuery} margin="margin-bottom-10" />
              <Table
                 headers={['ID', 'First Name', 'Last Name', 'Email', 'Role', 'Actions']}
                 content={
@@ -60,6 +58,11 @@ function AdminUsers (props: Props) {
                         el.role,
                         <div>actions</div>
                     ])
+                }
+                dataFiltrationComponent={
+                    <div style={{backgroundColor: '#fff', padding: '20px 20px 0 20px', textAlign: 'left'}}>
+                        <SearchInput searchCallback={searchCallback} id="filter-members" value={props.users.searchQuery} />
+                    </div>
                 }
                 pagination={{
                     pages: props.users.pagination.pages,

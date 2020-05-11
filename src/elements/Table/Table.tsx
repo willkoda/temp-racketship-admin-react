@@ -15,6 +15,7 @@ type Pagination = {
 
 interface Props {
     content: Array<Array<any>>;
+    dataFiltrationComponent?: JSX.Element;
     headers: Array<string>;
     margin?: string;
     nextPageClickHandler(): void;
@@ -29,6 +30,7 @@ function Table(props: Props) {
             <LinearProgress className="progress--indicator" style={{visibility: props.progressIndicatorVisible ? 'visible' : 'hidden'}} />
             <div className="table--content">
                 <div className="table--container">
+                    {props.dataFiltrationComponent}
                     <table>
                         <thead>
                             <tr>

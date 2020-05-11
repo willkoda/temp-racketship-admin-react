@@ -7,6 +7,13 @@ div.Table {
     div.table--content {
         border-radius: 4px;
         box-shadow: var(--shadow-type-one);
+        position: relative;
+
+        div.data--filtration--component {
+            position: absolute;
+            width: 100%;
+        }
+
         div.progress--indicator {
             border-top-left-radius: 2px;
             border-top-right-radius: 2px;
@@ -68,6 +75,7 @@ div.Table {
                 background-color: #fff;
                 border-spacing: 0;
                 thead tr {
+                    border-top: 1px solid rgba(0, 0, 0, 0.15);
                     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
                 }
 

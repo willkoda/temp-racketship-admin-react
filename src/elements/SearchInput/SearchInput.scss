@@ -1,5 +1,4 @@
 label.SearchInput {
-    font-size: 14px;
     position: relative;
     display: inline-block;
     &:focus-within {
@@ -27,6 +26,7 @@ label.SearchInput {
         &[data-has-content=true] ~ span.input--placeholder {
             transform: translateY(-24px) scale(0.8);
         }
+        font-size: 16px;
     }
     div.input--border {
         background: rgba(0, 0, 0, 0.8);
