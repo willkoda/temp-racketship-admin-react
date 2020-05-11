@@ -16,6 +16,7 @@ function IconButton(props: Props) {
     const buttonClass = ['IconButton', props.margin, 'dark'];
 
     const handleClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
         waveAnimation({event: e, waveElementRef: waveElementRef, waveColor: props.waveColor});
         props.clickHandler();
     };

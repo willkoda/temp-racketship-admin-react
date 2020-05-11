@@ -22,9 +22,15 @@ interface Props {
     pagination: Pagination;
     previousPageClickHandler(): void;
     progressIndicatorVisible?: boolean;
+    tableRowClickHandler?: {(params: any): void};
 }
 
 function Table(props: Props) {
+    const bodyRowClickHandler = (e: React.MouseEvent) => {
+        const element = e.target as HTMLElement;
+        const row = element.closest('tr');
+        if (props.tableRowClickHandler && row) props.tableRowClickHandler(row.dataset.rowIndex);
+    }
     return (
         <div className={`table--container Table ${props.margin}`}>
             <LinearProgress className="progress--indicator" style={{visibility: props.progressIndicatorVisible ? 'visible' : 'hidden'}} />
@@ -37,8 +43,8 @@ function Table(props: Props) {
                                 {props.headers.map((el, index) => <th key={index}>{el}</th>)}
                             </tr>
                         </thead>
-                        <tbody>
-                            {props.content.map((el, outerIndex) => <tr key={outerIndex}>
+                        <tbody onClick={bodyRowClickHandler}>
+                            {props.content.map((el, outerIndex) => <tr key={outerIndex} data-row-index={outerIndex} style={{cursor: props.tableRowClickHandler ?  'pointer' : 'initial'}}>
                                 {el.map((data, innerIndex) => <td key={innerIndex}>{data}</td>)}
                             </tr>)}
                         </tbody>
