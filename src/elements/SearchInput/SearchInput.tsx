@@ -3,9 +3,6 @@ import './SearchInput.scss';
 import {debounce} from 'lodash';
 import PropTypes from 'prop-types';
 
-{/* <SearchInput 
-    searchCallback={searchCallback} id="filter-members" value={props.ownerMembers.searchQuery} margin="margin-bottom-10" /> */}
-
 interface Props {
     searchCallback(params: {eventType: string, value: string}): void;
     id: string;
