@@ -1,43 +1,11 @@
 import React from 'react';
 import Button from '../../../../../elements/Button/Button';
+import {
+    UserOverviewPropsInterface,
+    adminUsersOverviewRenderElements
+} from '../AdminUsersOverview';
 
-interface UserOverview {
-    email: string;
-    first_name: string;
-    id: number;
-    last_name: string;
-    mobile_number: string;
-    role: string;
-    verified: boolean;
-    verified_on: string;
-    blocked: boolean;
-    blocked_on: string;
-    organization: {
-        identifier: string;
-        name: string;
-    }
-}
-
-interface Props {
-    memberInformation: Partial<UserOverview>;
-}
-
-function AdminUsersOverviewMember(props: Props) {
-
-    const renderElements = (params: {keys: Array<String>, propObject: Partial<UserOverview>}) => {
-        return Object.entries(props.memberInformation).reduce((acc: Array<JSX.Element>, curr, index: number): Array<JSX.Element> => {
-            const key = curr[0].split('_').join(' ');
-            if (params.keys.includes(curr[0])) {
-                acc.push(
-                    <div className="box--row" key={index}>
-                        <div className="key">{key}:</div>
-                        <div className="value">{curr[1]?.toString()}</div>
-                    </div>
-                )
-            }
-            return acc;
-        }, []);
-    }
+function AdminUsersOverviewMember(props: UserOverviewPropsInterface) {
 
     const blockUser = () => {
         console.log('block him')
@@ -50,7 +18,7 @@ function AdminUsersOverviewMember(props: Props) {
                 <div className="box padding-bottom-10">
                     <h3 className="box--heading">Account Details</h3>
                     <div className="box--details">
-                        {renderElements({
+                        {adminUsersOverviewRenderElements({
                             keys: ['id', 'name', 'email', 'mobile_number', 'verified', 'verified_on', 'blocked', 'blocked_on'],
                             propObject: props.memberInformation
                         })}
@@ -73,7 +41,7 @@ function AdminUsersOverviewMember(props: Props) {
                             <div className="key">organization:</div>
                             <div className="value">{props.memberInformation.organization?.name}</div>
                         </div>
-                        {renderElements({
+                        {adminUsersOverviewRenderElements({
                             keys: ['referral_code', 'total_cash_outs', 'total_purchases'],
                             propObject: props.memberInformation
                         })}
