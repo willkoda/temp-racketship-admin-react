@@ -5,7 +5,7 @@ div.AdminUsersOverview {
     }
     div.overview--boxes {
         display: flex;
-
+        justify-content: space-between;
         div.box {
             box-shadow: var(--shadow-type-two);
             background-color: #fff;
