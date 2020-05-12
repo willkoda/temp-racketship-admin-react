@@ -10,7 +10,8 @@ import {users} from '../../../../auxiliary/state';
 import {storeSetUsers} from '../../../../auxiliary/dispatch';
 
 import {UsersStateInterface} from '../../../../redux/reducers/users-reducer';
-import axios from '../../../../auxiliary/axios';
+import {useHistory, useRouteMatch} from 'react-router-dom';
+// import axios from '../../../../auxiliary/axios';
 
 import { 
     Edit as EditIcon,
@@ -24,6 +25,8 @@ interface Props {
 }
 
 function AdminUsersList(props: Props) {
+    const history = useHistory();
+    const {path} = useRouteMatch();
     const previousPageClickHandler = () => {
         props.retrieveUsers(`/v1/users?page=${props.users.pagination.currentPage - 1}&q=${encodeURIComponent(props.users.searchQuery)}`);
     }
@@ -50,8 +53,8 @@ function AdminUsersList(props: Props) {
     }
 
     const tableRowClickHandler = async (rowIndex: number) => {
-        const response = await axios.get(`/v1/users/${rowIndex}`);
-        console.log(response.data)
+        const id = props.users.users.slice()[rowIndex].id;
+        history.push(`${path}${id}`);
     }
 
     return (
