@@ -1,5 +1,4 @@
 button.Button {
-    padding: 12px 10px;
     outline: none;
     font-size: 14px;
     border: none;
@@ -10,5 +9,8 @@ button.Button {
         &:active {
             background-color: var(--accent-three-shade-three);
         }
+    }
+    &.dark--red {
+        background-color: var(--dark-red);
     }
 }

@@ -25,7 +25,7 @@ interface Props {
 }
 
 function Admin(props: Props) {
-    const {storeSetUsers} = props;
+    const {storeSetUsers, validateToken} = props;
     const retrieveUsers = useCallback(async (url) => {
         try {
             storeSetUsers({
@@ -63,8 +63,8 @@ function Admin(props: Props) {
     }, [storeSetUsers]);
 
     useEffect(() => {
-        props.validateToken();
-    }, [])
+        validateToken();
+    }, [validateToken])
 
     useEffect(() => {
         retrieveUsers('/v1/users');
