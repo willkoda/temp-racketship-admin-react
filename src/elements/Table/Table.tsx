@@ -23,6 +23,7 @@ interface Props {
     previousPageClickHandler(): void;
     progressIndicatorVisible?: boolean;
     tableRowClickHandler?: {(params: any): void};
+    tableName?: JSX.Element
 }
 
 function Table(props: Props) {
@@ -36,6 +37,7 @@ function Table(props: Props) {
             <LinearProgress className="progress--indicator" style={{visibility: props.progressIndicatorVisible ? 'visible' : 'hidden'}} />
             <div className="table--content">
                 <div className="table--container">
+                    {props.tableName}
                     {props.dataFiltrationComponent}
                     <table>
                         <thead>

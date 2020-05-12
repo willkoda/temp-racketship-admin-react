@@ -73,7 +73,7 @@ function Admin(props: Props) {
 
     useEffect(() => {
         if (window.innerWidth > 768) {
-            const height = window.innerHeight - 80;
+            const height = window.innerHeight - 80 - 20;
             adminContentRef.current.style.height = height + 'px';
         }
     }, []);

@@ -4,6 +4,8 @@ import {useLocation} from 'react-router-dom';
 import axios from '../../../../auxiliary/axios';
 import Container from '../../../../elements/Container/Container';
 
+import { CircularProgress } from '@material-ui/core';
+
 import AdminUsersOverviewMember from './AdminUsersOverviewMember/AdminUsersOverviewMember';
 import AdminUsersOverviewStaff from './AdminUsersOverviewStaff/AdminUsersOverviewStaff';
 
@@ -27,7 +29,7 @@ function AdminUsersOverview() {
             case 'staff':
                 return <AdminUsersOverviewStaff memberInformation={userInformation} />
             default:
-                return <div>fathead</div>
+                return <CircularProgress />
         }
     };
 

@@ -53,10 +53,6 @@ function AdminUsersOverviewMember(props: UserOverviewPropsInterface) {
         })();
     }, [])
 
-    useEffect(() => {
-        console.log(purchaseRequests)
-    }, [purchaseRequests])
-
     return (
         <div className="AdminUsersOverviewMember">
             <h2 className="overview--heading">Member Overview</h2>
@@ -95,6 +91,14 @@ function AdminUsersOverviewMember(props: UserOverviewPropsInterface) {
                 </div>
                 <section className="purchase--requests margin-top-20" style={{width: '100%'}}>
                     <Table 
+                        tableName={<div className="table--name">
+                            <span style={{
+                                backgroundColor: 'var(--status--requested--background)',
+                                color: 'var(--status--requested--color)',
+                                }}>
+                                Deposits
+                            </span>
+                        </div>}
                         headers={['Reference Number', 'Amount', 'Game Account', 'Bank Account', 'Requested', 'Status']}
                         content={
                             purchaseRequests.requests.map(el => [
