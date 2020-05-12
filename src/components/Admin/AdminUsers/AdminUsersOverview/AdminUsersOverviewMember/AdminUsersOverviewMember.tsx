@@ -105,7 +105,10 @@ function AdminUsersOverviewMember(props: UserOverviewPropsInterface) {
                                 </div>,
                                 `${el.linked_account.username}(${el.linked_account.game_id})`,
                                 `${el.bank_account.account_name}(${el.bank_account.account_number})`,
-                                el.created_at
+                                el.created_at,
+                                <div className={`status ${el.status}`}>
+                                    <span className="value">{el.status}</span>
+                                </div>
                             ])
                         }
                         nextPageClickHandler={() => console.log('fat next')}
@@ -117,7 +120,6 @@ function AdminUsersOverviewMember(props: UserOverviewPropsInterface) {
                         }}
                     />
                  </section>
-                 <div style={{height: '300px', width: '100%'}}></div>
             </div>
         </div>
     )

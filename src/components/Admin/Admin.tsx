@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import './Admin.scss';
 import {Switch, Route} from 'react-router-dom';
 import Header from '../../components/Header/Header';
@@ -25,6 +25,7 @@ interface Props {
 }
 
 function Admin(props: Props) {
+    const adminContentRef = useRef<HTMLDivElement>(null!);
     const {storeSetUsers, validateToken} = props;
     const retrieveUsers = useCallback(async (url) => {
         try {
@@ -70,12 +71,17 @@ function Admin(props: Props) {
         retrieveUsers('/v1/users');
     }, [retrieveUsers]);
 
+    useEffect(() => {
+        const height = window.innerHeight - 80;
+        adminContentRef.current.style.height = height + 'px';
+    }, []);
+
     return (
         <SideMenuProvider>
             <Header headerType="admin" />
             <div className="Admin padding-top-80">
             <AdminMenu />
-                <div className="admin--content">
+                <div className="admin--content" ref={adminContentRef}>
                     <Switch>
                         <Route exact path="/dashboard" component={AdminDashboard}/>
                         <Route path="/dashboard/users" render={() => <AdminUsers retrieveUsers={retrieveUsers} />} />

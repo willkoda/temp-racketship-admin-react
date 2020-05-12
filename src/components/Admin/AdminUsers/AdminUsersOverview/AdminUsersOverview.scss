@@ -18,6 +18,34 @@ div.AdminUsersOverview {
         }
     }
 
+    div.status {
+        display: inline-block;
+        text-align: center;
+        padding: 7px 5px;
+        min-width: 90px;
+        font-weight: 400;
+        border-radius: 4px;
+        font-size: 13px;
+        &.requested {
+            background-color: var(--status--requested--background);
+            color:  var(--status--requested--color);
+        }
+        &.completed {
+            background-color: var(--status--success--background);
+            color:  var(--status--success--color);
+        }
+        &.failed {
+            background-color: var(--status--failure--background);
+            color:  var(--status--failure--color);
+        }
+        &.verified, 
+        &.chips_sent,
+        &.flagged {
+            background-color: var(--status--pending--background);
+            color:  var(--status--pending--color);
+        }
+    }
+
     div.overview--boxes {
         display: flex;
         justify-content: space-between;
@@ -45,6 +73,10 @@ div.AdminUsersOverview {
                 padding: 15px 30px;
                 border-top: 1px solid rgba(0, 0, 0, 0.15);
                 border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+
+                @media (max-width: 450px) {
+                    padding: 15px;
+                }
                 div.box--row {
                     display: flex;
                     justify-content: flex-start;
@@ -56,6 +88,9 @@ div.AdminUsersOverview {
                     div.key {
                         min-width: 170px;
                         text-align: left;
+                        @media (max-width: 450px) {
+                            min-width: 120px;
+                        }
                     }
                     div.value {
                         font-weight: 500;
