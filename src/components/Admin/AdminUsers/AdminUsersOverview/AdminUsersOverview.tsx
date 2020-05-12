@@ -15,6 +15,7 @@ function AdminUsersOverview() {
         (async function() {
             const id = location.pathname.split('/');
             const response = await axios.get(`/v1/users/${id[id.length - 1]}`);
+            // console.log(response.data)
             setUserInformation(response.data);
         })();
     }, [location.pathname])
@@ -51,6 +52,7 @@ export interface UserOverviewInterface {
     blocked: boolean;
     blocked_on: string;
     organization: {
+        id: number;
         identifier: string;
         name: string;
     }

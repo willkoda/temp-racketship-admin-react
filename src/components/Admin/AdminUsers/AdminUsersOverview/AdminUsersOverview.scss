@@ -3,6 +3,21 @@ div.AdminUsersOverview {
         font-size: 20px;
         font-weight: 600;
     }
+    h2.section--heading {
+        font-weight: 400;
+        font-size: 16px;
+        text-align: left;
+    }
+
+    div.key--value--pair {
+        display: flex;
+        align-items: center;
+        span {
+            display: flex;
+            align-items: center;
+        }
+    }
+
     div.overview--boxes {
         display: flex;
         justify-content: space-between;
@@ -10,7 +25,6 @@ div.AdminUsersOverview {
         div.box {
             box-shadow: var(--shadow-type-two);
             background-color: #fff;
-            // flex: 0 1 49%;
             flex: 0 1 49%;
             margin-top: 15px;
             border-radius: 4px;

@@ -112,7 +112,7 @@ function LogIn(props: Props) {
                         valid={password.valid}
                     />
 
-                    <Button text="Log in" backgroundColor="accent--three" waveColor="rgba(0, 0, 0, 0.15)" />
+                    <Button text="Log in" backgroundColor="accent--three" waveColor="rgba(0, 0, 0, 0.15)" padding="10px 12px" />
                 </form>
             </div>
         </div>
