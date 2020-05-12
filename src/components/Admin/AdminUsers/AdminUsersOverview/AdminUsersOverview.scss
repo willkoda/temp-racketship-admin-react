@@ -6,12 +6,17 @@ div.AdminUsersOverview {
     div.overview--boxes {
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
         div.box {
             box-shadow: var(--shadow-type-two);
             background-color: #fff;
+            // flex: 0 1 49%;
             flex: 0 1 49%;
             margin-top: 15px;
             border-radius: 4px;
+            @media (max-width: 1100px) {
+                flex: 0 1 100%;
+            }
             div.detail--buttons {
                 padding: 15px 30px;
                 text-align: left;
