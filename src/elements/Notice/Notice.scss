@@ -1,0 +1,47 @@
+div.Notice {
+    overflow: hidden;
+    transition: opacity 240ms ease-in-out, height 240ms ease-in-out;
+    opacity: 0;
+    div.notice--content {
+        color: #f44336;
+        background-color: rgb(253, 236, 234);
+        border-radius: 4px;
+        display: grid;
+        grid-template-columns: 35px 1fr 20px;
+        align-items: center;
+        
+        cursor: pointer;
+        svg.notice--icon {
+            margin-right: 10px;
+        }
+
+        svg.notice--close--icon {
+            color: #9E9E9E;
+            font-size: 20px;
+            right: 15px;
+        }
+
+        span.notice--text {
+            color: rgb(97, 26, 21);
+            font-size: 13px;
+        }
+
+        &.success {
+            color: rgb(30, 70, 32);
+            background-color: rgb(237, 247, 237);
+
+            span.notice--text {
+                color: rgb(30, 70, 32);
+            }
+        }
+
+        &.info {
+            color: rgb(13, 60, 97);
+            background-color: rgb(232, 244, 253);
+
+            span.notice--text {
+                color: rgb(13, 60, 97);
+            }
+        }
+    }
+}

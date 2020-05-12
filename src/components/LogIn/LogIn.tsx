@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './LogIn.scss';
 import Input, {ResultInterface} from '../../elements/Input/Input';
 import Button from '../../elements/Button/Button';
-import axios from '../../auxiliary/axios';
+import Notice from '../../elements/Notice/Notice';
 
 import {storeSetToken, storeSetUser} from '../../auxiliary/dispatch';
 import withStoreConnection from '../../hoc/withStoreConnection';
@@ -12,14 +12,18 @@ import {TokenStateInterface} from '../../redux/reducers/token-reducer';
 import {UserStateInterface} from '../../redux/reducers/user-reducer';
 
 import {useHistory} from 'react-router-dom';
+import axios from '../../auxiliary/axios';
 
 interface Props {
     storeSetToken(params: TokenStateInterface): void;
-    storeSetUser(params: UserStateInterface): void
+    storeSetUser(params: UserStateInterface): void;
+    location: {
+        state: any
+    }
 }
 
 function LogIn(props: Props) {
-    const initialState = {value: '', valid: false, error: ''}
+    const initialState = {value: '', valid: false, error: ''};
     const [email, setEmail] = useState({...initialState});
     const [password, setPassword] = useState({...initialState});
     const [timeStamp, setTimeStamp] = useState(0);
@@ -79,7 +83,7 @@ function LogIn(props: Props) {
     return (
         <div className="LogIn">
             <div className="login--window padding-top-bottom-40 padding-left-right-20">
-                {/* {props.location.state ? <Notice text={props.location.state.message} /> : null} */}
+                {props.location.state ? <Notice text={props.location.state.message} noticeState="error" timeStamp={0} /> : null}
                 <h1 className="main--heading margin-bottom-10">
                     <span>Admin</span>
                     <span>Desk</span>

@@ -4,8 +4,9 @@ import {useLocation} from 'react-router-dom';
 function AdminUsersOverview() {
     const location = useLocation(); 
     useEffect(() => {
-        const id = location.pathname.split('/');
-    }, [])
+        console.log('eff')
+        // const id = location.pathname.split('/');
+    }, [location.pathname])
 
     return (
         <div>admin users overview</div>

@@ -7,6 +7,7 @@ function AdminTemplate() {
         <div className="App">
             <Switch>
                 <Route exact path="/" component={LogIn} />
+                <Route path="/login" component={LogIn} />
                 <Route path="/dashboard" component={Admin} />
             </Switch>
         </div>

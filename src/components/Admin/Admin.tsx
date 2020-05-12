@@ -12,13 +12,16 @@ import axios from '../../auxiliary/axios';
 import {users} from '../../auxiliary/state';
 import {storeSetUsers} from '../../auxiliary/dispatch';
 import {compose} from 'redux';
+
 import withStoreConnection from '../../hoc/withStoreConnection';
+import withTokenValidation from '../../hoc/withTokenValidation';
 
 import {UsersStateInterface} from '../../redux/reducers/users-reducer';
 
 interface Props {
     storeSetUsers(params: Partial<UsersStateInterface>): void;
     users: UsersStateInterface;
+    validateToken(): void;
 }
 
 function Admin(props: Props) {
@@ -60,9 +63,12 @@ function Admin(props: Props) {
     }, [storeSetUsers]);
 
     useEffect(() => {
+        props.validateToken();
+    }, [])
+
+    useEffect(() => {
         retrieveUsers('/v1/users');
     }, [retrieveUsers]);
-    
 
     return (
         <SideMenuProvider>
@@ -81,5 +87,6 @@ function Admin(props: Props) {
 }
 
 export default compose(
-    withStoreConnection({stateProps: [users], dispatchProps: [storeSetUsers]})
+    withStoreConnection({stateProps: [users], dispatchProps: [storeSetUsers]}),
+    withTokenValidation
 )(Admin)
