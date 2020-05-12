@@ -72,8 +72,10 @@ function Admin(props: Props) {
     }, [retrieveUsers]);
 
     useEffect(() => {
-        const height = window.innerHeight - 80;
-        adminContentRef.current.style.height = height + 'px';
+        if (window.innerWidth > 768) {
+            const height = window.innerHeight - 80;
+            adminContentRef.current.style.height = height + 'px';
+        }
     }, []);
 
     return (
