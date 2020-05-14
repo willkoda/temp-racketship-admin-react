@@ -12,7 +12,6 @@ function tokenValidation(Component: any) {
     return function EnhancedComponent(props: Props) {
         const history = useHistory();
         const validateToken = useCallback(async () => {
-            console.log('validate token use cb')
             try {
                 await axios.get('/auth/validate_token');
             }
