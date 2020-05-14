@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Container from '../../../../elements/Container/Container';
 import Table from '../../../../elements/Table/Table';
 import IconButton from '../../../../elements/IconButton/IconButton';
@@ -11,7 +11,7 @@ import {storeSetUsers} from '../../../../auxiliary/dispatch';
 
 import {UsersStateInterface} from '../../../../redux/reducers/users-reducer';
 import {useHistory, useRouteMatch} from 'react-router-dom';
-// import axios from '../../../../auxiliary/axios';
+import {AdminModalContext} from '../../AdminModalProvider';
 
 import { 
     Edit as EditIcon,
@@ -27,6 +27,7 @@ interface Props {
 function AdminUsersList(props: Props) {
     const history = useHistory();
     const {path} = useRouteMatch();
+    const adminModalContext = useContext(AdminModalContext);
     const previousPageClickHandler = () => {
         props.retrieveUsers(`/v1/users?page=${props.users.pagination.currentPage - 1}&q=${encodeURIComponent(props.users.searchQuery)}`);
     }
@@ -70,7 +71,11 @@ function AdminUsersList(props: Props) {
                             el.email,
                             el.role,
                             <div className="actions">
-                                <IconButton iconElement={<EditIcon />} clickHandler={() => console.log('glick')} waveColor="rgba(0, 0, 0, 0.2)" color="var(--status--success--color)" />
+                                <IconButton 
+                                    iconElement={<EditIcon />} 
+                                    clickHandler={() => adminModalContext.toggleModal()} 
+                                    waveColor="rgba(0, 0, 0, 0.2)" 
+                                    color="var(--status--success--color)" />
                                 <IconButton iconElement={<DeleteIcon />} clickHandler={() => console.log('delete button click')} waveColor="rgba(0, 0, 0, 0.2)" color="var(--dark-red)" />
                             </div>
                         ])

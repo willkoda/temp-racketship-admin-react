@@ -1,10 +1,11 @@
-import React, {useCallback, useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useRef, useContext} from 'react';
 import './Admin.scss';
 import {Switch, Route} from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import AdminMenu from '../Admin/AdminMenu/AdminMenu';
 import AdminDashboard from '../Admin/AdminDashboard/AdminDashboard';
 import AdminUsers from '../Admin/AdminUsers/AdminUsers';
+import Modal from '../../elements/Modal/Modal';
 
 import SideMenuProvider from '../../providers/SideMenuProvider';
 import axios from '../../auxiliary/axios';
@@ -17,6 +18,8 @@ import withStoreConnection from '../../hoc/withStoreConnection';
 import withTokenValidation from '../../hoc/withTokenValidation';
 
 import {UsersStateInterface} from '../../redux/reducers/users-reducer';
+
+import AdminModalProvider, {AdminModalContext} from './AdminModalProvider';
 
 interface Props {
     storeSetUsers(params: Partial<UsersStateInterface>): void;
@@ -80,16 +83,21 @@ function Admin(props: Props) {
 
     return (
         <SideMenuProvider>
-            <Header headerType="admin" />
-            <div className="Admin padding-top-80">
-            <AdminMenu />
-                <div className="admin--content" ref={adminContentRef}>
-                    <Switch>
-                        <Route exact path="/dashboard" component={AdminDashboard}/>
-                        <Route path="/dashboard/users" render={() => <AdminUsers retrieveUsers={retrieveUsers} />} />
-                    </Switch>
+            <AdminModalProvider>
+                <Modal 
+                    context={AdminModalContext}
+                />
+                <Header headerType="admin" />
+                <div className="Admin padding-top-80">
+                <AdminMenu />
+                    <div className="admin--content" ref={adminContentRef}>
+                        <Switch>
+                            <Route exact path="/dashboard" component={AdminDashboard}/>
+                            <Route path="/dashboard/users" render={() => <AdminUsers retrieveUsers={retrieveUsers} />} />
+                        </Switch>
+                    </div>
                 </div>
-            </div>
+            </AdminModalProvider>
         </SideMenuProvider>
     )
 }

@@ -13,4 +13,11 @@ button.Button {
     &.dark--red {
         background-color: var(--dark-red);
     }
+
+    &[data-button-type=text] {
+        width: auto;
+        background-color: transparent;
+        box-shadow: none;
+        transition: background-color 300ms ease-in-out;
+    }
 }
