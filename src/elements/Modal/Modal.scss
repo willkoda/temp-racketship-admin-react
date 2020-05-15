@@ -40,31 +40,31 @@ div.Modal {
             padding: 20px 15px;
             font-weight: 300;
             min-height: 120px;
-            display: flex;
-            align-items: center;
+            // display: flex;
+            // align-items: center;
             font-size: 13px;
         }
 
-        div.modal--footer {
-            border-top: 1px solid rgba(0, 0, 0, 0.2);
-            padding: 20px 15px;
+        // div.modal--footer {
+        //     border-top: 1px solid rgba(0, 0, 0, 0.2);
+        //     padding: 20px 15px;
 
-            div.modal--buttons {
-                display: flex;
-                justify-content: flex-end;
-                position: relative;
-                button {
-                    width: 70px;
-                    &.margin-0 {
-                        margin: 0;
-                    }
-                }
-                &.confirmation {
-                    button:nth-of-type(2) {
-                        border: 1px solid rgba(0, 0, 0, 0.05);
-                    }
-                }
-            }
-        }
+        //     div.modal--buttons {
+        //         display: flex;
+        //         justify-content: flex-end;
+        //         position: relative;
+        //         button {
+        //             width: 70px;
+        //             &.margin-0 {
+        //                 margin: 0;
+        //             }
+        //         }
+        //         &.confirmation {
+        //             button:nth-of-type(2) {
+        //                 border: 1px solid rgba(0, 0, 0, 0.05);
+        //             }
+        //         }
+        //     }
+        // }
     }
 }

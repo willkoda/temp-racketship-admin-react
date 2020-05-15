@@ -94,7 +94,24 @@ function AdminUsersList(props: Props) {
                                     }
                                     waveColor="rgba(0, 0, 0, 0.2)" 
                                     color="var(--status--success--color)" />
-                                <IconButton iconElement={<DeleteIcon />} clickHandler={() => console.log('delete button click')} waveColor="rgba(0, 0, 0, 0.2)" color="var(--dark-red)" />
+                                <IconButton iconElement={<DeleteIcon />}
+                                    clickHandler={
+                                        (e: React.MouseEvent) => {
+                                            const element = e.target as HTMLElement;
+                                            const row = element.closest('tr');
+                                            if (row) {
+                                                const userIndex = row.dataset.rowIndex;
+                                                adminModalContext.setModalData({
+                                                    header: 'Update User',
+                                                    modalType: 'confirmation',
+                                                    content: <div>Fat delete</div>,
+                                                    confirmationText: 'Submit'
+                                                })
+                                                adminModalContext.toggleModal()
+                                            }
+                                        }
+                                    }
+                                    waveColor="rgba(0, 0, 0, 0.2)" color="var(--dark-red)" />
                             </div>
                         ])
                     }

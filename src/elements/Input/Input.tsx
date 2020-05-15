@@ -5,6 +5,7 @@ interface Props {
     changeCallback(result: ResultInterface): void;
     error?: string;
     id: string;
+    initialValue? :string;
     inputBackgroundColor?: string;
     inputBorderColor?: string;
     margin?: string;
@@ -98,6 +99,7 @@ function Input(props: Props) {
                     onBlur={() => blur()}
                     className={`padding-top-bottom-10 padding-left-right-5 ${props.margin}`}
                     id={props.id}
+                    defaultValue={props.initialValue}
                     style={{backgroundColor: props.inputBackgroundColor  || 'transparent'}}
                     type={props.type || 'text'}/>
                 <span 

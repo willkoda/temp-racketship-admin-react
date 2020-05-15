@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useContext} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import './Admin.scss';
 import {Switch, Route} from 'react-router-dom';
 import Header from '../../components/Header/Header';

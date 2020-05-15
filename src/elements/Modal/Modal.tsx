@@ -61,7 +61,7 @@ function Modal(props: Props) {
                 <div className="modal--content">
                     {context.modalData ? context.modalData.content || 'Request Successful' : 'Request successful!'}
                 </div>
-                <div className="modal--footer">
+                {/* <div className="modal--footer">
                     {context.modalData ? context.modalData.modalType === 'confirmation' ? <div className="modal--buttons confirmation">
                         <Button 
                             backgroundColor="accent--three" 
@@ -74,7 +74,7 @@ function Modal(props: Props) {
                              />
                         <Button
                             backgroundColor="accent--three"
-                            text= {context.modalData.confirmationText || "Yes"} 
+                            text= {context.confirmationText || "Yes"} 
                             color="#fff"
                             clickCallback={confirmationHandler} 
                             margin="margin-0"
@@ -92,7 +92,7 @@ function Modal(props: Props) {
                             waveColor="rgba(0, 0, 0, 0.3)"
                             />
                     </div> : null : null}
-                </div>
+                </div> */}
             </div>
         </div>
     )
