@@ -14,6 +14,7 @@ import {useHistory, useRouteMatch} from 'react-router-dom';
 import {AdminModalContext} from '../../AdminModalProvider';
 
 import AdminUsersListUpdate from './AdminUserListUpdate/AdminUserListUpdate';
+import AdminUsersListDelete from './AdminUsersListDelete/AdminUsersListDelete';
 
 import { 
     Edit as EditIcon,
@@ -102,7 +103,7 @@ function AdminUsersList(props: Props) {
                                                 const userIndex = row.dataset.rowIndex;
                                                 adminModalContext.setModalData({
                                                     header: 'Delete User',
-                                                    content: <div>Fat delete</div>,
+                                                    content: <AdminUsersListDelete userIndex={+userIndex!} />,
                                                     confirmationText: 'Submit'
                                                 })
                                                 adminModalContext.toggleModal()

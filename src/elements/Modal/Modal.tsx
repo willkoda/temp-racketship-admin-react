@@ -39,12 +39,6 @@ function Modal(props: Props) {
         if (e.target === modalRef.current) context.hideModal();
     }
 
-    const confirmationHandler = () => {
-        if (context.modalData) {
-            if (context.modalData.confirmationCallback) context.modalData.confirmationCallback();
-        }
-    }
-    
     return (
         <div className="Modal" ref={modalRef} onClick={modalClickHandler}>
             <div className="modal--window" ref={windowRef}>
@@ -70,7 +64,6 @@ function Modal(props: Props) {
 export interface ModalDataInterface {
     header: string;
     content: JSX.Element;
-    confirmationCallback?(): void;
     confirmationText?: string;
 }
 

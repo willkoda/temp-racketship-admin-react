@@ -37,7 +37,7 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
           barColorPrimary: {
             backgroundColor: 'var(--accent-three-shade-three)',
           },
-      })(LinearProgress);
+    })(LinearProgress);
 
     const changeHandler = (result: ResultInterface) => {
         const newState = {...result};
@@ -65,7 +65,6 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
             first_name: firstName.value,
             last_name: lastName.value,
             email: email.value
-            //  :mobile_number, :role, :password, :current_password
         }
         try {
             setLoaderVisibility('visible')
@@ -94,8 +93,8 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
         } catch(error) {
             if (/index_users_on_email/.test(error.response.data.error)) {
                 setEmail({...email, valid: false, error: 'Email is already taken'});
-                setLoaderVisibility('hidden');
             }
+            setLoaderVisibility('hidden');
         }
     }
 

@@ -6,9 +6,6 @@ button.Button {
     transition: background-color 700ms ease-in-out;
     &.accent--three {
         background-color: var(--accent-three-shade-one);
-        &:active {
-            background-color: var(--accent-three-shade-three);
-        }
     }
     &.dark--red {
         background-color: var(--dark-red);
