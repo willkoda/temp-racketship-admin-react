@@ -5,8 +5,9 @@ import axios from '../../../../../auxiliary/axios';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import {compose} from 'redux';
-import {users} from '../../../../../auxiliary/state';
 import withStoreConnection from '../../../../../hoc/withStoreConnection';
+import {users} from '../../../../../auxiliary/state';
+import {storeSetUsers} from '../../../../../auxiliary/dispatch';
 import {UsersStateInterface} from '../../../../../redux/reducers/users-reducer';
 import {AdminNoticeContext} from '../../../AdminNoticeProvider';
 import {AdminModalContext} from '../../../AdminModalProvider';
@@ -16,8 +17,9 @@ import { withStyles } from '@material-ui/core/styles';
 interface Props {
     userIndex: number | string;
     users: UsersStateInterface;
+    storeSetUsers(params: Partial<UsersStateInterface>): void;
 }
-function AdminUserListUpdate({userIndex, users}: Props) {
+function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
     const noticeContext = useContext(AdminNoticeContext);
     const modalContext = useContext(AdminModalContext);
     const initialState = {value: '', valid: true, error: ''};
@@ -56,13 +58,26 @@ function AdminUserListUpdate({userIndex, users}: Props) {
         try {
             setLoaderVisibility('visible')
             const response = await axios.patch('/v1/users/' + users.users[+userIndex].id, requestData);
-            
+            const {data} = response;
             setTimeout(() => {
                 setLoaderVisibility('hidden');
                 noticeContext.setNoticeText('Successfully updated user');
                 noticeContext.setNoticeState('success');
                 noticeContext.setNoticeTimestamp(Date.now());
                 modalContext.hideModal();
+
+                const usersArray = [...users.users];
+                usersArray.splice(+userIndex, 1, {
+                    id: data.id,
+                    firstName: data.first_name,
+                    lastName: data.last_name,
+                    email: data.email,
+                    mobileNumber: data.mobile_number,
+                    role: data.role
+                })
+                storeSetUsers({
+                    users: usersArray
+                })
             }, 1500)
         } catch(error) {
             console.log(error)
@@ -91,5 +106,5 @@ function AdminUserListUpdate({userIndex, users}: Props) {
 }
 
 export default compose(
-    withStoreConnection({stateProps: [users]})
+    withStoreConnection({stateProps: [users], dispatchProps: [storeSetUsers]})
 )(AdminUserListUpdate);
