@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useRef} from 'react';
+import React, {useEffect, useContext, useRef, useCallback} from 'react';
 import './Modal.scss';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '../../elements/IconButton/IconButton';
@@ -34,6 +34,19 @@ function Modal(props: Props) {
             windowRef.current.style.opacity = '0';
         }
     }, [context.modalVisible])
+
+    const closeModal = useCallback((e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+            context.hideModal();
+        }
+    }, [context])
+
+    useEffect(() => {
+        window.addEventListener('keyup', closeModal);
+        return () => {
+            window.removeEventListener('keyup', closeModal);
+        }
+    }, [closeModal]);
 
     const modalClickHandler = (e: React.MouseEvent) => {
         if (e.target === modalRef.current) context.hideModal();
