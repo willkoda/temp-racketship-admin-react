@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Button from '../../../../../elements/Button/Button';
 import Input, {ResultInterface} from '../../../../../elements/Input/Input';
 import axios from '../../../../../auxiliary/axios';
@@ -8,6 +8,8 @@ import {compose} from 'redux';
 import {users} from '../../../../../auxiliary/state';
 import withStoreConnection from '../../../../../hoc/withStoreConnection';
 import {UsersStateInterface} from '../../../../../redux/reducers/users-reducer';
+import {AdminNoticeContext} from '../../../AdminNoticeProvider';
+import {AdminModalContext} from '../../../AdminModalProvider';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -16,6 +18,8 @@ interface Props {
     users: UsersStateInterface;
 }
 function AdminUserListUpdate({userIndex, users}: Props) {
+    const noticeContext = useContext(AdminNoticeContext);
+    const modalContext = useContext(AdminModalContext);
     const initialState = {value: '', valid: true, error: ''};
     const [loaderVisibility, setLoaderVisibility] = useState<'hidden' | 'visible'>('hidden');
     const [firstName, setFirstName] = useState({...initialState, value: users.users[+userIndex].firstName});
@@ -51,9 +55,14 @@ function AdminUserListUpdate({userIndex, users}: Props) {
         }
         try {
             setLoaderVisibility('visible')
-            const response = await axios.patch('/v1/users/' + users.users[+userIndex].id, requestData)
+            const response = await axios.patch('/v1/users/' + users.users[+userIndex].id, requestData);
+            
             setTimeout(() => {
                 setLoaderVisibility('hidden');
+                noticeContext.setNoticeText('Successfully updated user');
+                noticeContext.setNoticeState('success');
+                noticeContext.setNoticeTimestamp(Date.now());
+                modalContext.hideModal();
             }, 1500)
         } catch(error) {
             console.log(error)

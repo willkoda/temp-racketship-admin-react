@@ -6,6 +6,7 @@ import AdminMenu from '../Admin/AdminMenu/AdminMenu';
 import AdminDashboard from '../Admin/AdminDashboard/AdminDashboard';
 import AdminUsers from '../Admin/AdminUsers/AdminUsers';
 import Modal from '../../elements/Modal/Modal';
+import Notice from '../../elements/Notice/Notice';
 
 import SideMenuProvider from '../../providers/SideMenuProvider';
 import axios from '../../auxiliary/axios';
@@ -20,6 +21,7 @@ import withTokenValidation from '../../hoc/withTokenValidation';
 import {UsersStateInterface} from '../../redux/reducers/users-reducer';
 
 import AdminModalProvider, {AdminModalContext} from './AdminModalProvider';
+import AdminNoticeProvider, {AdminNoticeContext} from './AdminNoticeProvider';
 
 interface Props {
     storeSetUsers(params: Partial<UsersStateInterface>): void;
@@ -84,19 +86,30 @@ function Admin(props: Props) {
     return (
         <SideMenuProvider>
             <AdminModalProvider>
-                <Modal 
-                    context={AdminModalContext}
-                />
-                <Header headerType="admin" />
-                <div className="Admin padding-top-80">
-                <AdminMenu />
+                <AdminNoticeProvider>
+                    <Modal 
+                        context={AdminModalContext}
+                    />
+                    <Header headerType="admin" />
+                    <div className="Admin padding-top-80">
+                    <AdminMenu />
                     <div className="admin--content" ref={adminContentRef}>
+                        <AdminNoticeContext.Consumer>
+                            {(noticeContext) => {
+                                return <Notice 
+                                    text={noticeContext.noticeText}
+                                    noticeState={noticeContext.noticeState}
+                                    timeStamp={noticeContext.noticeTimeStamp}
+                                />
+                            }}
+                        </AdminNoticeContext.Consumer>
                         <Switch>
                             <Route exact path="/dashboard" component={AdminDashboard}/>
                             <Route path="/dashboard/users" render={() => <AdminUsers retrieveUsers={retrieveUsers} />} />
                         </Switch>
                     </div>
-                </div>
+                    </div>
+                </AdminNoticeProvider>
             </AdminModalProvider>
         </SideMenuProvider>
     )
