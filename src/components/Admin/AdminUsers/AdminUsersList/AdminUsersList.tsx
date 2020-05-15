@@ -77,13 +77,19 @@ function AdminUsersList(props: Props) {
                                 <IconButton 
                                     iconElement={<EditIcon />} 
                                     clickHandler={
-                                        () => { 
-                                            adminModalContext.setModalData({
-                                                header: 'f',
-                                                modalType: 'success',
-                                                content: <AdminUsersListUpdate userIndex={33} />
-                                            })
-                                            adminModalContext.toggleModal()
+                                        (e: React.MouseEvent) => {
+                                            const element = e.target as HTMLElement;
+                                            const row = element.closest('tr');
+                                            if (row) {
+                                                const userIndex = row.dataset.rowIndex;
+                                                adminModalContext.setModalData({
+                                                    header: 'Update User',
+                                                    modalType: 'confirmation',
+                                                    content: <AdminUsersListUpdate userIndex={+userIndex!} />,
+                                                    confirmationText: 'Submit'
+                                                })
+                                                adminModalContext.toggleModal()
+                                            }
                                         }
                                     }
                                     waveColor="rgba(0, 0, 0, 0.2)" 

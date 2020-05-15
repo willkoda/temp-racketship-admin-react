@@ -67,15 +67,14 @@ function Modal(props: Props) {
                             backgroundColor="accent--three" 
                             text="Cancel" 
                             buttonType="text"
-                            color="var(--dark-red)" 
+                            color="var(--accent-three-shade-two)" 
                             margin="margin-right-10"
                             clickCallback={() => context.toggleModal()}
                             waveColor="rgba(0, 0, 0, 0.3)"
                              />
                         <Button
                             backgroundColor="accent--three"
-                            buttonType="text"
-                            text="Yes"
+                            text= {context.modalData.confirmationText || "Yes"} 
                             color="#fff"
                             clickCallback={confirmationHandler} 
                             margin="margin-0"
@@ -101,9 +100,10 @@ function Modal(props: Props) {
 
 export interface ModalDataInterface {
     header: string;
-    modalType: string;
-    content: any;
+    modalType: 'success' | 'confirmation';
+    content: JSX.Element;
     confirmationCallback?(): void;
+    confirmationText?: string;
 }
 
 export interface ModalContextInterface {

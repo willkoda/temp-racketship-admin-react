@@ -7,7 +7,7 @@ interface Props {
 
 function AdminModalProvider(props: Props) {   
     const [modalVisible, setModalVisible] = useState(false);
-    const [modalData, setModalData] = useState({header: 'Success', modalType: 'success', content: ''});
+    const [modalData, setModalData] = useState<ModalDataInterface>({header: 'Success', modalType: "success", content: <div></div>});
 
     function toggleModal() {
         setModalVisible(!modalVisible);
