@@ -37,7 +37,7 @@ function Modal(props: Props) {
     }, [context.modalVisible])
 
     const modalClickHandler = (e: React.MouseEvent) => {
-        if (e.target === modalRef.current) context.toggleModal();
+        if (e.target === modalRef.current) context.hideModal();
     }
 
     const confirmationHandler = () => {
