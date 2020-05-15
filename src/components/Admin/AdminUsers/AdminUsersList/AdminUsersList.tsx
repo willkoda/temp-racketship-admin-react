@@ -84,7 +84,6 @@ function AdminUsersList(props: Props) {
                                                 const userIndex = row.dataset.rowIndex;
                                                 adminModalContext.setModalData({
                                                     header: 'Update User',
-                                                    modalType: 'confirmation',
                                                     content: <AdminUsersListUpdate userIndex={+userIndex!} />,
                                                     confirmationText: 'Submit'
                                                 })
@@ -102,8 +101,7 @@ function AdminUsersList(props: Props) {
                                             if (row) {
                                                 const userIndex = row.dataset.rowIndex;
                                                 adminModalContext.setModalData({
-                                                    header: 'Update User',
-                                                    modalType: 'confirmation',
+                                                    header: 'Delete User',
                                                     content: <div>Fat delete</div>,
                                                     confirmationText: 'Submit'
                                                 })

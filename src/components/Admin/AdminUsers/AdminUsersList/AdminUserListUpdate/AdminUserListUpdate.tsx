@@ -20,11 +20,14 @@ interface Props {
     storeSetUsers(params: Partial<UsersStateInterface>): void;
 }
 function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
+    const user = users.users[+userIndex];
     const noticeContext = useContext(AdminNoticeContext);
     const modalContext = useContext(AdminModalContext);
     const initialState = {value: '', valid: true, error: ''};
     const [loaderVisibility, setLoaderVisibility] = useState<'hidden' | 'visible'>('hidden');
-    const [firstName, setFirstName] = useState({...initialState, value: users.users[+userIndex].firstName});
+    const [firstName, setFirstName] = useState({...initialState, value: user.firstName});
+    const [lastName, setLastName] = useState({...initialState, value: user.lastName});
+    const [email, setEmail] = useState({...initialState, value: user.email})
     const [timeStamp, setTimeStamp] = useState(0);
 
     const Progress = withStyles({
@@ -44,6 +47,12 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
             case 'firstName':
                     setFirstName(newState);
                 break;
+            case 'lastName':
+                    setLastName(newState);
+                break;
+            case 'email':
+                    setEmail(newState);
+                break;
             default:
                 throw new Error(`${result.origin} is not a valid origin`);
         }
@@ -53,7 +62,10 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
         e.preventDefault();
         setTimeStamp(Date.now())
         const requestData = {
-            first_name: firstName.value
+            first_name: firstName.value,
+            last_name: lastName.value,
+            email: email.value
+            //  :mobile_number, :role, :password, :current_password
         }
         try {
             setLoaderVisibility('visible')
@@ -80,7 +92,10 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
                 })
             }, 1500)
         } catch(error) {
-            console.log(error)
+            if (/index_users_on_email/.test(error.response.data.error)) {
+                setEmail({...email, valid: false, error: 'Email is already taken'});
+                setLoaderVisibility('hidden');
+            }
         }
     }
 
@@ -98,6 +113,29 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
                     error={firstName.error}
                     timeStamp={timeStamp}
                     initialValue={firstName.value} />
+
+                <Input 
+                    id="lastName" 
+                    inputBorderColor="var(--accent-one-shade-two)"
+                    placeholder="Last Name" 
+                    value={lastName.value} 
+                    changeCallback={changeHandler}
+                    valid={lastName.valid} 
+                    error={lastName.error}
+                    timeStamp={timeStamp}
+                    initialValue={lastName.value} />
+
+                <Input 
+                    id="email" 
+                    inputBorderColor="var(--accent-one-shade-two)"
+                    placeholder="Email" 
+                    value={email.value} 
+                    changeCallback={changeHandler}
+                    validatedProps={{email: true}}
+                    valid={email.valid} 
+                    error={email.error}
+                    timeStamp={timeStamp}
+                    initialValue={email.value} />
 
                 <Button text="Submit" backgroundColor="accent--three" waveColor="rgba(0, 0, 0, 0.15)" padding="10px 12px" />
             </div>

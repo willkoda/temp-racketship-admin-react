@@ -69,7 +69,6 @@ function Modal(props: Props) {
 
 export interface ModalDataInterface {
     header: string;
-    modalType: 'success' | 'confirmation';
     content: JSX.Element;
     confirmationCallback?(): void;
     confirmationText?: string;
