@@ -2,7 +2,6 @@ import React, {useEffect, useContext, useRef} from 'react';
 import './Modal.scss';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '../../elements/IconButton/IconButton';
-import Button from '../../elements/Button/Button';
 
 interface Props {
     context: React.Context<ModalContextInterface>
@@ -59,40 +58,10 @@ function Modal(props: Props) {
                     />
                 </div>
                 <div className="modal--content">
-                    {context.modalData ? context.modalData.content || 'Request Successful' : 'Request successful!'}
+                        {context.modalData ? context.modalData.content || 'Request Successful' : 'Request successful!'}
+                    <div className="">
+                    </div>
                 </div>
-                {/* <div className="modal--footer">
-                    {context.modalData ? context.modalData.modalType === 'confirmation' ? <div className="modal--buttons confirmation">
-                        <Button 
-                            backgroundColor="accent--three" 
-                            text="Cancel" 
-                            buttonType="text"
-                            color="var(--accent-three-shade-two)" 
-                            margin="margin-right-10"
-                            clickCallback={() => context.toggleModal()}
-                            waveColor="rgba(0, 0, 0, 0.3)"
-                             />
-                        <Button
-                            backgroundColor="accent--three"
-                            text= {context.confirmationText || "Yes"} 
-                            color="#fff"
-                            clickCallback={confirmationHandler} 
-                            margin="margin-0"
-                            waveColor="rgba(0, 0, 0, 0.3)"
-                            />
-                    </div> : null : null}
-
-                    {context.modalData ? context.modalData.modalType === 'success' ? <div className="modal--buttons success">
-                        <Button
-                            backgroundColor="accent--three"
-                            text="Ok"
-                            color="#fff"
-                            margin="margin-0"
-                            clickCallback={confirmationHandler}
-                            waveColor="rgba(0, 0, 0, 0.3)"
-                            />
-                    </div> : null : null}
-                </div> */}
             </div>
         </div>
     )
