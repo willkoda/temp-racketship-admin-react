@@ -102,7 +102,7 @@ function Modal(props: Props) {
 export interface ModalDataInterface {
     header: string;
     modalType: string;
-    content: string;
+    content: any;
     confirmationCallback?(): void;
 }
 

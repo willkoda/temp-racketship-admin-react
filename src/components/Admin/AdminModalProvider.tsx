@@ -1,42 +1,32 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {ModalContextInterface, ModalDataInterface} from '../../elements/Modal/Modal';
 
 interface Props {
     children: JSX.Element | Array<JSX.Element>
 }
 
-function AdminModalProvider(props: Props) {
-    const initialState = {
-        modalVisible: false,
+function AdminModalProvider(props: Props) {   
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalData, setModalData] = useState({header: 'Success', modalType: 'success', content: ''});
+
+    function toggleModal() {
+        setModalVisible(!modalVisible);
+    }
+
+    function hideModal() {
+        setModalVisible(false);
+    }
+
+    const state = {
+        modalVisible: modalVisible,
         toggleModal: toggleModal,
-        modalData: {
-            header: 'Success',
-            modalType: 'success',
-            content: ''
-        },
+        modalData: modalData,
         setModalData: setModalData,
         hideModal: hideModal
     }
 
-    const [modalState, setModalState] = useState(initialState);
-
-    function toggleModal() {
-        setModalState({...modalState, modalVisible: !modalState.modalVisible});
-    }
-
-    function hideModal() {
-        setModalState({...modalState, modalVisible: false});
-    }
-
-    function setModalData(params: ModalDataInterface) {
-        setModalState({
-            ...modalState,
-            modalData: params
-        })
-    }
-
     return (
-        <AdminModalContext.Provider value={modalState}>
+        <AdminModalContext.Provider value={state}>
             {props.children}
         </AdminModalContext.Provider>
     )
