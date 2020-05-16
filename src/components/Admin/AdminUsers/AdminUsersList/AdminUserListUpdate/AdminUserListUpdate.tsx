@@ -17,23 +17,22 @@ import {AdminModalContext} from '../../../AdminModalProvider';
 import { withStyles } from '@material-ui/core/styles';
 
 interface Props {
-    userIndex: number | string;
+    currentUser: any;
     users: UsersStateInterface;
     storeSetUsers(params: Partial<UsersStateInterface>): void;
 }
-function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
-    const user = users.users[+userIndex];
+function AdminUserListUpdate({currentUser, users, storeSetUsers}: Props) {
     const noticeContext = useContext(AdminNoticeContext);
     const modalContext = useContext(AdminModalContext);
     const initialState = {value: '', valid: true, error: ''};
     const [loaderVisibility, setLoaderVisibility] = useState<'hidden' | 'visible'>('hidden');
-    const [userID, setUserID] = useState(user.id);
-    const [firstName, setFirstName] = useState({...initialState, value: user.firstName});
-    const [lastName, setLastName] = useState({...initialState, value: user.lastName});
-    const [email, setEmail] = useState({...initialState, value: user.email});
-    const [mobileNumber, setMobileNumber] = useState({...initialState, value: user.mobileNumber});
+    const [userID, setUserID] = useState(currentUser.id);
+    const [firstName, setFirstName] = useState({...initialState, value: currentUser.firstName});
+    const [lastName, setLastName] = useState({...initialState, value: currentUser.lastName});
+    const [email, setEmail] = useState({...initialState, value: currentUser.email});
+    const [mobileNumber, setMobileNumber] = useState({...initialState, value: currentUser.mobileNumber});
     const [password, setPassword] = useState({...initialState, valid: false, error: 'Password is too short; Enter at least 8 characters'});
-    const [role, setRole] = useState({...initialState, value: user.role});
+    const [role, setRole] = useState({...initialState, value: currentUser.role});
     const [timeStamp, setTimeStamp] = useState(0);
 
     const Progress = withStyles({
@@ -104,15 +103,20 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
                     noticeContext.setNoticeState('success');
                     noticeContext.setNoticeTimestamp(Date.now());
                     modalContext.hideModal();
-
+                    
                     const usersArray = [...users.users];
-                    usersArray.splice(+userIndex, 1, {
+                    const index = usersArray.findIndex(el => el === currentUser)
+
+                    usersArray.splice(index, 1, {
                         id: data.id,
                         firstName: data.first_name,
                         lastName: data.last_name,
                         email: data.email,
                         mobileNumber: data.mobile_number,
                         role: data.role
+                    });
+                    storeSetUsers({
+                        users: usersArray
                     })
                 }, 1500)
                 setPassword({...password, error: '', valid: true})
@@ -127,15 +131,15 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
 
     useEffect(() => {
         const initialState = {value: '', valid: true, error: ''};
-        const user = users.users[+userIndex];
-        setUserID(user.id);
-        setFirstName({...initialState, value: user.firstName});
-        setLastName({...initialState, value: user.lastName});
-        setEmail({...initialState , value: user.email});
+
+        setUserID(currentUser.id);
+        setFirstName({...initialState, value: currentUser.firstName});
+        setLastName({...initialState, value: currentUser.lastName});
+        setEmail({...initialState , value: currentUser.email});
         setPassword({...initialState})
-        setMobileNumber({...initialState, value: user.mobileNumber});
-        setRole({...initialState, value: user.role});
-    },[userIndex, users.users])
+        setMobileNumber({...initialState, value: currentUser.mobileNumber});
+        setRole({...initialState, value: currentUser.role});
+    },[currentUser, users.users])
 
     return (
         <form onSubmit={submitForm}>

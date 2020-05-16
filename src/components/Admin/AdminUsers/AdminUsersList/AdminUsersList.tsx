@@ -83,9 +83,10 @@ function AdminUsersList(props: Props) {
                                             const row = element.closest('tr');
                                             if (row) {
                                                 const userIndex = row.dataset.rowIndex;
+                                                const currentUser = props.users.users[+userIndex!];
                                                 adminModalContext.setModalData({
                                                     header: 'Update User',
-                                                    content: <AdminUsersListUpdate userIndex={+userIndex!} />,
+                                                    content: <AdminUsersListUpdate currentUser={currentUser} />,
                                                     confirmationText: 'Submit'
                                                 })
                                                 adminModalContext.toggleModal()
