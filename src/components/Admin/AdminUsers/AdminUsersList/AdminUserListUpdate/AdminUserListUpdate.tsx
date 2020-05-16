@@ -30,7 +30,7 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
     const [lastName, setLastName] = useState({...initialState, value: user.lastName});
     const [email, setEmail] = useState({...initialState, value: user.email});
     const [mobileNumber, setMobileNumber] = useState({...initialState, value: user.mobileNumber});
-    const [password, setPassword] = useState({...initialState});
+    const [password, setPassword] = useState({...initialState, valid: false});
     const [timeStamp, setTimeStamp] = useState(0);
 
     const Progress = withStyles({
@@ -120,6 +120,7 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
                     placeholder="First Name" 
                     value={firstName.value} 
                     changeCallback={changeHandler}
+                    validatedProps={{minLength: 3, english: true}}
                     valid={firstName.valid} 
                     error={firstName.error}
                     timeStamp={timeStamp}
@@ -131,6 +132,7 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
                     placeholder="Last Name" 
                     value={lastName.value} 
                     changeCallback={changeHandler}
+                    validatedProps={{minLength: 3, english: true}}
                     valid={lastName.valid} 
                     error={lastName.error}
                     timeStamp={timeStamp}
@@ -166,7 +168,10 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
                     type="password"
                     value={password.value}
                     changeCallback={changeHandler}
+                    validatedProps={{minLength: 8}}
                     valid={password.valid}
+                    error={password.error}
+                    timeStamp={timeStamp}
                 />
 
                 <Button text="Submit" backgroundColor="accent--three" waveColor="rgba(0, 0, 0, 0.15)" padding="10px 12px" />

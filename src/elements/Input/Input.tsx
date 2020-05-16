@@ -13,7 +13,9 @@ interface Props {
     timeStamp?: number;
     type?: string;
     validatedProps?: {
-        email?: boolean
+        email?: boolean;
+        minLength?: number;
+        english?: boolean;
     };
     valid: boolean;
     value: string;
@@ -32,12 +34,27 @@ function Input(props: Props) {
             email: {
                 valid: true,
                 errorMessage: "The email is invalid."
+            },
+            minLength: {
+                valid: true,
+                errorMessage: `${props.placeholder.toLowerCase()} is too short. Enter at least ${props.validatedProps.minLength} characters`
+            },
+            english: {
+                valid: true,
+                errorMessage: 'Please enter only valid english letters.'
             }
         };
         const predicate: indexSignature = {
             email: () => {
                 const regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
                 return result['email'] = regex.test(event.target.value);
+            },
+            minLength: () => {
+                return event.target.value.length >= props.validatedProps?.minLength!;
+            },
+            english: () => {
+                const regex = /^[a-zA-Z\s]*$/;
+                return result['english'] = regex.test(event.target.value);
             }
         }
 
