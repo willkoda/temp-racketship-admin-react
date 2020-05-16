@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import Button from '../../../../../elements/Button/Button';
 import Table from '../../../../../elements/Table/Table';
 import axios from '../../../../../auxiliary/axios';
@@ -56,6 +56,7 @@ interface WithdrawalRequests extends PurchaseRequests {
 }
 
 function AdminUsersOverviewMember(props: UserOverviewPropsInterface) {
+    const templateRef = useRef<HTMLDivElement>(null)!
     const initialData = {pagination: {pages: 1, count:  0, current: 1}, requests: [], progressIndicatorVisible: false};
     const blockUser = () => {
         console.log('block him')
@@ -69,18 +70,18 @@ function AdminUsersOverviewMember(props: UserOverviewPropsInterface) {
         (async function() {
             const response = await axios.get(`/v1/organizations/${organization?.id}/members/${id}/purchase_requests?page=${1}`);
             const {pagination, purchase_requests} = response.data;
-            setPurchaseRequests({pagination: pagination, requests: purchase_requests});
+            if (templateRef.current) setPurchaseRequests({pagination: pagination, requests: purchase_requests});
         })();
 
         (async function() {
             const response = await axios.get(`/v1/organizations/${organization?.id}/members/${id}/withdrawal_requests?page=${1}`);
             const {pagination, withdrawal_requests} = response.data;
-            setWithdrawalRequests({pagination: pagination, requests: withdrawal_requests});
+            if (templateRef.current) setWithdrawalRequests({pagination: pagination, requests: withdrawal_requests});
         })();
-    }, [id, organization])
+    }, [id, organization, templateRef])
 
     return (
-        <div className="AdminUsersOverviewMember">
+        <div className="AdminUsersOverviewMember" ref={templateRef}>
             <h2 className="overview--heading">Member Overview</h2>
             <div className="overview--boxes">
                 <div className="box padding-bottom-10">

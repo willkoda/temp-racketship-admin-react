@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import './AdminUsersOverview.scss';
 import {useLocation} from 'react-router-dom';
 import axios from '../../../../auxiliary/axios';
@@ -12,14 +12,15 @@ import AdminUsersOverviewStaff from './AdminUsersOverviewStaff/AdminUsersOvervie
 function AdminUsersOverview() {
     const location = useLocation();
     const [userInformation, setUserInformation] = useState({role: ''});
+    const templateRef = useRef<HTMLDivElement>(null!);
 
     useEffect(() => {
         (async function() {
             const id = location.pathname.split('/');
             const response = await axios.get(`/v1/users/${id[id.length - 1]}`);
-            setUserInformation(response.data);
+            if (templateRef.current) setUserInformation(response.data);
         })();
-    }, [location.pathname])
+    }, [location.pathname, templateRef])
 
     const renderTemplate = () => {
         switch(userInformation.role) {
@@ -34,7 +35,7 @@ function AdminUsersOverview() {
 
     return (
         <Container paddingOnly={true}>
-            <div className="AdminUsersOverview">
+            <div className="AdminUsersOverview" ref={templateRef}>
                 {renderTemplate()}
             </div>
         </Container>
