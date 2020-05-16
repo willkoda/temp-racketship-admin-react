@@ -32,7 +32,7 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
     const [lastName, setLastName] = useState({...initialState, value: user.lastName});
     const [email, setEmail] = useState({...initialState, value: user.email});
     const [mobileNumber, setMobileNumber] = useState({...initialState, value: user.mobileNumber});
-    const [password, setPassword] = useState({...initialState, valid: false});
+    const [password, setPassword] = useState({...initialState, valid: false, error: 'Password is too short; Enter at least 8 characters'});
     const [role, setRole] = useState({...initialState, value: user.role});
     const [timeStamp, setTimeStamp] = useState(0);
 
@@ -85,47 +85,57 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
             role: role.value
         }
 
-        try {
-            setLoaderVisibility('visible')
-            const response = await axios.patch('/v1/users/' + userID, requestData);
-            const {data} = response;
-            setTimeout(() => {
-                setLoaderVisibility('hidden');
-                noticeContext.setNoticeText('Successfully updated user');
-                noticeContext.setNoticeState('success');
-                noticeContext.setNoticeTimestamp(Date.now());
-                modalContext.hideModal();
+        const result = [
+            email,
+            password,
+            firstName,
+            lastName,
+            mobileNumber,
+        ].map(e => e.valid);
 
-                const usersArray = [...users.users];
-                usersArray.splice(+userIndex, 1, {
-                    id: data.id,
-                    firstName: data.first_name,
-                    lastName: data.last_name,
-                    email: data.email,
-                    mobileNumber: data.mobile_number,
-                    role: data.role
-                })
-                storeSetUsers({
-                    users: usersArray
-                })
-            }, 1500)
-        } catch(error) {
-            if (/index_users_on_email/.test(error.response.data.error)) {
-                setEmail({...email, valid: false, error: 'Email is already taken'});
+        if (result.every(valid => valid)) {
+            try {
+                setLoaderVisibility('visible')
+                const response = await axios.patch('/v1/users/' + userID, requestData);
+                const {data} = response;
+                setTimeout(() => {
+                    setLoaderVisibility('hidden');
+                    noticeContext.setNoticeText('Successfully updated user');
+                    noticeContext.setNoticeState('success');
+                    noticeContext.setNoticeTimestamp(Date.now());
+                    modalContext.hideModal();
+
+                    const usersArray = [...users.users];
+                    usersArray.splice(+userIndex, 1, {
+                        id: data.id,
+                        firstName: data.first_name,
+                        lastName: data.last_name,
+                        email: data.email,
+                        mobileNumber: data.mobile_number,
+                        role: data.role
+                    })
+                }, 1500)
+                setPassword({...password, error: '', valid: true})
+            } catch(error) {
+                if (/index_users_on_email/.test(error.response.data.error)) {
+                    setEmail({...email, valid: false, error: 'Email is already taken'});
+                }
+                setLoaderVisibility('hidden');
             }
-            setLoaderVisibility('hidden');
         }
     }
 
     useEffect(() => {
         const initialState = {value: '', valid: true, error: ''};
+        const user = users.users[+userIndex];
         setUserID(user.id);
         setFirstName({...initialState, value: user.firstName});
         setLastName({...initialState, value: user.lastName});
         setEmail({...initialState , value: user.email});
+        setPassword({...initialState})
         setMobileNumber({...initialState, value: user.mobileNumber});
         setRole({...initialState, value: user.role});
-    },[userIndex])
+    },[userIndex, users.users])
 
     return (
         <form onSubmit={submitForm}>
