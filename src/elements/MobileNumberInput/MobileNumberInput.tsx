@@ -47,7 +47,7 @@ function MobileNumberInput(props: Props) {
             <label htmlFor={props.id}>
                 <PhoneInput
                     country={'us'}
-                    value={props.value}
+                    value={props.value || ''}
                     masks={{ph: '... ... ....', at: '... ... ....'}}
                     onChange={handleChange}
                     enableSearch={true}

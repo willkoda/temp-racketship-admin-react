@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import Button from '../../../../../elements/Button/Button';
 import Input, {ResultInterface} from '../../../../../elements/Input/Input';
 import MobileNumberInput from '../../../../../elements/MobileNumberInput/MobileNumberInput';
@@ -27,6 +27,7 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
     const modalContext = useContext(AdminModalContext);
     const initialState = {value: '', valid: true, error: ''};
     const [loaderVisibility, setLoaderVisibility] = useState<'hidden' | 'visible'>('hidden');
+    const [userID, setUserID] = useState(user.id);
     const [firstName, setFirstName] = useState({...initialState, value: user.firstName});
     const [lastName, setLastName] = useState({...initialState, value: user.lastName});
     const [email, setEmail] = useState({...initialState, value: user.email});
@@ -86,7 +87,7 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
 
         try {
             setLoaderVisibility('visible')
-            const response = await axios.patch('/v1/users/' + users.users[+userIndex].id, requestData);
+            const response = await axios.patch('/v1/users/' + userID, requestData);
             const {data} = response;
             setTimeout(() => {
                 setLoaderVisibility('hidden');
@@ -115,6 +116,16 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
             setLoaderVisibility('hidden');
         }
     }
+
+    useEffect(() => {
+        const initialState = {value: '', valid: true, error: ''};
+        setUserID(user.id);
+        setFirstName({...initialState, value: user.firstName});
+        setLastName({...initialState, value: user.lastName});
+        setEmail({...initialState , value: user.email});
+        setMobileNumber({...initialState, value: user.mobileNumber});
+        setRole({...initialState, value: user.role});
+    },[userIndex])
 
     return (
         <form onSubmit={submitForm}>

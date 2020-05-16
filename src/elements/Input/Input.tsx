@@ -24,6 +24,7 @@ interface Props {
 function Input(props: Props) {
     const placeholderRef = useRef<HTMLSpanElement>(null!);
     const inputErrorRef = useRef<HTMLDivElement>(null!);
+    const inputRef = useRef<HTMLInputElement>(null!);
 
     const validator = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!props.validatedProps) return {valid: true, error: null};
@@ -87,12 +88,14 @@ function Input(props: Props) {
     }, [props.inputBorderColor])
 
     const blur = () => {
+        if (!props.value) return;
         if (props.value.length > 0) return;
         placeholderRef.current.style.transform = 'translateY(-50%) scale(1)';
         placeholderRef.current.style.color = 'var(--light-grey)';
     }
 
     useEffect(() => {
+        if (!props.value) return;
         if (props.value.length > 0) focus();
     }, [props.value, focus])
 
@@ -106,10 +109,15 @@ function Input(props: Props) {
         }
     }, [props.timeStamp])
 
+    useEffect(() => {
+        inputRef.current.value = props.value;
+    }, [props.value])
+
     return (
         <div className="Input">
             <label htmlFor={props.id}>
                 <input
+                    ref={inputRef}
                     autoComplete="off"
                     onChange={(e) => props.changeCallback(changeHandler(e))}
                     onFocus={() => focus()}

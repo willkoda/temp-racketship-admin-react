@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useEffect } from 'react';
 import './RadioGroup.scss';
 
 interface Props {
@@ -13,6 +13,10 @@ interface Props {
 }
 
 function RadioGroup(props: Props) {
+
+    useEffect(() => {
+        // console.log(props.initialValue)
+    }, [props.initialValue]) 
     const changeHandler = (e: FormEvent) => {
         const target = e.target as HTMLInputElement;
         const container = target.closest('div.radio--button');
@@ -38,6 +42,7 @@ function RadioGroup(props: Props) {
             value: target.value,
             error: ''
         });
+        
     }
 
     return (
@@ -47,7 +52,7 @@ function RadioGroup(props: Props) {
                     props.options.map((option, index) => (
                         <label htmlFor={option.value} key={index}>
                             <div className="radio--button">
-                                <input type="radio" id={option.value} name={props.name} defaultChecked={option.value === props.initialValue} value={option.value}/>
+                                <input type="radio" id={option.value} name={props.name}  defaultChecked={option.value === props.initialValue} value={option.value}/>
                                 <div className="wave--container">
                                     <div className="hover--wave"></div>
                                 </div>
