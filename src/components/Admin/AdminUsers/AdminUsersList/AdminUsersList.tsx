@@ -3,7 +3,6 @@ import Container from '../../../../elements/Container/Container';
 import Table from '../../../../elements/Table/Table';
 import IconButton from '../../../../elements/IconButton/IconButton';
 import SearchInput from '../../../../elements/SearchInput/SearchInput';
-import RadioGroup from '../../../../elements/RadioGroup/RadioGroup';
 
 import {compose} from 'redux';
 import withStoreConnection from '../../../../hoc/withStoreConnection';
@@ -66,16 +65,6 @@ function AdminUsersList(props: Props) {
     return (
         <Container paddingOnly={true}>
             <div className="AdminUsers">
-                <RadioGroup
-                    name="role" 
-                    options={
-                        [
-                            {label: 'Staff', value: 'staff'},
-                            {label: 'Owner', value: 'owner'},
-                            {label: 'Admin', value: 'admin'}
-                        ]
-                    }
-                 />
                 <Table
                     headers={['ID', 'First Name', 'Last Name', 'Email', 'Role', 'Actions']}
                     content={

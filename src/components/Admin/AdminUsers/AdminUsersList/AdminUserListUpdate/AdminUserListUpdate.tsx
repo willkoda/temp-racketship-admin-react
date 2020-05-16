@@ -4,6 +4,7 @@ import Input, {ResultInterface} from '../../../../../elements/Input/Input';
 import MobileNumberInput from '../../../../../elements/MobileNumberInput/MobileNumberInput';
 import axios from '../../../../../auxiliary/axios';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import RadioGroup from '../../../../../elements/RadioGroup/RadioGroup';
 
 import {compose} from 'redux';
 import withStoreConnection from '../../../../../hoc/withStoreConnection';
@@ -31,6 +32,7 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
     const [email, setEmail] = useState({...initialState, value: user.email});
     const [mobileNumber, setMobileNumber] = useState({...initialState, value: user.mobileNumber});
     const [password, setPassword] = useState({...initialState, valid: false});
+    const [role, setRole] = useState({...initialState, value: user.role});
     const [timeStamp, setTimeStamp] = useState(0);
 
     const Progress = withStyles({
@@ -62,6 +64,9 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
             case 'password':
                     setPassword(newState);
                 break;
+            case 'role':
+                    setRole(newState);
+                break;
             default:
                 throw new Error(`${result.origin} is not a valid origin`);
         }
@@ -75,9 +80,10 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
             last_name: lastName.value,
             email: email.value,
             mobile_number: mobileNumber.value,
-            password: password.value
+            password: password.value,
+            role: role.value
         }
-        // :role
+
         try {
             setLoaderVisibility('visible')
             const response = await axios.patch('/v1/users/' + users.users[+userIndex].id, requestData);
@@ -150,16 +156,6 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
                     timeStamp={timeStamp}
                     initialValue={email.value} />
 
-                <MobileNumberInput 
-                    change={changeHandler}
-                    error={mobileNumber.error}
-                    margin="margin-top-20"
-                    id="mobileNumber"
-                    timeStamp={timeStamp}
-                    value={mobileNumber.value}
-                    valid={mobileNumber.valid}
-                />
-
                 <Input
                     id="password"
                     inputBorderColor="var(--accent-one-shade-two)"
@@ -173,6 +169,33 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
                     error={password.error}
                     timeStamp={timeStamp}
                 />
+
+                <MobileNumberInput 
+                    change={changeHandler}
+                    error={mobileNumber.error}
+                    margin="margin-top-20"
+                    id="mobileNumber"
+                    timeStamp={timeStamp}
+                    value={mobileNumber.value}
+                    valid={mobileNumber.valid}
+                />
+
+                <div className="padding-top-bottom-10 text-align-left" style={{fontSize: '16px'}}>
+                    <div className="margin-bottom-10">Role</div>
+                    <RadioGroup
+                        id="role"
+                        name="role" 
+                        initialValue={role.value}
+                        changeCallback={changeHandler}
+                        options={
+                            [
+                                {label: 'Staff', value: 'staff'},
+                                {label: 'Owner', value: 'owner'},
+                                {label: 'Admin', value: 'admin'}
+                            ]
+                        }
+                    />
+                 </div>
 
                 <Button text="Submit" backgroundColor="accent--three" waveColor="rgba(0, 0, 0, 0.15)" padding="10px 12px" />
             </div>

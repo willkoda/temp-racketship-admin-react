@@ -2,7 +2,10 @@ import React, { FormEvent } from 'react';
 import './RadioGroup.scss';
 
 interface Props {
+    id: string;
     name: string;
+    initialValue: string;
+    changeCallback(params: ResultInterface): void;
     options: Array<{
         label: string;
         value: string;
@@ -11,7 +14,7 @@ interface Props {
 
 function RadioGroup(props: Props) {
     const changeHandler = (e: FormEvent) => {
-        const target = e.target as HTMLElement;
+        const target = e.target as HTMLInputElement;
         const container = target.closest('div.radio--button');
         const waveContainer = container?.querySelector('div.wave--container') as HTMLDivElement;
 
@@ -28,16 +31,23 @@ function RadioGroup(props: Props) {
             if (!waveContainer) return;
             waveContainer.removeChild(waveElement);
         }, 750);
+
+        props.changeCallback({
+            origin: props.id, 
+            valid: true,
+            value: target.value,
+            error: ''
+        });
     }
 
     return (
         <div className="RadioGroup">
-            <div className="radio--buttons" onChange={changeHandler}>
+            <div className="radio--buttons" onChange={changeHandler} >
                 {
                     props.options.map((option, index) => (
                         <label htmlFor={option.value} key={index}>
                             <div className="radio--button">
-                                <input type="radio" id={option.value} name={props.name}/>
+                                <input type="radio" id={option.value} name={props.name} defaultChecked={option.value === props.initialValue} value={option.value}/>
                                 <div className="wave--container">
                                     <div className="hover--wave"></div>
                                 </div>
@@ -52,6 +62,13 @@ function RadioGroup(props: Props) {
             </div>
         </div>
     )
+}
+
+export interface ResultInterface {
+    origin: string, 
+    valid: boolean,
+    value: string,
+    error: string
 }
 
 export default RadioGroup;
