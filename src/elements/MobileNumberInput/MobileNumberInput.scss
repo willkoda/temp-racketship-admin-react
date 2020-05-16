@@ -1,0 +1,71 @@
+div.MobileNumberInput {  
+    label {
+        display: block;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 2px;
+        transition: border-color 250ms ease-in-out;
+        position: relative;
+
+        &:focus-within {
+            border-color: var(--accent-one-shade-one);
+        }
+        span.input--group__error {
+            position: absolute;
+            left: 0;
+            bottom: -16px;
+            color: var(--dark-red);
+            font-size: 12px;
+            visibility: hidden;
+            &.visible {
+                visibility: visible;
+            }
+        }
+
+        div.react-tel-input {
+            display: inline-flex;
+            flex-direction: row-reverse;
+            justify-content: flex-start;
+            cursor: pointer;
+            height: 43px;
+        }
+
+        div.flag-dropdown,
+        div.flag-dropdown.open {
+            border: none;
+            flex: 0 1 46px;
+            position: relative;
+            background-color: #f7f8fa;
+            div.selected-flag:hover,
+            div.selected-flag:focus {
+                background-color: transparent;
+            }
+            div.selected-flag {
+                background-color: #f7f8fa;
+            };
+        }
+
+        input[type=tel] {
+            border: none;
+            font-size: 16px;
+            box-shadow: none;
+            color: var(--light-grey);
+            padding: 0;
+            outline: none;
+            margin-left: 10px;
+            margin-right: 10px;
+            font-size: 14px;
+            width: 100%;
+            flex: 0 1 auto;
+            height: 100%;
+        }
+    }
+    div.input--error {
+        font-size: 11px;
+        color: var(--dark-red);
+        min-height: 15px;
+    }
+
+    li.country, li.search {
+        text-align: left;
+    }
+}

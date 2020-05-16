@@ -1,6 +1,7 @@
 import React, {useState, useContext} from 'react';
 import Button from '../../../../../elements/Button/Button';
 import Input, {ResultInterface} from '../../../../../elements/Input/Input';
+import MobileNumberInput from '../../../../../elements/MobileNumberInput/MobileNumberInput';
 import axios from '../../../../../auxiliary/axios';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
@@ -27,7 +28,9 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
     const [loaderVisibility, setLoaderVisibility] = useState<'hidden' | 'visible'>('hidden');
     const [firstName, setFirstName] = useState({...initialState, value: user.firstName});
     const [lastName, setLastName] = useState({...initialState, value: user.lastName});
-    const [email, setEmail] = useState({...initialState, value: user.email})
+    const [email, setEmail] = useState({...initialState, value: user.email});
+    const [mobileNumber, setMobileNumber] = useState({...initialState, value: user.mobileNumber});
+    const [password, setPassword] = useState({...initialState});
     const [timeStamp, setTimeStamp] = useState(0);
 
     const Progress = withStyles({
@@ -53,6 +56,12 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
             case 'email':
                     setEmail(newState);
                 break;
+            case 'mobileNumber':
+                    setMobileNumber(newState);
+                break;
+            case 'password':
+                    setPassword(newState);
+                break;
             default:
                 throw new Error(`${result.origin} is not a valid origin`);
         }
@@ -64,8 +73,11 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
         const requestData = {
             first_name: firstName.value,
             last_name: lastName.value,
-            email: email.value
+            email: email.value,
+            mobile_number: mobileNumber.value,
+            password: password.value
         }
+        // :role
         try {
             setLoaderVisibility('visible')
             const response = await axios.patch('/v1/users/' + users.users[+userIndex].id, requestData);
@@ -135,6 +147,27 @@ function AdminUserListUpdate({userIndex, users, storeSetUsers}: Props) {
                     error={email.error}
                     timeStamp={timeStamp}
                     initialValue={email.value} />
+
+                <MobileNumberInput 
+                    change={changeHandler}
+                    error={mobileNumber.error}
+                    margin="margin-top-20"
+                    id="mobileNumber"
+                    timeStamp={timeStamp}
+                    value={mobileNumber.value}
+                    valid={mobileNumber.valid}
+                />
+
+                <Input
+                    id="password"
+                    inputBorderColor="var(--accent-one-shade-two)"
+                    margin="margin-top-10"
+                    placeholder="Password"
+                    type="password"
+                    value={password.value}
+                    changeCallback={changeHandler}
+                    valid={password.valid}
+                />
 
                 <Button text="Submit" backgroundColor="accent--three" waveColor="rgba(0, 0, 0, 0.15)" padding="10px 12px" />
             </div>
