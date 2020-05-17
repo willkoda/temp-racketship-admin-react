@@ -89,7 +89,7 @@ function AdminUsersList(props: Props) {
                                                     content: <AdminUsersListUpdate currentUser={currentUser} />,
                                                     confirmationText: 'Submit'
                                                 })
-                                                adminModalContext.toggleModal()
+                                                adminModalContext.toggleModal();
                                             }
                                         }
                                     }
@@ -102,12 +102,13 @@ function AdminUsersList(props: Props) {
                                             const row = element.closest('tr');
                                             if (row) {
                                                 const userIndex = row.dataset.rowIndex;
+                                                const currentUser = props.users.users[+userIndex!];
                                                 adminModalContext.setModalData({
                                                     header: 'Delete User',
-                                                    content: <AdminUsersListDelete userIndex={+userIndex!} />,
+                                                    content: <AdminUsersListDelete currentUser={currentUser} />,
                                                     confirmationText: 'Submit'
                                                 })
-                                                adminModalContext.toggleModal()
+                                                adminModalContext.toggleModal();
                                             }
                                         }
                                     }

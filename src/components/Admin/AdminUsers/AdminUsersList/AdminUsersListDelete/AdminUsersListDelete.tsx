@@ -15,14 +15,13 @@ import { withStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 interface Props {
-    userIndex: number | string;
+    currentUser: any;
     users: UsersStateInterface;
     storeSetUsers(params: Partial<UsersStateInterface>): void;
 }
-function AdminUsersListDelete({userIndex, users, storeSetUsers}: Props) {
-    const modalContext = useContext(AdminModalContext);
+function AdminUsersListDelete({currentUser, users, storeSetUsers}: Props) {
     const noticeContext = useContext(AdminNoticeContext);
-    const user = users.users[+userIndex];
+    const modalContext = useContext(AdminModalContext);
     const [loaderVisibility, setLoaderVisibility] = useState<'hidden' | 'visible'>('hidden');
     const Progress = withStyles({
         colorPrimary: {
@@ -62,7 +61,7 @@ function AdminUsersListDelete({userIndex, users, storeSetUsers}: Props) {
                         async () => {
                             try {
                                 setLoaderVisibility('visible');
-                                await axios.delete('v1/users/' + user.id);
+                                await axios.delete('v1/users/' + currentUser.id);
                                 setTimeout(() => {
                                     setLoaderVisibility('hidden');
                                     noticeContext.setNoticeText('The user has been deleted successfully');
@@ -71,7 +70,8 @@ function AdminUsersListDelete({userIndex, users, storeSetUsers}: Props) {
                                     modalContext.hideModal();
 
                                     const usersArray = [...users.users];
-                                    usersArray.splice(+userIndex, 1)
+                                    const index = usersArray.findIndex(el => el === currentUser);
+                                    usersArray.splice(index, 1)
                                     storeSetUsers({
                                         users: usersArray
                                     });
