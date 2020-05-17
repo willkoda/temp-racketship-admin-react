@@ -1,0 +1,31 @@
+div.Accordion {
+    div.accordion {
+        div.accordion__header {
+            color: #fff;
+            position: relative;
+            min-height: 39px;
+
+            div.header--details {
+                min-height: 39px;
+                display: flex;
+                align-items: center;
+            }
+
+            div.header--button {
+                position: absolute;
+                right: 0;
+                top: 0;
+                
+                svg {
+                    transition: transform 300ms ease-in-out;
+                }
+            }
+        }
+
+        div.accordion--content--container {
+            overflow: hidden;
+            height: 0px;
+            transition: height 300ms ease-in-out;
+        }
+    }
+}

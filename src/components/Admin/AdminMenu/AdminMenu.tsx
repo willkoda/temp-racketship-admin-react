@@ -1,12 +1,19 @@
 import React, {useEffect, useRef, useContext} from 'react';
 import './AdminMenu.scss';
 import {NavLink} from 'react-router-dom';
+import Accordion from '../../../elements/Accordion/Accordion';
 
 import { 
     Assessment as AssessmentIcon,
     Dashboard as DashboardIcon,
     People as PeopleIcon,
-    Settings as SettingsIcon
+    Settings as SettingsIcon,
+
+    FormatListBulleted as FormatListBulletedIcon,
+    PlaylistAddCheck as PlaylistAddCheckIcon,
+    SyncAlt as SyncAltIcon,
+    NewReleases as NewReleasesIcon,
+    FormatListNumbered as FormatListNumberedIcon
 } from '@material-ui/icons';
 
 import {SideMenuContext} from '../../../providers/SideMenuProvider';
@@ -51,6 +58,45 @@ function AdminMenu() {
                     <SettingsIcon />
                     <div>Settings</div>
                 </NavLink>
+            </li>
+
+            <li>
+                <Accordion
+                    header={
+                        <div className="padding-left-20" style={{display: 'flex', alignItems: 'center'}}>
+                            <FormatListNumberedIcon className="margin-right-40" />
+                            <span>Tasks</span>
+                        </div>
+                    }
+                    content={
+                        <ul className="dashboard--tasks">
+                            <li>
+                                <NavLink to="/dashboard/tasks">
+                                    <FormatListBulletedIcon />
+                                    <div>Avialable</div>
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/tasks">
+                                    <PlaylistAddCheckIcon />
+                                    <div>Closed</div>
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/tasks">
+                                    <SyncAltIcon />
+                                    <div>Withdrawals</div>
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/tasks">
+                                    <NewReleasesIcon />
+                                    <div>New Verifications</div>
+                                </NavLink>
+                            </li>
+                        </ul>
+                    } 
+                />
             </li>
         </ul>
     )
