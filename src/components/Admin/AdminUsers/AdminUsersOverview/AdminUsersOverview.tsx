@@ -8,6 +8,7 @@ import { CircularProgress } from '@material-ui/core';
 
 import AdminUsersOverviewMember from './AdminUsersOverviewMember/AdminUsersOverviewMember';
 import AdminUsersOverviewStaff from './AdminUsersOverviewStaff/AdminUsersOverviewStaff';
+import AdminUsersOverviewOwner from './AdminUsersOverviewOwner/AdminUsersOverviewOwner';
 
 function AdminUsersOverview() {
     const location = useLocation();
@@ -25,9 +26,11 @@ function AdminUsersOverview() {
     const renderTemplate = () => {
         switch(userInformation.role) {
             case 'member':
-                return <AdminUsersOverviewMember memberInformation={userInformation} />
+                return <AdminUsersOverviewMember userInformation={userInformation} />
             case 'staff':
-                return <AdminUsersOverviewStaff memberInformation={userInformation} />
+                return <AdminUsersOverviewStaff userInformation={userInformation} />
+            case 'owner':
+                return <AdminUsersOverviewOwner userInformation={userInformation} />
             default:
                 return <CircularProgress />
         }
@@ -61,7 +64,7 @@ export interface UserOverviewInterface {
 }
 
 export interface UserOverviewPropsInterface {
-    memberInformation: Partial<UserOverviewInterface>;
+    userInformation: Partial<UserOverviewInterface>;
 }
 
 export const adminUsersOverviewRenderElements = (params: {keys: Array<String>, propObject: Partial<UserOverviewInterface>}) => {

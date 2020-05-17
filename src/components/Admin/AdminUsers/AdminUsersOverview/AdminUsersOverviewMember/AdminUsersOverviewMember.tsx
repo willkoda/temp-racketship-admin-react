@@ -62,7 +62,7 @@ function AdminUsersOverviewMember(props: UserOverviewPropsInterface) {
         console.log('block him')
     }
 
-    const {id, organization} = props.memberInformation;
+    const {id, organization} = props.userInformation;
     const [purchaseRequests, setPurchaseRequests] = useState<PurchaseRequests>({...initialData});
     const [withdrawalRequests, setWithdrawalRequests] = useState<WithdrawalRequests>({...initialData});
 
@@ -89,7 +89,7 @@ function AdminUsersOverviewMember(props: UserOverviewPropsInterface) {
                     <div className="box--details">
                         {adminUsersOverviewRenderElements({
                             keys: ['id', 'name', 'email', 'mobile_number', 'verified', 'verified_on', 'blocked', 'blocked_on'],
-                            propObject: props.memberInformation
+                            propObject: props.userInformation
                         })}
                     </div>
                     <div className="detail--buttons">
@@ -108,11 +108,11 @@ function AdminUsersOverviewMember(props: UserOverviewPropsInterface) {
                     <div className="box--details">
                         <div className="box--row">
                             <div className="key">organization:</div>
-                            <div className="value">{props.memberInformation.organization?.name}</div>
+                            <div className="value">{props.userInformation.organization?.name}</div>
                         </div>
                         {adminUsersOverviewRenderElements({
                             keys: ['referral_code', 'total_cash_outs', 'total_purchases'],
-                            propObject: props.memberInformation
+                            propObject: props.userInformation
                         })}
                     </div>
                 </div>
