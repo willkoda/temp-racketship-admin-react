@@ -9,6 +9,7 @@ import { CircularProgress } from '@material-ui/core';
 import AdminUsersOverviewMember from './AdminUsersOverviewMember/AdminUsersOverviewMember';
 import AdminUsersOverviewStaff from './AdminUsersOverviewStaff/AdminUsersOverviewStaff';
 import AdminUsersOverviewOwner from './AdminUsersOverviewOwner/AdminUsersOverviewOwner';
+import AdminUsersOverviewAdmin from './AdminUsersOverviewAdmin/AdminUsersOverviewAdmin';
 
 function AdminUsersOverview() {
     const location = useLocation();
@@ -31,6 +32,8 @@ function AdminUsersOverview() {
                 return <AdminUsersOverviewStaff userInformation={userInformation} />
             case 'owner':
                 return <AdminUsersOverviewOwner userInformation={userInformation} />
+            case 'admin':
+                return <AdminUsersOverviewAdmin userInformation={userInformation} />
             default:
                 return <CircularProgress />
         }

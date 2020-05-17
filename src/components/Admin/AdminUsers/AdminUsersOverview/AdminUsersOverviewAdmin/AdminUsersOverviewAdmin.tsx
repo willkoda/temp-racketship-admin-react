@@ -1,12 +1,15 @@
 import React from 'react';
-import {adminUsersOverviewRenderElements, UserOverviewPropsInterface} from '../AdminUsersOverview';
+import {
+    adminUsersOverviewRenderElements,
+    UserOverviewPropsInterface
+} from '../AdminUsersOverview';
 
-function AdminUsersOverviewStaff(props: UserOverviewPropsInterface) {
+function AdminUsersOverviewAdmin(props: UserOverviewPropsInterface) {
     return (
-        <div className="AdminUsersOverviewStaff">
-            <h2 className="overview--heading">Staff Overview</h2>
+        <div className="AdminUsersOverviewAdmin">
+            <h2 className="overview--heading">Admin Overview</h2>
             <div className="overview--boxes">
-                <div className="box padding-bottom-10">
+                <div className="box padding-bottom-10" style={{flex: '0 1 100%'}}>
                     <h3 className="box--heading">Account Details</h3>
                     <div className="box--details">
                         {adminUsersOverviewRenderElements({
@@ -20,4 +23,4 @@ function AdminUsersOverviewStaff(props: UserOverviewPropsInterface) {
     )
 }
 
-export default AdminUsersOverviewStaff;
+export default AdminUsersOverviewAdmin;
