@@ -18,9 +18,9 @@ interface Props {
     dataFiltrationComponent?: JSX.Element;
     headers: Array<string>;
     margin?: string;
-    nextPageClickHandler(): void;
-    pagination: Pagination;
-    previousPageClickHandler(): void;
+    nextPageClickHandler?(): void;
+    pagination?: Pagination;
+    previousPageClickHandler?(): void;
     progressIndicatorVisible?: boolean;
     tableRowClickHandler?: {(params: any): void};
     tableName?: JSX.Element
@@ -57,14 +57,14 @@ function Table(props: Props) {
                         <IconButton 
                             iconElement={<ChevronRightIcon />} 
                             margin="margin-right-10"
-                            clickHandler={props.nextPageClickHandler}
+                            clickHandler={props.nextPageClickHandler!}
                             disabled={props.pagination.currentPage + 1 > props.pagination.pages}
                             waveColor="#fff"
                         />
                         <IconButton 
                             iconElement={<ChevronLeftIcon />} 
                             margin="margin-right-10" 
-                            clickHandler={props.previousPageClickHandler}
+                            clickHandler={props.previousPageClickHandler!}
                             disabled={props.pagination.currentPage - 1 < 1}
                             waveColor="#fff"
                         />
