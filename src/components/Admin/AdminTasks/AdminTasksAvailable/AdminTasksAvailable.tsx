@@ -154,7 +154,9 @@ function AdminTasksAvailable() {
                             setTasks({...tasks, progressIndicatorVisible: true});
                             const response = await axios.get(`/v1/tasks?page=${tasks.pagination.current + 1}`);
                             const {pagination} = response.data;
-                            setTasks({pagination: pagination, tasks: response.data.tasks, progressIndicatorVisible: false});
+                            if (componentRef.current) {
+                                setTasks({pagination: pagination, tasks: response.data.tasks, progressIndicatorVisible: false});
+                            }
                         }
                     }
                     previousPageClickHandler={
@@ -162,7 +164,9 @@ function AdminTasksAvailable() {
                             setTasks({...tasks, progressIndicatorVisible: true});
                             const response = await axios.get(`/v1/tasks?page=${tasks.pagination.current - 1}`);
                             const {pagination} = response.data;
-                            setTasks({pagination: pagination, tasks: response.data.tasks, progressIndicatorVisible: false});
+                            if (componentRef.current) {
+                                setTasks({pagination: pagination, tasks: response.data.tasks, progressIndicatorVisible: false});
+                            }
                         }
                     }
                     progressIndicatorVisible={tasks.progressIndicatorVisible}
