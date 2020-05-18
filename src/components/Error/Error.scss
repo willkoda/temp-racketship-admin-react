@@ -1,0 +1,26 @@
+div.Error {
+    background-color: var(--background-color);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    div.error--code {
+        font-size: 110px;
+    }
+
+    div.error--message {
+        font-size: 16px;
+        font-weight: 300;
+    }
+
+    button.go--back {
+        color: var(--dark-text);
+        padding: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        border-radius: 2px;
+        background-color:  transparent;
+        outline: none;
+    }
+}

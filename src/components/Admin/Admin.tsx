@@ -7,6 +7,7 @@ import AdminDashboard from '../Admin/AdminDashboard/AdminDashboard';
 import AdminUsers from '../Admin/AdminUsers/AdminUsers';
 import Modal from '../../elements/Modal/Modal';
 import Notice from '../../elements/Notice/Notice';
+import Error from '../../components/Error/Error';
 
 import SideMenuProvider from '../../providers/SideMenuProvider';
 import axios from '../../auxiliary/axios';
@@ -106,6 +107,7 @@ function Admin(props: Props) {
                         <Switch>
                             <Route exact path="/dashboard" component={AdminDashboard}/>
                             <Route path="/dashboard/users" render={() => <AdminUsers retrieveUsers={retrieveUsers} />} />
+                            <Route path="*" render={() => <Error />} />
                         </Switch>
                     </div>
                     </div>
