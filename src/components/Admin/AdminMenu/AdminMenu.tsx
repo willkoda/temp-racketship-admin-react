@@ -40,6 +40,33 @@ function AdminMenu() {
             mobileLinksRef.current.style.transform = 'translateY(100%)';
         }
     }, [mobileLinksVisibile])
+    
+    const taskLinks = [
+        <li key={0}>
+            <NavLink exact to="/dashboard/tasks">
+                <FormatListBulletedIcon />
+                <div>Avialable</div>
+            </NavLink>
+        </li>,
+        <li key={1}>
+            <NavLink to="/dashboard/tasks/closed">
+                <PlaylistAddCheckIcon />
+                <div>Closed</div>
+            </NavLink>
+        </li>,
+        <li key={2}>
+            <NavLink to="/dashboard/tasks/withdrawals">
+                <SyncAltIcon />
+                <div>Withdrawals</div>
+            </NavLink>
+        </li>,
+        <li key={3}>
+            <NavLink to="/dashboard/tasks/new-verifications">
+                <NewReleasesIcon />
+                <div>New Verifications</div>
+            </NavLink>
+        </li>
+    ];
 
     return (
         <ul className="AdminMenu" ref={sideMenuRef}>
@@ -81,30 +108,7 @@ function AdminMenu() {
                     }
                     content={
                         <ul className="dashboard--tasks">
-                            <li>
-                                <NavLink to="/dashboard/tasks">
-                                    <FormatListBulletedIcon />
-                                    <div>Avialable</div>
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/tasks/closed">
-                                    <PlaylistAddCheckIcon />
-                                    <div>Closed</div>
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/tasks">
-                                    <SyncAltIcon />
-                                    <div>Withdrawals</div>
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/tasks">
-                                    <NewReleasesIcon />
-                                    <div>New Verifications</div>
-                                </NavLink>
-                            </li>
+                            {taskLinks}
                         </ul>
                     }
                     waveColor="rgba(255, 255, 255, 0.2)" 
@@ -122,30 +126,7 @@ function AdminMenu() {
                             <CloseIcon />
                         </button>
                     </li>
-                    <li>
-                        <NavLink to="/dashboard/tasks">
-                            <FormatListBulletedIcon />
-                            <div>Avialable</div>
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/dashboard/tasks">
-                            <PlaylistAddCheckIcon />
-                            <div>Closed</div>
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/dashboard/tasks">
-                            <SyncAltIcon />
-                            <div>Withdrawals</div>
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/dashboard/tasks">
-                            <NewReleasesIcon />
-                            <div>New Verifications</div>
-                        </NavLink>
-                    </li>
+                    {taskLinks}
                 </ul>
             </li>
         </ul>

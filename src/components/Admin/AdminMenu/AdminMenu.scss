@@ -62,9 +62,22 @@ ul.AdminMenu {
         }
     }
 
+    li.accordion--menu {
+        a {
+            &.active {
+                color: var(--accent-one-shade-three);
+            }
+        }
+    }
+
     li.dashboard--tasks--link {
         display:  none;
         height: 24px;
+        a {
+            &.active {
+                color: var(--accent-one-shade-three);
+            }
+        }
         a::after {
             content: none;
         }
@@ -110,6 +123,9 @@ ul.AdminMenu {
                 }
 
                 a {
+                    &.active {
+                        color: var(--accent-one-shade-three);
+                    }
                     color: #fff;
                     padding: 10px 20px 10px 30px;
                     div {
