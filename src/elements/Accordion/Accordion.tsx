@@ -1,6 +1,6 @@
 import React, {useRef, useState, useEffect} from 'react';
 import './Accordion.scss';
-import IconButton from '../../elements/IconButton/IconButton';
+import {waveAnimation} from '../../auxiliary/animation/wave-animation';
 
 import { 
     KeyboardArrowDown as KeyboardArrowDownIcon
@@ -8,21 +8,23 @@ import {
 
 interface Props {
     content: JSX.Element;
-    header: JSX.Element
+    header: JSX.Element;
+    waveColor: string;
 }
 
 function Accordion(props: Props) {
     const headerButtonRef = useRef<SVGSVGElement>(null!);
     const accordionContainerRef = useRef<HTMLDivElement>(null!);
     const accordionContentRef = useRef<HTMLDivElement>(null!);
+    const waveElementRef = useRef<HTMLButtonElement>(null!);
 
     const [accordionExpanded, setAccordionExpanded] = useState(false);
 
     useEffect(() => {
         if (accordionExpanded) {
-            headerButtonRef.current.style.transform = 'rotate(-180deg)';
+            headerButtonRef.current.style.transform = 'translateY(-50%) rotate(-180deg)';
         } else {
-            headerButtonRef.current.style.transform = 'rotate(0deg)';
+            headerButtonRef.current.style.transform = 'translateY(-50%) rotate(0deg)';
         }
     }, [accordionExpanded])
 
@@ -34,23 +36,18 @@ function Accordion(props: Props) {
         }
     }, [accordionExpanded])
 
+    const clickHandler = (e: React.MouseEvent) => {
+        waveAnimation({event: e, waveElementRef: waveElementRef, waveColor: props.waveColor});
+        setAccordionExpanded(!accordionExpanded)
+    }
+
     return (
         <div className="Accordion">
             <div className="accordion">
-                <div className="accordion__header">
-                    <div className="header--details">
-                        {props.header}
-                    </div>
-                    <div className="header--button" >
-                        <IconButton
-                            clickHandler={() => {
-                                setAccordionExpanded(!accordionExpanded);
-                            }}
-                            iconElement={<KeyboardArrowDownIcon ref={headerButtonRef} />}
-                            waveColor="rgba(255, 255, 255, 0.2)"
-                        />
-                    </div>
-                </div>
+                <button className="header--button" onClick={clickHandler} ref={waveElementRef}>
+                    {props.header}
+                    <KeyboardArrowDownIcon className="arrow--icon" ref={headerButtonRef} />
+                </button>
                 <div className="accordion--content--container" ref={accordionContainerRef}>
                     <div className="accordion--content" ref={accordionContentRef}>
                         {props.content}

@@ -1,24 +1,20 @@
 div.Accordion {
     div.accordion {
-        div.accordion__header {
+        button.header--button {
             color: #fff;
+            background-color: transparent;
             position: relative;
-            min-height: 39px;
+            width: 100%;
+            min-height: 40px;
+            outline: none;
+            border: none;
 
-            div.header--details {
-                min-height: 39px;
-                display: flex;
-                align-items: center;
-            }
-
-            div.header--button {
+            svg.arrow--icon {
+                transition: transform 300ms ease-in-out;
                 position: absolute;
-                right: 0;
-                top: 0;
-                
-                svg {
-                    transition: transform 300ms ease-in-out;
-                }
+                right: 20px;
+                top: 50%;
+                transform: translateY(-50%);
             }
         }
 

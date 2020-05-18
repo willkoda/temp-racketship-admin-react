@@ -60,12 +60,12 @@ function AdminMenu() {
                 </NavLink>
             </li>
 
-            <li>
+            <li className="accordion--menu">
                 <Accordion
                     header={
                         <div className="padding-left-20" style={{display: 'flex', alignItems: 'center'}}>
                             <FormatListNumberedIcon className="margin-right-40" />
-                            <span>Tasks</span>
+                            <span style={{fontSize: '14px'}}>Tasks</span>
                         </div>
                     }
                     content={
@@ -95,8 +95,13 @@ function AdminMenu() {
                                 </NavLink>
                             </li>
                         </ul>
-                    } 
+                    }
+                    waveColor="rgba(255, 255, 255, 0.2)" 
                 />
+            </li>
+
+            <li className="tasks--link">
+
             </li>
         </ul>
     )

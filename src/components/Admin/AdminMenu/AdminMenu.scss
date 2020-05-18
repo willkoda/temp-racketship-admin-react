@@ -7,7 +7,7 @@ ul.AdminMenu {
     z-index: 5;
     li {
         font-size: 14px;
-        &:not(:last-of-type):hover a {
+        &:not(.accordion--menu):hover a {
             color: var(--accent-one-shade-two);
             &::after {
                 opacity: 0.13;
@@ -79,6 +79,9 @@ ul.AdminMenu {
                 svg {
                     margin-right: 5px;
                 }
+            }
+            &.accordion--menu {
+                display: none;
             }
         }
     }
