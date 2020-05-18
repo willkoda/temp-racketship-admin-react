@@ -7,6 +7,7 @@ import {
 } from '@material-ui/icons';
 
 interface Props {
+    expandedInitially?: boolean;
     content: JSX.Element;
     header: JSX.Element;
     waveColor: string;
@@ -18,7 +19,8 @@ function Accordion(props: Props) {
     const accordionContentRef = useRef<HTMLDivElement>(null!);
     const waveElementRef = useRef<HTMLButtonElement>(null!);
 
-    const [accordionExpanded, setAccordionExpanded] = useState(false);
+    // const [accordionExpanded, setAccordionExpanded] = useState(false);
+    const [accordionExpanded, setAccordionExpanded] = useState(props.expandedInitially);
 
     useEffect(() => {
         if (accordionExpanded) {

@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useContext, useState} from 'react';
 import './AdminMenu.scss';
 import {NavLink} from 'react-router-dom';
 import Accordion from '../../../elements/Accordion/Accordion';
+import {useLocation} from 'react-router-dom';
 
 import { 
     Assessment as AssessmentIcon,
@@ -24,6 +25,7 @@ function AdminMenu() {
     const context = useContext(SideMenuContext);
     const [mobileLinksVisibile, setMobileLinksVisibile] = useState(false); 
     const mobileLinksRef = useRef<HTMLUListElement>(null!);
+    const location = useLocation();
 
     useEffect(() => {
         if (context.sideMenuVisible) {
@@ -100,6 +102,7 @@ function AdminMenu() {
 
             <li className="accordion--menu">
                 <Accordion
+                    expandedInitially={location.pathname === '/dashboard/tasks'}
                     header={
                         <div className="padding-left-20" style={{display: 'flex', alignItems: 'center'}}>
                             <FormatListNumberedIcon className="margin-right-40" />
