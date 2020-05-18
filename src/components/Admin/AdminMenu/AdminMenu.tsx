@@ -88,7 +88,7 @@ function AdminMenu() {
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink to="/dashboard/tasks">
+                                <NavLink to="/dashboard/tasks/closed">
                                     <PlaylistAddCheckIcon />
                                     <div>Closed</div>
                                 </NavLink>
