@@ -3,7 +3,7 @@ div.Container {
     padding: 20px;
     overflow: auto;
     background-color: var(--background-color);
-    height: 100%;
+    height: inherit;
     @media (max-width: 600px) {
         padding: 10px;
     }

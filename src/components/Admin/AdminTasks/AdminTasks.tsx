@@ -6,7 +6,7 @@ import Error from '../../../components/Error/Error';
 
 function AdminTasks() {
     return (
-        <div className="AdminTasks">
+        <div className="AdminTasks" style={{height: 'inherit'}}>
             <Switch>
                 <Route exact path="/dashboard/tasks" component={AdminTasksAvailable}/>
                 <Route path="/dashboard/tasks/closed" render={() => <div>closed</div>} />

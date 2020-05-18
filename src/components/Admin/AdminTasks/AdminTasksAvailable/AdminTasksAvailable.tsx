@@ -2,10 +2,14 @@ import React, {useEffect, useState, useRef} from 'react';
 import Container from '../../../../elements/Container/Container';
 import Table from '../../../../elements/Table/Table';
 import axios from '../../../../auxiliary/axios';
+import IconButton from '../../../../elements/IconButton/IconButton';
 
 import {
     AttachMoney as AttachMoneyIcon,
-    SyncAlt as SyncAltIcon
+    SyncAlt as SyncAltIcon,
+    Visibility as VisibilityIcon,
+    Lock as LockIcon,
+    LockOpen as LockOpenIcon
 } from '@material-ui/icons';
 
 interface Tasks {
@@ -41,7 +45,6 @@ function AdminTasksAvailable() {
         (async function () {
             const response = await axios.get('/v1/tasks?page=1');
             const {tasks, pagination} = response.data;
-            console.log(response.data)
             if (componentRef.current) setTasks({tasks: tasks, pagination: pagination, progressIndicatorVisible: false});
         })()
     }, [])
@@ -131,33 +134,35 @@ function AdminTasksAvailable() {
                             })(),
                             el.request.notes,
                             el.request.handler || '-',
-                            <div>test</div>
-                            // <div className="key--value--pair">
-                            //     <span style={{color: 'var(--status--success--color)'}}><AttachMoneyIcon /></span>
-                            //     <span>{el.amount}</span>
-                            // </div>,
-                            // `${el.linked_account.username}(${el.linked_account.game_id})`,
-                            // `${el.bank_account.account_name}(${el.bank_account.account_number})`,
-                            // el.created_at,
-                            // <div className={`status ${el.status}`}>
-                            //     <span className="value">{el.status}</span>
-                            // </div>
+                            <div className="action--buttons">
+                                <IconButton 
+                                    color="var(--accent-one-shade-two)"
+                                    waveColor="rgba(0, 0, 0, 0.2)"
+                                    iconElement={<VisibilityIcon />} 
+                                    clickHandler={() => console.log('view this')} />
+
+                                <IconButton
+                                    color={el.request.handler ? 'var(--dark-red)' : "var(--status--success--color)"}
+                                    waveColor="rgba(0, 0, 0, 0.2)"
+                                    iconElement={el.request.handler ? <LockIcon /> : <LockOpenIcon />} 
+                                    clickHandler={() => console.log('view this')} />
+                            </div>
                         ])
                     }
                     nextPageClickHandler={
                         async () => {
-                            // setPurchaseRequests({...purchaseRequests, progressIndicatorVisible: true})
-                            // const response = await axios.get(`/v1/organizations/${organization?.id}/members/${id}/purchase_requests?page=${purchaseRequests.pagination.current + 1}`);
-                            // const {pagination, purchase_requests} = response.data;
-                            // setPurchaseRequests({pagination: pagination, requests: purchase_requests, progressIndicatorVisible: false})
+                            setTasks({...tasks, progressIndicatorVisible: true});
+                            const response = await axios.get(`/v1/tasks?page=${tasks.pagination.current + 1}`);
+                            const {pagination} = response.data;
+                            setTasks({pagination: pagination, tasks: response.data.tasks, progressIndicatorVisible: false});
                         }
                     }
                     previousPageClickHandler={
                         async () => {
-                            // setPurchaseRequests({...purchaseRequests, progressIndicatorVisible: true})
-                            // const response = await axios.get(`/v1/organizations/${organization?.id}/members/${id}/purchase_requests?page=${purchaseRequests.pagination.current - 1}`);
-                            // const {pagination, purchase_requests} = response.data;
-                            // setPurchaseRequests({pagination: pagination, requests: purchase_requests, progressIndicatorVisible: false});
+                            setTasks({...tasks, progressIndicatorVisible: true});
+                            const response = await axios.get(`/v1/tasks?page=${tasks.pagination.current - 1}`);
+                            const {pagination} = response.data;
+                            setTasks({pagination: pagination, tasks: response.data.tasks, progressIndicatorVisible: false});
                         }
                     }
                     progressIndicatorVisible={tasks.progressIndicatorVisible}
