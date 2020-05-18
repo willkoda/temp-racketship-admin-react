@@ -3,17 +3,18 @@ import './IconButton.scss';
 import {waveAnimation} from '../../auxiliary/animation/wave-animation';
 
 interface Props {
+    className?: string;
     color?: string,
     clickHandler(e: React.MouseEvent): void,
     disabled?: boolean,
     iconElement: JSX.Element,
     margin?: string,
-    waveColor: string
+    waveColor: string;
 }
 
 function IconButton(props: Props) {
     const waveElementRef = useRef<HTMLButtonElement>(null!);
-    const buttonClass = ['IconButton', props.margin, 'dark'];
+    const buttonClass = ['IconButton', props.margin, 'dark', props.className];
 
     const handleClick = (e: React.MouseEvent) => {
         e.stopPropagation();

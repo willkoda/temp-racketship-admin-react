@@ -8,10 +8,20 @@ header.AdminHeader {
     display: grid;
     grid-template-columns: repeat(2, auto) 1fr;
     z-index: 10;
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(2, auto);
+    }
+
+    button.menu--button {
+        @media (max-width: 768px) {
+            display: none;
+        }
+     }
 
     div.application--name {
         font-size: 24px;
         font-weight: 600;
+        text-align: left;
         span.colored--text {
             color:  var(--base);
         }

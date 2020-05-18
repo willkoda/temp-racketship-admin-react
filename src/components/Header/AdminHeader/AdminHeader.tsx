@@ -12,7 +12,9 @@ function AdminHeader() {
     }
     return (
         <header className="AdminHeader padding-left-right-20 padding-top-bottom-15">
-            <IconButton color="#fff" 
+            <IconButton 
+                className="menu--button"
+                color="#fff" 
                 iconElement={<MenuIcon />} 
                 clickHandler={clickHandler} 
                 margin="margin-right-10" 
