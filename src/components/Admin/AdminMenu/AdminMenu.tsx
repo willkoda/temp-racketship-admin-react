@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useContext} from 'react';
+import React, {useEffect, useRef, useContext, useState} from 'react';
 import './AdminMenu.scss';
 import {NavLink} from 'react-router-dom';
 import Accordion from '../../../elements/Accordion/Accordion';
@@ -13,7 +13,8 @@ import {
     PlaylistAddCheck as PlaylistAddCheckIcon,
     SyncAlt as SyncAltIcon,
     NewReleases as NewReleasesIcon,
-    FormatListNumbered as FormatListNumberedIcon
+    FormatListNumbered as FormatListNumberedIcon,
+    Close as CloseIcon
 } from '@material-ui/icons';
 
 import {SideMenuContext} from '../../../providers/SideMenuProvider';
@@ -21,6 +22,8 @@ import {SideMenuContext} from '../../../providers/SideMenuProvider';
 function AdminMenu() {
     const sideMenuRef = useRef<HTMLUListElement>(null!);
     const context = useContext(SideMenuContext);
+    const [mobileLinksVisibile, setMobileLinksVisibile] = useState(false); 
+    const mobileLinksRef = useRef<HTMLUListElement>(null!);
 
     useEffect(() => {
         if (context.sideMenuVisible) {
@@ -29,6 +32,14 @@ function AdminMenu() {
             sideMenuRef.current.style.flex = '0 1 0px';
         }
     }, [context])
+
+    useEffect(() => {
+        if (mobileLinksVisibile) {
+            mobileLinksRef.current.style.transform = 'translateY(0%)';
+        } else {
+            mobileLinksRef.current.style.transform = 'translateY(100%)';
+        }
+    }, [mobileLinksVisibile])
 
     return (
         <ul className="AdminMenu" ref={sideMenuRef}>
@@ -100,8 +111,42 @@ function AdminMenu() {
                 />
             </li>
 
-            <li className="tasks--link">
-
+            <li className="dashboard--tasks--link">
+                <button className="mobile--dashboard--button" onClick={() => setMobileLinksVisibile(!mobileLinksVisibile)}>
+                    <FormatListBulletedIcon />
+                </button>
+                <ul className="mobile--dashboard--tasks" ref={mobileLinksRef}>
+                    <li>
+                        <button className="close--mobile--dashboard" onClick={() => setMobileLinksVisibile(false)}>
+                            <span className="tasks--text">Tasks</span>
+                            <CloseIcon />
+                        </button>
+                    </li>
+                    <li>
+                        <NavLink to="/dashboard/tasks">
+                            <FormatListBulletedIcon />
+                            <div>Avialable</div>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/dashboard/tasks">
+                            <PlaylistAddCheckIcon />
+                            <div>Closed</div>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/dashboard/tasks">
+                            <SyncAltIcon />
+                            <div>Withdrawals</div>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/dashboard/tasks">
+                            <NewReleasesIcon />
+                            <div>New Verifications</div>
+                        </NavLink>
+                    </li>
+                </ul>
             </li>
         </ul>
     )
