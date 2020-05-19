@@ -22,10 +22,15 @@ interface Tasks {
     id: number;
     type: string;
     request: {
+        id: number;
         created_at: string;
         status: string;
         notes: string;
-        handler: string | undefined;
+        handler: {
+                id: number;
+                first_name: string;
+                last_name: string;
+        } | undefined;
         organization: {
             name: string;
         };
@@ -85,6 +90,10 @@ function AdminTasksAvailableList() {
         return `${getDateMonth(date.getMonth() + 1)} ${date.getDate()}, ${date.getFullYear()}`;
     }
 
+    const formatName = (firstName: string, lastName: string) => {
+        return `${firstName.charAt(0).toUpperCase() + firstName.slice(1)} ${lastName.charAt(0).toUpperCase() + lastName.slice(1)}`;
+    }
+
     return (
         <div className="AdminTasksAvailableList" style={{height: 'inherit'}}>
             <Container paddingOnly={true}>
@@ -115,9 +124,7 @@ function AdminTasksAvailableList() {
                                     }
                                 })(),
                                 (() => {
-                                    const firstName = el.request.user.first_name;
-                                    const lastName = el.request.user.last_name;
-                                    const fullName = `${firstName.charAt(0).toUpperCase() + firstName.slice(1)} ${lastName.charAt(0).toUpperCase() + lastName.slice(1)}`
+                                    const fullName = formatName(el.request.user.first_name, el.request.user.last_name);
                                     switch (el.request.status) {
                                         case 'requested':
                                             return `Verify bank transfer screenshot from ${fullName}`
@@ -134,7 +141,11 @@ function AdminTasksAvailableList() {
                                     }
                                 })(),
                                 el.request.notes,
-                                el.request.handler || '-',
+                                (() => {
+                                    if (!el.request.handler) return '-';
+                                    const {first_name, last_name} = el.request.handler;
+                                    return formatName(first_name, last_name);
+                                })(),
                                 <div className="action--buttons">
                                     <IconButton 
                                         color="var(--accent-one-shade-two)"
@@ -146,7 +157,13 @@ function AdminTasksAvailableList() {
                                         color={el.request.handler ? 'var(--dark-red)' : "var(--status--success--color)"}
                                         waveColor="rgba(0, 0, 0, 0.2)"
                                         iconElement={el.request.handler ? <LockIcon /> : <LockOpenIcon />} 
-                                        clickHandler={() => console.log('view this')} />
+                                        clickHandler={
+                                            async () => {
+                                                // `/api/v1/purchase_requests/${request.id}/lock`
+                                                const result = await axios.get(`/v1/purchase_requests/${el.request.id}/lock`)
+                                                console.log(result);
+                                            }
+                                        } />
                                 </div>
                             ])
                         }
