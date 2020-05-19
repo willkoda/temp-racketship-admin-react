@@ -84,7 +84,6 @@ div.AdminTasks {
             div.box--details {
                 padding: 25px 30px;
                 border-top: 1px solid rgba(0, 0, 0, 0.15);
-                border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 
                 @media (max-width: 450px) {
                     padding: 15px;
@@ -98,6 +97,7 @@ div.AdminTasks {
                         margin-top: 20px;
                     }
                     div.key {
+                        color: var(--light-grey);
                         min-width: 170px;
                         text-align: left;
                         @media (max-width: 450px) {

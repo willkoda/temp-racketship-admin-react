@@ -1,27 +1,10 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
+import './AdminTasksAvailableView.scss';
 import {useParams, useHistory} from 'react-router-dom';
 import axios from '../../../../../auxiliary/axios';
 import Container from '../../../../../elements/Container/Container';
-import {formatName} from '../../../../../auxiliary/functions/format-name';
 
-interface RequestData {
-    referenceNumber: string;
-    bankAccount: {
-        accountName: string;
-        accountNumber: string;
-        bankName: string;
-    };
-    user: {
-        email: string;
-        firstName: string;
-        lastName: string;
-        mobileNumber: string;
-    };
-    organization: {
-        identifier: string;
-        name: string;
-    };
-}
+import AdminTasksAvailableViewPurchase from './AdminTasksAvailableViewPurchase/AdminTasksAvailableViewPurchase';
 
 function AdminTasksAvailableView() {
     const {request_type, id} = useParams();
@@ -36,7 +19,13 @@ function AdminTasksAvailableView() {
         (async () => {
             try {
                 const response = await axios.get(`/v1/${request_type}s/${id}`);
-                const {reference_number, bank_account, user, organization} = response.data;
+                const {reference_number, bank_account, user, organization, handler} = response.data;
+                const transactionHistory = user.transaction_history ? user.transaction_history : {
+                    failed: {count: 'N/A', total: 'N/A'},
+                    success: {count: 'N/A', total: 'N/A'},
+                    unconfirmed: {count: 'N/A', total: 'N/A'}
+                }
+                const {failed, success, unconfirmed} = transactionHistory;
                 setRequest({
                     referenceNumber: reference_number,
                     bankAccount: {
@@ -44,79 +33,93 @@ function AdminTasksAvailableView() {
                         accountNumber: bank_account.account_number,
                         bankName: bank_account.bank_name
                     },
+                    handler: handler ? {
+                        id: handler.id,
+                        firstName: handler.first_name,
+                        lastName: handler.last_name
+                    } : undefined,
                     user: {
                         email: user.email,
                         firstName: user.first_name,
                         lastName: user.last_name,
-                        mobileNumber: user.mobile_number
+                        mobileNumber: user.mobile_number,
+                        transactionHistory: {
+                            failed: {
+                                count: failed.count,
+                                total: failed.total
+                            },
+                            success: {
+                                count: success.count,
+                                total: success.total
+                            },
+                            unconfirmed: {
+                                count: unconfirmed.count,
+                                total: unconfirmed.total
+                            }
+                        }
                     },
                     organization: {
                         identifier: organization.identifier,
                         name: organization.name
                     }
                 })
-                console.log(response);
             } catch(error) {
+                console.log(error)
                 history.replace('/error');
             }
         })()
-    }, [request_type, history])
+    }, [request_type, id, history])
+
+    const renderTemplate = () => {
+        return request_type === 'purchase_request' ? 
+            <AdminTasksAvailableViewPurchase request={request} requestType={request_type} /> 
+                :
+            <div>withdrawal request under construction</div>
+    }
 
     return (
         <Container paddingOnly={true}>
-            <div className="AdminTasksAvailableView">
-                <h2 className="overview--heading">Member Overview</h2>
-                <div className="overview--boxes">
-                    <div className="box padding-bottom-10" style={{flex: request_type === 'purchase_request' ? '0 1 49%' : '0 1 100%'}}>
-                        <h3 className="box--heading">
-                            {request_type === 'purchase_request' ? 'Verify Bank Transfer' : 'Send Deposit'}
-                        </h3>
-                        <div className="box--details">
-                            <div className="box--row">
-                                <div className="key">Reference Number:</div>
-                                <div className="value">{request?.referenceNumber}</div>
-                            </div>
-                            <div className="box--row">
-                                <div className="key">Bank:</div>
-                                <div className="value">{request?.bankAccount.bankName}</div>
-                            </div>
-                            <div className="box--row">
-                                <div className="key">Bank Account:</div>
-                                <div className="value">{request?.bankAccount.accountNumber}</div>
-                            </div>
-                            <div className="box--row">
-                                <div className="key">User's Name:</div>
-                                <div className="value">
-                                    {
-                                        (() => {
-                                            if (!request) return '';
-                                            return formatName(request.user.firstName, request.user.lastName)
-                                        })()
-                                    }
-                                </div>
-                            </div>
-                            <div className="box--row">
-                                <div className="key">User's Email:</div>
-                                <div className="value">{request?.user.email}</div>
-                            </div>
-                            <div className="box--row">
-                                <div className="key">User's Number:</div>
-                                <div className="value">{request?.user.mobileNumber}</div>
-                            </div>
-                            <div className="box--row">
-                                <div className="key">Club Name:</div>
-                                <div className="value">{request?.organization.name}</div>
-                            </div>
-                            <div className="box--row">
-                                <div className="key">Club ID:</div>
-                                <div className="value">{request?.organization.identifier}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {renderTemplate()}
         </Container>
     )
+}
+
+export interface RequestData {
+    referenceNumber: string;
+    bankAccount: {
+        accountName: string;
+        accountNumber: string;
+        bankName: string;
+    };
+    handler?: {
+        id: number;
+        firstName: string;
+        lastName: string;
+    };
+    user: {
+        email: string;
+        firstName: string;
+        lastName: string;
+        mobileNumber: string;
+        transactionHistory: {
+            failed: {
+                count: number;
+                total: number;
+            }
+            success: {
+                count: number;
+                total: number;
+            }
+            unconfirmed: {
+                count: number;
+                total: number;
+            }
+        }
+    };
+    organization: {
+        identifier: string;
+        name: string;
+    };
 }
 
 export default AdminTasksAvailableView;
