@@ -10,6 +10,8 @@ import withStoreConnection from '../../../../../hoc/withStoreConnection';
 import {UserStateInterface} from '../../../../../redux/reducers/user-reducer';
 
 import {AdminNoticeContext} from '../../../AdminNoticeProvider';
+import {useHistory} from 'react-router-dom';
+import {formatName} from '../../../../../auxiliary/functions/format-name';
 
 import {
     AttachMoney as AttachMoneyIcon,
@@ -57,6 +59,7 @@ function AdminTasksAvailableList(props: Props) {
     const componentRef = useRef<HTMLDivElement>(null!);
     const initialData = {pagination: {pages: 1, count:  0, current: 1}, tasks: [], progressIndicatorVisible: true};
     const [tasks, setTasks] = useState<{pagination: Pagination, tasks: Array<Tasks>,  progressIndicatorVisible: boolean}>({...initialData});
+    const history = useHistory();
 
     useEffect(() => {
         (async function () {
@@ -100,10 +103,6 @@ function AdminTasksAvailableList(props: Props) {
     const transformDate = (dateString: string) => {
         const date = new Date(dateString);
         return `${getDateMonth(date.getMonth() + 1)} ${date.getDate()}, ${date.getFullYear()}`;
-    }
-
-    const formatName = (firstName: string, lastName: string) => {
-        return `${firstName.charAt(0).toUpperCase() + firstName.slice(1)} ${lastName.charAt(0).toUpperCase() + lastName.slice(1)}`;
     }
 
     return (
@@ -166,7 +165,9 @@ function AdminTasksAvailableList(props: Props) {
                                         color="var(--accent-one-shade-two)"
                                         waveColor="rgba(0, 0, 0, 0.2)"
                                         iconElement={<VisibilityIcon />} 
-                                        clickHandler={() => console.log('view this')} />
+                                        clickHandler={() => {
+                                            history.push(`/dashboard/tasks/available/view/${el.type}/${el.request.id}`)
+                                        }} />
 
                                     <IconButton
                                         color={el.request.handler ? el.request.handler.id === props.user.id ? "var(--status--success--color)" : 'var(--dark-red)' : "var(--status--success--color)"}
@@ -177,7 +178,6 @@ function AdminTasksAvailableList(props: Props) {
                                         clickHandler={
                                             async () => {
                                                 try {
-                                                    console.log(el.type)
                                                     const result = await axios.get(`/v1/${el.type}s/${el.request.id}/${el.request.handler ? 'unlock' : 'lock'}`);
                                                     const tasksClone = [...tasks.tasks];
                                                     const index = tasksClone.findIndex(task => task.request.id === el.request.id);

@@ -108,7 +108,8 @@ function Admin(props: Props) {
                         <Switch>
                             <Route exact path="/dashboard" component={AdminDashboard}/>
                             <Route path="/dashboard/users" render={() => <AdminUsers retrieveUsers={retrieveUsers} />} />
-                            <Route exact path="/dashboard/tasks" component={AdminTasks} />
+                            <Route path="/dashboard/tasks/" component={AdminTasks} />
+                            <Route path="/error" render={() => <Error />} />
                             <Route path="*" render={() => <Error />} />
                         </Switch>
                     </div>

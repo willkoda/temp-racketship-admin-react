@@ -8,7 +8,8 @@ function AdminTasks() {
     return (
         <div className="AdminTasks" style={{height: 'inherit'}}>
             <Switch>
-                <Route exact path="/dashboard/tasks/" component={AdminTasksAvailable}/>
+                <Route exact path="/dashboard/tasks" component={AdminTasksAvailable}/>
+                <Route path="/dashboard/tasks/available" component={AdminTasksAvailable}/>
                 <Route path="/dashboard/tasks/closed" render={() => <div>closed</div>} />
                 <Route path="*" render={() => <Error />} />
             </Switch>
