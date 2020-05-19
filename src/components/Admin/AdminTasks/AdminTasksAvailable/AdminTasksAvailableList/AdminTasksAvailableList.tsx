@@ -1,8 +1,15 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useContext} from 'react';
 import Table from '../../../../../elements/Table/Table';
 import axios from '../../../../../auxiliary/axios';
 import IconButton from '../../../../../elements/IconButton/IconButton';
 import Container from '../../../../../elements/Container/Container';
+
+import {compose} from 'redux';
+import {user} from '../../../../../auxiliary/state';
+import withStoreConnection from '../../../../../hoc/withStoreConnection';
+import {UserStateInterface} from '../../../../../redux/reducers/user-reducer';
+
+import {AdminNoticeContext} from '../../../AdminNoticeProvider';
 
 import {
     AttachMoney as AttachMoneyIcon,
@@ -41,7 +48,12 @@ interface Tasks {
     }
 }
 
-function AdminTasksAvailableList() {
+interface Props {
+    user: UserStateInterface
+}
+
+function AdminTasksAvailableList(props: Props) {
+    const adminNoticeContext = useContext(AdminNoticeContext);
     const componentRef = useRef<HTMLDivElement>(null!);
     const initialData = {pagination: {pages: 1, count:  0, current: 1}, tasks: [], progressIndicatorVisible: true};
     const [tasks, setTasks] = useState<{pagination: Pagination, tasks: Array<Tasks>,  progressIndicatorVisible: boolean}>({...initialData});
@@ -144,7 +156,10 @@ function AdminTasksAvailableList() {
                                 (() => {
                                     if (!el.request.handler) return '-';
                                     const {first_name, last_name} = el.request.handler;
-                                    return formatName(first_name, last_name);
+                                    return <div className="status verified">
+                                        {formatName(first_name, last_name)}
+                                    </div>
+                                    
                                 })(),
                                 <div className="action--buttons">
                                     <IconButton 
@@ -154,14 +169,35 @@ function AdminTasksAvailableList() {
                                         clickHandler={() => console.log('view this')} />
 
                                     <IconButton
-                                        color={el.request.handler ? 'var(--dark-red)' : "var(--status--success--color)"}
+                                        color={el.request.handler ? el.request.handler.id === props.user.id ? "var(--status--success--color)" : 'var(--dark-red)' : "var(--status--success--color)"}
                                         waveColor="rgba(0, 0, 0, 0.2)"
-                                        iconElement={el.request.handler ? <LockIcon /> : <LockOpenIcon />} 
+                                        iconElement={
+                                            el.request.handler ? <LockIcon /> : <LockOpenIcon />
+                                        } 
                                         clickHandler={
                                             async () => {
-                                                // `/api/v1/purchase_requests/${request.id}/lock`
-                                                const result = await axios.get(`/v1/purchase_requests/${el.request.id}/lock`)
-                                                console.log(result);
+                                                try {
+                                                    console.log(el.type)
+                                                    const result = await axios.get(`/v1/${el.type}s/${el.request.id}/${el.request.handler ? 'unlock' : 'lock'}`);
+                                                    const tasksClone = [...tasks.tasks];
+                                                    const index = tasksClone.findIndex(task => task.request.id === el.request.id);
+                                                    tasksClone.splice(index, 1, {
+                                                        ...tasksClone[index],
+                                                        request: {
+                                                            ...tasksClone[index].request,
+                                                            handler: result.data.handler
+                                                        }
+                                                    });
+                                                    setTasks({...tasks, tasks: tasksClone});
+                                                    
+                                                    adminNoticeContext.setNoticeText(el.request.handler ? 'The task has been unlocked succesfully' : 'The task has been locked succesfully');
+                                                    adminNoticeContext.setNoticeState('success');
+                                                } catch(error) {
+                                                    adminNoticeContext.setNoticeText(error.response.data.error);
+                                                    adminNoticeContext.setNoticeState('error');
+                                                } finally {
+                                                    adminNoticeContext.setNoticeTimestamp(Date.now());
+                                                }
                                             }
                                         } />
                                 </div>
@@ -200,4 +236,6 @@ function AdminTasksAvailableList() {
     )
 }
 
-export default AdminTasksAvailableList;
+export default compose(
+    withStoreConnection({stateProps: [user]})
+)(AdminTasksAvailableList);

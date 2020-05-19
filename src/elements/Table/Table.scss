@@ -130,7 +130,10 @@ div.Table {
                             background-color: var(--status--failure--background);
                             color:  var(--status--failure--color);
                         }
-                        &.verified, 
+                        &.verified {
+                            background-color: var(--status--approved--background);
+                            color:  var(--status--approved--color);
+                        }
                         &.chips_sent,
                         &.flagged {
                             background-color: var(--status--pending--background);
