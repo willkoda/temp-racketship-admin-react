@@ -205,6 +205,7 @@ function AdminTasksAvailableList(props: Props) {
                         }
                         tableRowClickHandler={(rowIndex: number) => {
                             const targetTask = tasks.tasks[rowIndex];
+                            console.log(targetTask)
                             history.push(`/dashboard/tasks/available/view/${targetTask.type}/${targetTask.request.id}`);
                         }}
                         nextPageClickHandler={

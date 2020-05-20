@@ -54,7 +54,7 @@ function AdminTasksAvailableViewPurchaseNote({request, updateNotesCallback}: Pro
                         width="200px"
                         clickCallback={() => {updateRequestNote('Image Seems Edited')}}
                     />
-                    <textarea defaultValue={request?.notes} placeholder="Enter note here" className="margin-top-10 padding-10" ref={textAreaRef} />
+                    <textarea defaultValue={request?.notes} placeholder="Enter note here" className="margin-top-10 padding-10" ref={textAreaRef}></textarea>
 
                     <Button
                         text="Submit"

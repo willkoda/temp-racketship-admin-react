@@ -8,7 +8,9 @@ import {AdminNoticeContext} from '../../../../AdminNoticeProvider';
 import {AdminModalContext} from '../../../../AdminModalProvider';
 import IconButton from '../../../../../../elements/IconButton/IconButton';
 import noteImage from '../../../../../../assets/images/note.svg';
+import noteTwoImage from '../../../../../../assets/images/note-two.svg';
 import AdminTasksAvailableViewPurchaseNote from './AdminTasksAvailableViewPurchaseNote/AdminTasksAvailableViewPurchaseNote';
+import AdminTasksAvailableViewPurchasePlayerNote from './AdminTasksAvailableViewPurchasePlayerNote/AdminTasksAvailableViewPurchasePlayerNote';
 
 interface Props {
     requestType: string;
@@ -184,6 +186,79 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                                 </div>
                             </div>
                         }
+                    </div>
+
+                    <div className="box player--notes">
+                        <h3 className="box--heading">
+                            <span>Player Notes</span>
+                            <div className="button--container" style={{
+                                position: 'absolute',
+                                right: '15px',
+                                top: '50%',
+                                transform: 'translateY(-50%)'
+                            }}>
+                                <IconButton
+                                    showToolTip={true}
+                                    toolTip="Add Player Note"
+                                    iconElement={<img src={noteTwoImage} style={{height: '25px'}} alt=""/>}
+                                    waveColor="rgba(0, 0, 0, 0.2)"
+                                    clickHandler={
+                                        // <AdminTasksAvailableViewPurchaseNote updateNotesCallback={callbacks.updateNote} request={request} />,
+                                        () => {
+                                            adminModal.setModalData({
+                                                header: 'Add a Player Note',
+                                                content: <AdminTasksAvailableViewPurchasePlayerNote request={request} />,
+                                                confirmationText: 'Submit'
+                                            })
+                                            adminModal.toggleModal();
+                                        }
+                                    }
+                                />
+                            </div>
+                        </h3>
+                        <div className="box--details">
+                            Under construction
+                        </div>
+                        {/* {
+                            request?.handler ? 
+                            <div className="box--details">
+                                <div className="request--notes padding-20">
+                                    {
+                                        request.notes.length === 0 ? 'There are no notes for this task.' : request.notes
+                                    }
+                                </div>
+                            </div>
+                            : 
+                            <div className="box--details">
+                                <div className="lock--task">
+                                    <span>This task has not been locked by anyone. Please lock this task before adding some notes</span>
+                                    <div className="margin-top-10">
+                                        <Button 
+                                            text="Lock Task" 
+                                            color="#fff"
+                                            waveColor="rgba(0, 0, 0, 0.2)"
+                                            backgroundColor="accent--three"
+                                            width="120px"
+                                            clickCallback={
+                                                async () => {
+                                                    try {
+                                                        const result = await axios.get(`/v1/${requestType}s/${request.id}/lock`);
+                                                        adminNotice.setNoticeText('The task has been locked successfully');
+                                                        adminNotice.setNoticeState('success');
+                                                        callbacks.lockTask(result.data)
+                                                        
+                                                    } catch(error) {
+                                                        adminNotice.setNoticeText(error.response.data.error);
+                                                        adminNotice.setNoticeState('error');
+                                                    } finally {
+                                                        adminNotice.setNoticeTimestamp(Date.now());
+                                                    }
+                                                }
+                                            } />
+                                    </div>
+                                </div>
+                            </div>
+                        } */}
                     </div>
                 </div> 
             </div>
