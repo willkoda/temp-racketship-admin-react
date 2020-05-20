@@ -19,7 +19,7 @@ function AdminTasksAvailableView() {
         (async () => {
             try {
                 const response = await axios.get(`/v1/${request_type}s/${id}`);
-                const {reference_number, bank_account, user, organization, handler, notes} = response.data;
+                const {reference_number, bank_account, user, organization, handler, notes, image_url} = response.data;
                 const transactionHistory = user.transaction_history ? user.transaction_history : {
                     failed: {count: 'N/A', total: 'N/A'},
                     success: {count: 'N/A', total: 'N/A'},
@@ -39,6 +39,7 @@ function AdminTasksAvailableView() {
                         firstName: handler.first_name,
                         lastName: handler.last_name
                     } : undefined,
+                    imageUrl: image_url,
                     notes: notes,
                     user: {
                         email: user.email,
@@ -116,6 +117,7 @@ export interface RequestData {
         firstName: string;
         lastName: string;
     };
+    imageUrl: string;
     notes: string;
     user: {
         email: string;
