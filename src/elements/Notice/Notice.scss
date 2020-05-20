@@ -6,10 +6,10 @@ div.Notice {
         color: #f44336;
         background-color: rgb(253, 236, 234);
         border-radius: 4px;
-        display: grid;
+        display: flex;
         grid-template-columns: 35px 1fr 20px;
         align-items: center;
-        
+        justify-content: space-between;
         cursor: pointer;
         svg.notice--icon {
             margin-right: 10px;

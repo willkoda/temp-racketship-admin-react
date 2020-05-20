@@ -1,6 +1,7 @@
 button.IconButton {
     background-color: transparent;
     color: #fff;
+    position: relative;
     svg {
         font-size: 25px;
     }
@@ -14,5 +15,25 @@ button.IconButton {
     transition: background-color 500ms ease-in-out;
     &:active {
         background-color: rgba(255, 255, 255, 0.4);
+    }
+
+    div.icon--button--tooltip {
+        background-color: rgba(0, 0, 0, 0.7);
+        text-transform: none;
+        padding: 6px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        position: absolute;
+        white-space: nowrap;
+        left: 50%;
+        transform: translateX(-50%) scale(0.85);
+        opacity: 0;
+        top: -25px;
+        transform-origin: center;
+        transition: transform 120ms ease-in-out, opacity 120ms ease-in-out;
+        backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        outline: none;
+        transform: translate3d(0,0,0);
     }
 }

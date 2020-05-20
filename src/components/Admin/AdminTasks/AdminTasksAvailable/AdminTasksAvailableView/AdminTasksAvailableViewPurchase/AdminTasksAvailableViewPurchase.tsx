@@ -124,6 +124,8 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                                     transform: 'translateY(-50%)'
                                 }}>
                                     <IconButton
+                                        showToolTip={true}
+                                        toolTip="Edit Note"
                                         iconElement={<img src={noteImage} style={{height: '25px'}} alt=""/>}
                                         waveColor="rgba(0, 0, 0, 0.2)"
                                         clickHandler={
@@ -136,38 +138,38 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                             </h3>
                             {
                                 request?.handler ? 
-                                    <div className="box--details">
-                                        <div>add notes under construction</div> 
-                                    </div>
-                                    : 
-                                    <div className="box--details">
-                                        <div className="lock--task">
-                                            <span>This task has not been locked by anyone. Please lock this task before adding some notes</span>
-                                            <div className="margin-top-10">
-                                                <Button 
-                                                    text="Lock Task" 
-                                                    color="#fff"
-                                                    waveColor="rgba(0, 0, 0, 0.2)"
-                                                    backgroundColor="accent--three"
-                                                    width="120px"
-                                                    clickCallback={
-                                                        async () => {
-                                                            try {
-                                                                const result = await axios.get(`/v1/${requestType}s/${request.id}/lock`);
-                                                                adminNotice.setNoticeText('The task has been locked successfully');
-                                                                adminNotice.setNoticeState('success');
-                                                                callbacks.lockTask(result.data)
-                                                                
-                                                            } catch(error) {
-                                                                adminNotice.setNoticeText(error.response.data.error);
-                                                                adminNotice.setNoticeState('error');
-                                                            } finally {
-                                                                adminNotice.setNoticeTimestamp(Date.now());
-                                                            }
+                                <div className="box--details">
+                                    <div>add notes under construction</div> 
+                                </div>
+                                : 
+                                <div className="box--details">
+                                    <div className="lock--task">
+                                        <span>This task has not been locked by anyone. Please lock this task before adding some notes</span>
+                                        <div className="margin-top-10">
+                                            <Button 
+                                                text="Lock Task" 
+                                                color="#fff"
+                                                waveColor="rgba(0, 0, 0, 0.2)"
+                                                backgroundColor="accent--three"
+                                                width="120px"
+                                                clickCallback={
+                                                    async () => {
+                                                        try {
+                                                            const result = await axios.get(`/v1/${requestType}s/${request.id}/lock`);
+                                                            adminNotice.setNoticeText('The task has been locked successfully');
+                                                            adminNotice.setNoticeState('success');
+                                                            callbacks.lockTask(result.data)
+                                                            
+                                                        } catch(error) {
+                                                            adminNotice.setNoticeText(error.response.data.error);
+                                                            adminNotice.setNoticeState('error');
+                                                        } finally {
+                                                            adminNotice.setNoticeTimestamp(Date.now());
                                                         }
-                                                    } />
-                                            </div>
+                                                    }
+                                                } />
                                         </div>
+                                    </div>
                                 </div>
                             }
                         </div>

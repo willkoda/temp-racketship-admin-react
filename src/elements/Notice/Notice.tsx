@@ -49,9 +49,9 @@ function Notice(props: Props) {
 
     return (
         <div className={`Notice ${props.margin}`} ref={noticeRef}>
-            <div className={`notice--content padding-left-right-15 margin-bottom-20 margin-top-10 margin-left-right-10 ${props.noticeState}`} onClick={close} ref={noticeContentRef}>
+            <div className={`notice--content padding-left-right-15 padding-top-bottom-10 ${props.noticeState}`} onClick={close} ref={noticeContentRef}>
                 <ErrorIcon className="notice--icon" />
-                <span className="notice--text margin-top-bottom-15">{props.text}</span>
+                <span className="notice--text ">{props.text}</span>
                 <CloseIcon className="notice--close--icon" />
             </div>
         </div>

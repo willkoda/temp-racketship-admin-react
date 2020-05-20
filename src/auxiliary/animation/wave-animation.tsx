@@ -6,8 +6,7 @@ interface Params {
 
 export function waveAnimation(params: Params) {
     params.waveElementRef.current.style.position = 'relative';
-    params.waveElementRef.current.style.overflow = 'hidden';
-
+    
     if (!params.waveElementRef.current.querySelector('.wave--cover')) {
         const cover = document.createElement('span');
         cover.classList.add('wave--cover');
@@ -31,11 +30,13 @@ export function waveAnimation(params: Params) {
     waveElement.style.zIndex = '0';
     waveElement.classList.add('wave--animation');
     waveElement.classList.add('--wave');
-    params.waveElementRef.current.appendChild(waveElement);
 
+    const coverElement = params.waveElementRef.current.querySelector('.wave--cover') as HTMLElement;
+    coverElement.style.overflow = 'hidden';
+    coverElement.appendChild(waveElement);
     setTimeout(() => {
         if (!params.waveElementRef.current) return;
-        params.waveElementRef.current.removeChild(waveElement);
+        coverElement?.removeChild(waveElement)
     }, 750);
 
     const rect = params.waveElementRef.current.getBoundingClientRect();
