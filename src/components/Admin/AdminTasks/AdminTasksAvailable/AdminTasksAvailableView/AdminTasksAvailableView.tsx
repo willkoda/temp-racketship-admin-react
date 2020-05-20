@@ -27,6 +27,7 @@ function AdminTasksAvailableView() {
                 }
                 const {failed, success, unconfirmed} = transactionHistory;
                 setRequest({
+                    id: response.data.id,
                     referenceNumber: reference_number,
                     bankAccount: {
                         accountName: bank_account.account_name,
@@ -72,7 +73,18 @@ function AdminTasksAvailableView() {
 
     const renderTemplate = () => {
         return request_type === 'purchase_request' ? 
-            <AdminTasksAvailableViewPurchase request={request} requestType={request_type} /> 
+            <AdminTasksAvailableViewPurchase 
+                request={request}
+                requestType={request_type}
+                callbacks={{
+                    lockTask: (lockedRequest) => {
+                        setRequest({
+                            ...request,
+                            handler: lockedRequest.handler
+                        })
+                    }
+                }}
+                /> 
                 :
             <div>withdrawal request under construction</div>
     }
@@ -85,6 +97,7 @@ function AdminTasksAvailableView() {
 }
 
 export interface RequestData {
+    id: number;
     referenceNumber: string;
     bankAccount: {
         accountName: string;

@@ -59,14 +59,14 @@ function Table(props: Props) {
                             margin="margin-right-10"
                             clickHandler={props.nextPageClickHandler!}
                             disabled={props.pagination.currentPage + 1 > props.pagination.pages}
-                            waveColor="#fff"
+                            waveColor="rgba(0, 0, 0, 0.2)"
                         />
                         <IconButton 
                             iconElement={<ChevronLeftIcon />} 
                             margin="margin-right-10" 
                             clickHandler={props.previousPageClickHandler!}
                             disabled={props.pagination.currentPage - 1 < 1}
-                            waveColor="#fff"
+                            waveColor="rgba(0, 0, 0, 0.2)"
                         />
                         <div className="page--tracker margin-left-right-40">
                             <span>{props.pagination.totalCount}</span>

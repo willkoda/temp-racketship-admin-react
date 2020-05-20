@@ -1,15 +1,22 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import './AdminTasksAvailableViewPurchase.scss';
 import {RequestData} from '../AdminTasksAvailableView';
 import {formatName} from '../../../../../../auxiliary/functions/format-name';
 import Button from '../../../../../../elements/Button/Button';
+import axios from '../../../../../../auxiliary/axios';
+import {AdminNoticeContext} from '../../../../AdminNoticeProvider';
 
 interface Props {
     requestType: string;
     request: RequestData;
+    callbacks: {
+        lockTask(request: RequestData): void;
+    }
 }
 
-function AdminTasksAvailableViewPurchase({requestType, request}: Props) {
+function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Props) {
+    const adminNotice = useContext(AdminNoticeContext);
+
     return (
         <div className="AdminTasksAvailableViewPurchase">
             <div className="AdminTasksAvailableView">
@@ -112,7 +119,28 @@ function AdminTasksAvailableViewPurchase({requestType, request}: Props) {
                                     <div className="lock--task">
                                         <span>This task has not been locked by anyone. Please lock this task before adding some notes</span>
                                         <div className="margin-top-10">
-                                            <Button text="Lock Task" color="#fff" waveColor="rgba(0, 0, 0, 0.2)" backgroundColor="accent--three" width="120px" />
+                                            <Button 
+                                                text="Lock Task" 
+                                                color="#fff"
+                                                waveColor="rgba(0, 0, 0, 0.2)"
+                                                backgroundColor="accent--three"
+                                                width="120px"
+                                                clickCallback={
+                                                    async () => {
+                                                        try {
+                                                            const result = await axios.get(`/v1/${requestType}s/${request.id}/lock`);
+                                                            adminNotice.setNoticeText('The task has been locked successfully');
+                                                            adminNotice.setNoticeState('success');
+                                                            callbacks.lockTask(result.data)
+                                                            
+                                                        } catch(error) {
+                                                            adminNotice.setNoticeText(error.response.data.error);
+                                                            adminNotice.setNoticeState('error');
+                                                        } finally {
+                                                            adminNotice.setNoticeTimestamp(Date.now());
+                                                        }
+                                                    }
+                                                } />
                                         </div>
                                     </div>
                                 </div>
