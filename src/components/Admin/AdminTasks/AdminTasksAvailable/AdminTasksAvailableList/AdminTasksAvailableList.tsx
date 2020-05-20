@@ -203,6 +203,10 @@ function AdminTasksAvailableList(props: Props) {
                                 </div>
                             ])
                         }
+                        tableRowClickHandler={(rowIndex: number) => {
+                            const targetTask = tasks.tasks[rowIndex];
+                            history.push(`/dashboard/tasks/available/view/${targetTask.type}/${targetTask.request.id}`);
+                        }}
                         nextPageClickHandler={
                             async () => {
                                 setTasks({...tasks, progressIndicatorVisible: true});
