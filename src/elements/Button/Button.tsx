@@ -3,7 +3,7 @@ import './Button.scss';
 import {waveAnimation} from '../../auxiliary/animation/wave-animation';
 
 interface Props {
-    backgroundColor: 'accent--three' | 'dark--red';
+    backgroundColor: 'accent--three' | 'dark--red' | 'status--approved' | 'status--requested' | 'status--success';
     borderRadius?: string;
     buttonType?: 'text';
     clickCallback?(): void;

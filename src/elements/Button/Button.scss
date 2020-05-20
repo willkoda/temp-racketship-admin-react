@@ -7,6 +7,15 @@ button.Button {
     &.accent--three {
         background-color: var(--accent-three-shade-one);
     }
+    &.status--approved {
+        background-color: var(--status--approved--color);
+    }
+    &.status--requested {
+        background-color: var(--status--requested--color);
+    }
+    &.status--success {
+        background-color: var(--status--success--color);
+    }
     &.dark--red {
         background-color: var(--dark-red);
     }

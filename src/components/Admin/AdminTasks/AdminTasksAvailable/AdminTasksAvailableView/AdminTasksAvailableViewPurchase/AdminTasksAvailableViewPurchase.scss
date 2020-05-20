@@ -5,4 +5,14 @@ div.AdminTasksAvailableViewPurchase {
             flex: 0 1 100%;
         }
     }
+
+    div.box--details {
+        div.request--notes {
+            background-color: var(--background-color);
+            color: var(--medium-grey);
+            font-weight: 300;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+    }
 }

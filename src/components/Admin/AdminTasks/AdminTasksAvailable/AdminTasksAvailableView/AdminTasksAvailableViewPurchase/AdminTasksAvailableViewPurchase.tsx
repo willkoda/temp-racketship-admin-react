@@ -5,19 +5,23 @@ import {formatName} from '../../../../../../auxiliary/functions/format-name';
 import Button from '../../../../../../elements/Button/Button';
 import axios from '../../../../../../auxiliary/axios';
 import {AdminNoticeContext} from '../../../../AdminNoticeProvider';
+import {AdminModalContext} from '../../../../AdminModalProvider';
 import IconButton from '../../../../../../elements/IconButton/IconButton';
 import noteImage from '../../../../../../assets/images/note.svg';
+import AdminTasksAvailableViewPurchaseNote from './AdminTasksAvailableViewPurchaseNote/AdminTasksAvailableViewPurchaseNote';
 
 interface Props {
     requestType: string;
     request: RequestData;
     callbacks: {
         lockTask(request: RequestData): void;
+        updateNote(request: RequestData): void;
     }
 }
 
 function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Props) {
     const adminNotice = useContext(AdminNoticeContext);
+    const adminModal = useContext(AdminModalContext);
 
     return (
         <div className="AdminTasksAvailableViewPurchase">
@@ -130,7 +134,12 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                                         waveColor="rgba(0, 0, 0, 0.2)"
                                         clickHandler={
                                             () => {
-                                                console.log('add note')
+                                                adminModal.setModalData({
+                                                    header: 'Edit Notes',
+                                                    content: <AdminTasksAvailableViewPurchaseNote updateNotesCallback={callbacks.updateNote} request={request} />,
+                                                    confirmationText: 'Submit'
+                                                })
+                                                adminModal.toggleModal();
                                             }
                                         }
                                     />
@@ -139,7 +148,11 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                             {
                                 request?.handler ? 
                                 <div className="box--details">
-                                    <div>add notes under construction</div> 
+                                    <div className="request--notes padding-20">
+                                        {
+                                            request.notes.length === 0 ? 'There are no notes for this task.' : request.notes
+                                        }
+                                    </div>
                                 </div>
                                 : 
                                 <div className="box--details">
