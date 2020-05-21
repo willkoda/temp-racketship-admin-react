@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import './AdminTasksAvailableViewPurchase.scss';
 import {RequestData} from '../AdminTasksAvailableView';
 import {formatName} from '../../../../../../auxiliary/functions/format-name';
@@ -11,6 +11,21 @@ import noteImage from '../../../../../../assets/images/note.svg';
 import noteTwoImage from '../../../../../../assets/images/note-two.svg';
 import AdminTasksAvailableViewPurchaseNote from './AdminTasksAvailableViewPurchaseNote/AdminTasksAvailableViewPurchaseNote';
 import AdminTasksAvailableViewPurchasePlayerNote from './AdminTasksAvailableViewPurchasePlayerNote/AdminTasksAvailableViewPurchasePlayerNote';
+import {
+    Person as PersonIcon,
+    CalendarToday as CalendarTodayIcon,
+    Edit as EditIcon,
+    Delete as DeleteIcon
+} from '@material-ui/icons';
+import {formatDate} from '../../../../../../auxiliary/functions/format-date';
+
+interface BankAccount {
+    id: number;
+    bank_name: string;
+    account_name: string;
+    account_number: string;
+    country: string;
+}
 
 interface Props {
     requestType: string;
@@ -24,6 +39,32 @@ interface Props {
 function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Props) {
     const adminNotice = useContext(AdminNoticeContext);
     const adminModal = useContext(AdminModalContext);
+    const [playerNotes, setPlayerNotes] = useState<Array<Note>>(null!);
+
+    const [clubBankAccounts, setClubBankAccounts] = useState<Array<BankAccount>>(null!);
+
+    useEffect(() => {
+        (async function() {
+            if (request) {
+                const response = await axios.get(`/v1/organizations/${request.organization.id}/members/${request.user.id}/player_notes?page=${1}`);
+                const {notes} = response.data;
+                setPlayerNotes(notes)
+            }
+        })()
+    }, [request])
+
+    useEffect(() => {
+        (async function() {
+            if (request) {
+                const response = await axios.get(`/v1/organizations/${request.organization.id}/bank_accounts?page=${1}`);
+                setClubBankAccounts(response.data.accounts);
+            }
+        })()
+    }, [request])
+
+    const updateRequestHandler = () => {
+
+    }
 
     return (
         <div className="AdminTasksAvailableViewPurchase">
@@ -203,11 +244,24 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                                     iconElement={<img src={noteTwoImage} style={{height: '25px'}} alt=""/>}
                                     waveColor="rgba(0, 0, 0, 0.2)"
                                     clickHandler={
-                                        // <AdminTasksAvailableViewPurchaseNote updateNotesCallback={callbacks.updateNote} request={request} />,
                                         () => {
                                             adminModal.setModalData({
                                                 header: 'Add a Player Note',
-                                                content: <AdminTasksAvailableViewPurchasePlayerNote request={request} />,
+                                                content: <AdminTasksAvailableViewPurchasePlayerNote 
+                                                    callback={
+                                                        (note) => {
+                                                            setPlayerNotes([
+                                                                ...playerNotes,
+                                                                note
+                                                            ])
+                                                            adminModal.hideModal();
+                                                            adminNotice.setNoticeText('Successfully added player note');
+                                                            adminNotice.setNoticeState('success');
+                                                            adminNotice.setNoticeTimestamp(Date.now());
+                                                        }
+                                                    } 
+                                                    request={request} 
+                                                    noteRequestType="add" />,
                                                 confirmationText: 'Submit'
                                             })
                                             adminModal.toggleModal();
@@ -217,48 +271,76 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                             </div>
                         </h3>
                         <div className="box--details">
-                            Under construction
-                        </div>
-                        {/* {
-                            request?.handler ? 
-                            <div className="box--details">
-                                <div className="request--notes padding-20">
-                                    {
-                                        request.notes.length === 0 ? 'There are no notes for this task.' : request.notes
-                                    }
-                                </div>
-                            </div>
-                            : 
-                            <div className="box--details">
-                                <div className="lock--task">
-                                    <span>This task has not been locked by anyone. Please lock this task before adding some notes</span>
-                                    <div className="margin-top-10">
-                                        <Button 
-                                            text="Lock Task" 
-                                            color="#fff"
-                                            waveColor="rgba(0, 0, 0, 0.2)"
-                                            backgroundColor="accent--three"
-                                            width="120px"
-                                            clickCallback={
-                                                async () => {
-                                                    try {
-                                                        const result = await axios.get(`/v1/${requestType}s/${request.id}/lock`);
-                                                        adminNotice.setNoticeText('The task has been locked successfully');
-                                                        adminNotice.setNoticeState('success');
-                                                        callbacks.lockTask(result.data)
+                            {
+                                playerNotes?.map((el, index) => (
+                                    <div key={index}>
+                                        <p className="text-align-left">{el.notes}</p>
+                                        <div className="player--note">
+                                            <div className="pair">
+                                                <PersonIcon/>
+                                                <span>{formatName(el.staff.first_name, el.staff.last_name)}</span>
+                                            </div>
+                                            <div className="pair">
+                                                <CalendarTodayIcon />
+                                                <span>{formatDate(el.created_at)}</span>
+                                            </div>
+                                            <div className="pair">
+                                                <IconButton
+                                                    color="var(--status--success--color)"
+                                                    waveColor="rgba(0, 0, 0, 0.2)"
+                                                    iconElement={<EditIcon />}
+                                                    clickHandler={() => {
+                                                        const note = playerNotes[index];
+                                                        adminModal.setModalData({
+                                                            header: 'Edit Note',
+                                                            content: <AdminTasksAvailableViewPurchasePlayerNote
+                                                                callback={(note) => {
+                                                                    const index = playerNotes.findIndex(el => el.id === note.id);
+                                                                    const clone = [...playerNotes];
+                                                                    clone.splice(index, 1, note);
+                                                                    setPlayerNotes(clone);
+
+                                                                    adminModal.hideModal();
+                                                                    adminNotice.setNoticeText('Successfully edited player note');
+                                                                    adminNotice.setNoticeState('success');
+                                                                    adminNotice.setNoticeTimestamp(Date.now());
+                                                                }}
+                                                                note={note} 
+                                                                request={request}
+                                                                noteRequestType="edit" />,
+                                                            confirmationText: 'Submit'
+                                                        })
+                                                        adminModal.toggleModal();
+                                                    }}
+                                                />
+
+                                                <IconButton
+                                                    color="var(--dark-red)"
+                                                    waveColor="rgba(0, 0, 0, 0.2)"
+                                                    iconElement={<DeleteIcon />}
+                                                    clickHandler={async () => {
+                                                        const clone = [...playerNotes];
+                                                        clone.splice(index, 1);
+                                                        setPlayerNotes(clone);
+                                                        try {
+                                                            await axios.delete(`/v1/organizations/${request.organization.id}/members/${request.user.id}/player_notes/${el.id}`);
+                                                            adminNotice.setNoticeText('Successfully deleted player note');
+                                                            adminNotice.setNoticeState('success');
+                                                            adminNotice.setNoticeTimestamp(Date.now());
+                                                        } catch(error) {
+                                                            adminNotice.setNoticeText('There was an error deleting the note');
+                                                            adminNotice.setNoticeState('error');
+                                                            adminNotice.setNoticeTimestamp(Date.now());
+                                                        }
                                                         
-                                                    } catch(error) {
-                                                        adminNotice.setNoticeText(error.response.data.error);
-                                                        adminNotice.setNoticeState('error');
-                                                    } finally {
-                                                        adminNotice.setNoticeTimestamp(Date.now());
-                                                    }
-                                                }
-                                            } />
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        } */}
+                                ))
+                            }
+                        </div>
                     </div>
                 </div> 
             </div>
@@ -275,8 +357,35 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                     </div>
                 </div>
             </section>
+
+            <section className="adjustment--and--admin--actions">
+                <div className="overview--boxes">
+                    <div className="box padding--bottom-10">
+                        <h3 className="box--heading">
+                            <span>Adjustment</span>
+                            <span className="sub--heading">If the player has sent it to the wrong account or entered an incorrect amount, please adjust the values accordingly.</span>
+                        </h3>
+                        <div className="box--details">
+                            <form>
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     )
+}
+
+export interface Note {
+    id: number;
+    created_at: string;
+    notes: string;
+    staff: {
+        id: number;
+        first_name: string;
+        last_name: string;
+    }
 }
 
 export default AdminTasksAvailableViewPurchase;

@@ -20,7 +20,6 @@ function AdminTasksAvailableView() {
             try {
                 const response = await axios.get(`/v1/${request_type}s/${id}`);
                 const {reference_number, bank_account, user, organization, handler, notes, image_url} = response.data;
-                console.log(response);
                 const transactionHistory = user.transaction_history ? user.transaction_history : {
                     failed: {count: 'N/A', total: 'N/A'},
                     success: {count: 'N/A', total: 'N/A'},

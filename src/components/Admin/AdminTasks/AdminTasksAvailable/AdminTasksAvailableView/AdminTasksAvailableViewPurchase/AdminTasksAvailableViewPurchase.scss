@@ -14,5 +14,24 @@ div.AdminTasksAvailableViewPurchase {
             border-radius: 4px;
             font-size: 13px;
         }
+
+        div.player--note {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+
+            div.pair {
+                display: flex;
+                align-items: center;
+                padding-bottom: 8px;
+                color: var(--medium-grey);
+                font-weight: 300;
+                font-size: 13px;
+                svg {
+                    margin-right: 4px;
+                    font-size: 22px;
+                }
+            }
+        }
     }
 }
