@@ -367,7 +367,7 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                         </h3>
                         <div className="box--details">
                             <form>
-                                
+
                             </form>
                         </div>
                     </div>

@@ -34,7 +34,7 @@ function AdminTasksAvailableViewPurchasePlayerNote({request, note, callback, not
     return (
         <div className="AdminTasksAvailableViewPurchasePlayerNote">
             <div className="content padding-20">
-                <textarea className="margin-top-10 padding-10" ref={textAreaRef} defaultValue={note ? note.notes : ''}></textarea>
+                <textarea key={note?.id} className="margin-top-10 padding-10" ref={textAreaRef} defaultValue={note ? note.notes : ''}></textarea>
                 <Button
                     text="Submit"
                     waveColor="rgba(0, 0, 0, 0.2)"
