@@ -16,6 +16,7 @@ interface Props {
         email?: boolean;
         minLength?: number;
         english?: boolean;
+        numbersOnly?: boolean;
     };
     valid: boolean;
     value: string;
@@ -43,6 +44,10 @@ function Input(props: Props) {
             english: {
                 valid: true,
                 errorMessage: 'Please enter only valid english letters.'
+            },
+            numbersOnly: {
+                valid: true,
+                errorMessage: 'Please enter only numbers.'
             }
         };
         const predicate: indexSignature = {
@@ -56,6 +61,10 @@ function Input(props: Props) {
             english: () => {
                 const regex = /^[a-zA-Z\s]*$/;
                 return result['english'] = regex.test(event.target.value);
+            },
+            numbersOnly: () => {
+                const regex = /^\d+$/;
+                return result['numbersOnly'] = regex.test(event.target.value);
             }
         }
 

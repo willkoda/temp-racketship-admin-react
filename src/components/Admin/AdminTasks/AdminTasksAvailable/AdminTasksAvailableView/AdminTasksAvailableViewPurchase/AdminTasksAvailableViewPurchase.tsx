@@ -12,7 +12,7 @@ import noteTwoImage from '../../../../../../assets/images/note-two.svg';
 import AdminTasksAvailableViewPurchaseNote from './AdminTasksAvailableViewPurchaseNote/AdminTasksAvailableViewPurchaseNote';
 import AdminTasksAvailableViewPurchasePlayerNote from './AdminTasksAvailableViewPurchasePlayerNote/AdminTasksAvailableViewPurchasePlayerNote';
 import Select from '../../../../../../elements/Select/Select';
-import Input from '../../../../../../elements/Input/Input';
+import Input, {ResultInterface} from '../../../../../../elements/Input/Input';
 import {
     Person as PersonIcon,
     CalendarToday as CalendarTodayIcon,
@@ -53,6 +53,7 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
     const initialState: InitialState = {value: '', valid: false, error: ''};
     const [selectedBankAccount, setSelectedBankAccount] = useState({...initialState});
     const [requestAmount,  setRequestAmount] = useState({...initialState});
+    const [timeStamp, setTimeStamp] = useState(0);
 
     useEffect(() => {
         (async function() {
@@ -88,7 +89,47 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
         })()
     }, [request])
 
-    
+    const changeHandler = (result: ResultInterface) => {
+        const newState = {...result};
+        delete newState.origin
+
+        switch(result.origin) {
+            case 'request-amount':
+                    setRequestAmount(newState)
+                break;
+            default:
+                throw new Error(`${result.origin} is not a valid origin`);
+        }
+    }
+
+    const formSubmitHandler = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setTimeStamp(Date.now())
+
+        const requestData = {
+            amount: requestAmount.value,
+            bank_account_id: selectedBankAccount.value
+        }
+
+        const result = [
+            requestAmount,
+            selectedBankAccount
+        ].map(e => e.valid);
+
+        if (result.every(valid => valid)) {
+            try {
+                await axios.patch('/v1/purchase_requests/' + request.id, requestData)
+                adminNotice.setNoticeText('Successfully updated payment details');
+                adminNotice.setNoticeState('success');
+                adminNotice.setNoticeTimestamp(Date.now());
+            } catch(error) {
+                console.log(error.response)
+                adminNotice.setNoticeText('There was a problem updating the payment details.');
+                adminNotice.setNoticeState('error');
+                adminNotice.setNoticeTimestamp(Date.now());
+            }
+        }
+    }
 
     return (
         <div className="AdminTasksAvailableViewPurchase">
@@ -390,12 +431,15 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                             <span className="sub--heading">If the player has sent it to the wrong account or entered an incorrect amount, please adjust the values accordingly.</span>
                         </h3>
                         <div className="box--details">
-                            <form>
+                            <form onSubmit={formSubmitHandler}>
                                 <Select
                                     id="club-bank-account"
+                                    margin="margin-top-20"
                                     error={selectedBankAccount.error}
                                     options={clubBankAccountOptions}
-                                    select={(result) => console.log(result)}
+                                    select={
+                                        (result) => setSelectedBankAccount({value: result.value, valid: result.valid, error: ''})
+                                    }
                                     selectColor="var(--medium-grey)"
                                     selectText="Select a Bank Account"
                                     initialValue={
@@ -408,23 +452,24 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
 
                                 <Input
                                     margin="margin-top-20" 
-                                    changeCallback={() => console.log('change me')}
+                                    changeCallback={changeHandler}
                                     error={requestAmount.error}
                                     id="request-amount"
                                     initialValue={requestAmount.value}
-                                    // inputBackgroundColor?: string;
-                                    // inputBorderColor?: string;
-                                    // margin?: string;
+                                    inputBorderColor="var(--accent-one-shade-one)"
                                     placeholder="Amount"
-                                    // timeStamp?: number;
-                                    // type?: string;
-                                    // validatedProps?: {
-                                    //     email?: boolean;
-                                    //     minLength?: number;
-                                    //     english?: boolean;
-                                    // };
+                                    timeStamp={timeStamp}
+                                    validatedProps = {{
+                                        numbersOnly: true
+                                    }}
                                     valid={requestAmount.valid}
                                     value={requestAmount.value.toString()}
+                                />
+
+                                <Button 
+                                    text="Submit"
+                                    waveColor="rgba(0, 0, 0, 0.2)"
+                                    backgroundColor="accent--three"
                                 />
                             </form>
                         </div>

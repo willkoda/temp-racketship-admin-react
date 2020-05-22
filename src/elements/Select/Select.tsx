@@ -154,7 +154,7 @@ function Select(props: Props) {
 
     return (
         <div 
-            className="Select" 
+            className={`Select ${props.margin}`}
             aria-label="Select" 
             role="combobox" 
             aria-expanded="false" 
