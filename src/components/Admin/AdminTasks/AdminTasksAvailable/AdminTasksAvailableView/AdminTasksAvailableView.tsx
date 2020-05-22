@@ -19,7 +19,7 @@ function AdminTasksAvailableView() {
         (async () => {
             try {
                 const response = await axios.get(`/v1/${request_type}s/${id}`);
-                const {reference_number, bank_account, user, organization, handler, notes, image_url} = response.data;
+                const {amount, reference_number, bank_account, user, organization, handler, notes, image_url} = response.data;
                 const transactionHistory = user.transaction_history ? user.transaction_history : {
                     failed: {count: 'N/A', total: 'N/A'},
                     success: {count: 'N/A', total: 'N/A'},
@@ -28,8 +28,10 @@ function AdminTasksAvailableView() {
                 const {failed, success, unconfirmed} = transactionHistory;
                 setRequest({
                     id: response.data.id,
+                    amount: amount,
                     referenceNumber: reference_number,
                     bankAccount: {
+                        id: bank_account.id,
                         accountName: bank_account.account_name,
                         accountNumber: bank_account.account_number,
                         bankName: bank_account.bank_name
@@ -108,8 +110,10 @@ function AdminTasksAvailableView() {
 
 export interface RequestData {
     id: number;
+    amount: number;
     referenceNumber: string;
     bankAccount: {
+        id: number;
         accountName: string;
         accountNumber: string;
         bankName: string;

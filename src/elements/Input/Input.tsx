@@ -5,7 +5,7 @@ interface Props {
     changeCallback(result: ResultInterface): void;
     error?: string;
     id: string;
-    initialValue? :string;
+    initialValue?: string;
     inputBackgroundColor?: string;
     inputBorderColor?: string;
     margin?: string;

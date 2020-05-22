@@ -11,6 +11,8 @@ import noteImage from '../../../../../../assets/images/note.svg';
 import noteTwoImage from '../../../../../../assets/images/note-two.svg';
 import AdminTasksAvailableViewPurchaseNote from './AdminTasksAvailableViewPurchaseNote/AdminTasksAvailableViewPurchaseNote';
 import AdminTasksAvailableViewPurchasePlayerNote from './AdminTasksAvailableViewPurchasePlayerNote/AdminTasksAvailableViewPurchasePlayerNote';
+import Select from '../../../../../../elements/Select/Select';
+import Input from '../../../../../../elements/Input/Input';
 import {
     Person as PersonIcon,
     CalendarToday as CalendarTodayIcon,
@@ -19,11 +21,17 @@ import {
 } from '@material-ui/icons';
 import {formatDate} from '../../../../../../auxiliary/functions/format-date';
 
+interface InitialState {
+    value: string;
+    valid: boolean;
+    error: string;
+}
+
 interface BankAccount {
     id: number;
-    bank_name: string;
     account_name: string;
     account_number: string;
+    bank_name: string;
     country: string;
 }
 
@@ -41,7 +49,10 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
     const adminModal = useContext(AdminModalContext);
     const [playerNotes, setPlayerNotes] = useState<Array<Note>>(null!);
 
-    const [clubBankAccounts, setClubBankAccounts] = useState<Array<BankAccount>>(null!);
+    const [clubBankAccountOptions, setClubBankAccountOptions] = useState<Array<{text: string, value: string}>>(null!);
+    const initialState: InitialState = {value: '', valid: false, error: ''};
+    const [selectedBankAccount, setSelectedBankAccount] = useState({...initialState});
+    const [requestAmount,  setRequestAmount] = useState({...initialState});
 
     useEffect(() => {
         (async function() {
@@ -57,14 +68,27 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
         (async function() {
             if (request) {
                 const response = await axios.get(`/v1/organizations/${request.organization.id}/bank_accounts?page=${1}`);
-                setClubBankAccounts(response.data.accounts);
+                setClubBankAccountOptions(response.data.accounts.map((account: BankAccount) => {
+                    return {
+                        text: `${account.bank_name} (${account.account_number})`,
+                        value: account.id.toString()
+                    }
+                }))
+                setSelectedBankAccount({
+                    value: request.bankAccount.id.toString(),
+                    valid: true,
+                    error: ''
+                })
+                setRequestAmount({
+                    value: request.amount.toString(),
+                    valid: true,
+                    error: ''
+                })
             }
         })()
     }, [request])
 
-    const updateRequestHandler = () => {
-
-    }
+    
 
     return (
         <div className="AdminTasksAvailableViewPurchase">
@@ -367,7 +391,41 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                         </h3>
                         <div className="box--details">
                             <form>
+                                <Select
+                                    id="club-bank-account"
+                                    error={selectedBankAccount.error}
+                                    options={clubBankAccountOptions}
+                                    select={(result) => console.log(result)}
+                                    selectColor="var(--medium-grey)"
+                                    selectText="Select a Bank Account"
+                                    initialValue={
+                                        (() =>  {
+                                            const result = clubBankAccountOptions?.find(el => el.value === selectedBankAccount.value)
+                                            return result ? result.text : '';
+                                        })()
+                                    }
+                                />
 
+                                <Input
+                                    margin="margin-top-20" 
+                                    changeCallback={() => console.log('change me')}
+                                    error={requestAmount.error}
+                                    id="request-amount"
+                                    initialValue={requestAmount.value}
+                                    // inputBackgroundColor?: string;
+                                    // inputBorderColor?: string;
+                                    // margin?: string;
+                                    placeholder="Amount"
+                                    // timeStamp?: number;
+                                    // type?: string;
+                                    // validatedProps?: {
+                                    //     email?: boolean;
+                                    //     minLength?: number;
+                                    //     english?: boolean;
+                                    // };
+                                    valid={requestAmount.valid}
+                                    value={requestAmount.value.toString()}
+                                />
                             </form>
                         </div>
                     </div>
