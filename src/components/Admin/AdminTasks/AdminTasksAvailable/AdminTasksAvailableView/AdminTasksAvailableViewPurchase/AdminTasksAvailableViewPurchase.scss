@@ -33,5 +33,15 @@ div.AdminTasksAvailableViewPurchase {
                 }
             }
         }
+
+        div.action--buttons {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            button:not(:first-of-type) {
+                margin-top: 10px;
+            }
+        }
     }
 }

@@ -18,7 +18,8 @@ import {
     SyncAlt as SyncAltIcon,
     Visibility as VisibilityIcon,
     Lock as LockIcon,
-    LockOpen as LockOpenIcon
+    LockOpen as LockOpenIcon,
+    CheckCircle as CheckCircleIcon
 } from '@material-ui/icons';
 
 interface Pagination {
@@ -144,7 +145,16 @@ function AdminTasksAvailableList(props: Props) {
                                         case 'verified':
                                             return `Send chips to ${fullName}`
                                         case 'chips_sent':
-                                            return `Mark complete`
+                                            return (
+                                                <span style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    color: 'var(--status--success--color)'
+                                                }}>
+                                                    <CheckCircleIcon className="margin-right-5" />
+                                                    <span>Mark Complete</span>
+                                                </span>
+                                            )
                                         case 'flagged':
                                             return `Review bank transfer from ${fullName}`
                                         default: 

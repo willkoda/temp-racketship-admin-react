@@ -1,6 +1,7 @@
 import React, {useRef} from 'react';
 import './Button.scss';
 import {waveAnimation} from '../../auxiliary/animation/wave-animation';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface Props {
     backgroundColor: 'accent--three' | 'dark--red' | 'status--approved' | 'status--requested' | 'status--success';
@@ -8,6 +9,7 @@ interface Props {
     buttonType?: 'text';
     clickCallback?(): void;
     color?: string;
+    loading?: boolean;
     margin?: string;
     padding?: string;
     text: string;
@@ -25,17 +27,26 @@ function Button(props: Props) {
     }
     return (
         <button 
-            className={`Button ${props.backgroundColor} ${props.margin}`}
+            className={`Button ${props.loading ? 'loading' : props.backgroundColor} ${props.margin}`}
             data-button-type={props.buttonType}
             onClick={handleClick}
             ref={waveElementRef}
             style={{
                 borderRadius: props.borderRadius || '3px',
                 color: props.color || '#fff',
-                padding: props.padding || '12px 10px',
+                padding: props.padding || '10px 8px',
                 width: props.width || '100%'
-            }}>
-            {props.text}
+            }}
+            disabled={props.loading}
+            >
+            {
+                props.loading ? 
+                    <span className="loading--element--container">
+                        <CircularProgress size={15} style={{color: 'rgba(0, 0, 0, 0.3)'}} />
+                    </span>
+                        :
+                    props.text
+            }
         </button>
     )
 }

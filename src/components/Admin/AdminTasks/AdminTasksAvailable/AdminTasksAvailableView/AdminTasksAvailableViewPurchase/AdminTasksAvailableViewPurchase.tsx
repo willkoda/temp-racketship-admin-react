@@ -20,6 +20,7 @@ import {
     Delete as DeleteIcon
 } from '@material-ui/icons';
 import {formatDate} from '../../../../../../auxiliary/functions/format-date';
+import {useHistory} from 'react-router-dom';
 
 interface InitialState {
     value: string;
@@ -54,6 +55,8 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
     const [selectedBankAccount, setSelectedBankAccount] = useState({...initialState});
     const [requestAmount,  setRequestAmount] = useState({...initialState});
     const [timeStamp, setTimeStamp] = useState(0);
+
+    const history = useHistory();
 
     useEffect(() => {
         (async function() {
@@ -266,28 +269,41 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                                 <div className="lock--task">
                                     <span>This task has not been locked by anyone. Please lock this task before adding some notes</span>
                                     <div className="margin-top-10">
-                                        <Button 
-                                            text="Lock Task" 
-                                            color="#fff"
-                                            waveColor="rgba(0, 0, 0, 0.2)"
-                                            backgroundColor="accent--three"
-                                            width="120px"
-                                            clickCallback={
-                                                async () => {
-                                                    try {
-                                                        const result = await axios.get(`/v1/${requestType}s/${request.id}/lock`);
-                                                        adminNotice.setNoticeText('The task has been locked successfully');
-                                                        adminNotice.setNoticeState('success');
-                                                        callbacks.lockTask(result.data)
-                                                        
-                                                    } catch(error) {
-                                                        adminNotice.setNoticeText(error.response.data.error);
-                                                        adminNotice.setNoticeState('error');
-                                                    } finally {
-                                                        adminNotice.setNoticeTimestamp(Date.now());
-                                                    }
-                                                }
-                                            } />
+                                        {
+                                            (() => {
+                                                return <Button 
+                                                    text="Lock Task" 
+                                                    color="#fff"
+                                                    waveColor="rgba(0, 0, 0, 0.2)"
+                                                    backgroundColor="accent--three"
+                                                    width="120px"
+                                                    clickCallback={
+                                                        async () => {
+                                                            try {
+                                                                const result = await axios.get(`/v1/${requestType}s/${request.id}/lock`);
+                                                                adminNotice.setNoticeText('The task has been locked successfully');
+                                                                adminNotice.setNoticeState('success');
+                                                                const {id, first_name, last_name} = result.data.handler;
+                                                                callbacks.lockTask({
+                                                                    ...result.data,
+                                                                    handler: {
+                                                                        id: id,
+                                                                        firstName: first_name,
+                                                                        lastName: last_name
+                                                                    }
+                                                                });
+                                                                
+                                                            } catch(error) {
+                                                                adminNotice.setNoticeText(error.response.data.error);
+                                                                adminNotice.setNoticeState('error');
+                                                            } finally {
+                                                                adminNotice.setNoticeTimestamp(Date.now());
+                                                            }
+                                                        }
+                                                    } />
+                                            })()
+                                        }
+                                            
                                     </div>
                                 </div>
                             </div>
@@ -423,7 +439,7 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                 </div>
             </section>
 
-            <section className="adjustment--and--admin--actions">
+            <section className="adjustment">
                 <div className="overview--boxes">
                     <div className="box padding--bottom-10">
                         <h3 className="box--heading">
@@ -473,6 +489,109 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                                 />
                             </form>
                         </div>
+                    </div>
+
+                    <div className="box padding--bottom-10">
+                        <h3 className="box--heading">
+                            <span>Actions</span>
+                            {
+                                request?.handler ? 
+                                    <span className="sub--heading">This task is locked by {formatName(request?.handler.firstName, request?.handler.lastName)}.</span> 
+                                        : 
+                                    <span className="sub--heading">This task has not been locked by anyone. Please lock this task before performing any of the actions below.</span>
+                            }
+                        </h3>
+                        {
+                            request?.handler ?
+                                <div className="box--details">
+                                    <div className="action--buttons">
+                                        <Button 
+                                            text="Complete" 
+                                            color="#fff"
+                                            waveColor="rgba(0, 0, 0, 0.2)"
+                                            backgroundColor="accent--three"
+                                            width="190px"
+                                            clickCallback={
+                                                async () => {
+                                                    try {
+                                                        await axios.get(`/v1/purchase_requests/${request.id}/verify_screenshot`);
+                                                        await axios.get(`/v1/purchase_requests/${request.id}/send_chips`);
+                                                        history.push('/dashboard/tasks');
+                                                    } catch(error) {
+                                                        console.log(error.response)
+                                                    }
+                                                }
+                                            }
+                                        />
+
+                                        <Button 
+                                            text="Complete and Send Chips" 
+                                            color="#fff"
+                                            waveColor="rgba(0, 0, 0, 0.2)"
+                                            backgroundColor="accent--three"
+                                            width="190px"
+                                            clickCallback={
+                                                () => console.log('complete')
+                                            }
+                                        />
+
+                                        <Button 
+                                            text="Flag" 
+                                            color="#fff"
+                                            waveColor="rgba(0, 0, 0, 0.2)"
+                                            backgroundColor="accent--three"
+                                            width="190px"
+                                            clickCallback={
+                                                () => console.log('complete')
+                                            }
+                                        />
+
+                                        <Button 
+                                            text="Ask Telegram" 
+                                            color="#fff"
+                                            waveColor="rgba(0, 0, 0, 0.2)"
+                                            backgroundColor="accent--three"
+                                            width="190px"
+                                            clickCallback={
+                                                () => console.log('complete')
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                                    :
+                                <div className="box--details">
+                                    <Button 
+                                        text="Lock Task" 
+                                        color="#fff"
+                                        waveColor="rgba(0, 0, 0, 0.2)"
+                                        backgroundColor="accent--three"
+                                        width="120px"
+                                        clickCallback={
+                                            async () => {
+                                                try {
+                                                    const result = await axios.get(`/v1/${requestType}s/${request.id}/lock`);
+                                                    adminNotice.setNoticeText('The task has been locked successfully');
+                                                    adminNotice.setNoticeState('success');
+                                                    const {id, first_name, last_name} = result.data.handler;
+                                                    callbacks.lockTask({
+                                                        ...result.data,
+                                                        handler: {
+                                                            id: id,
+                                                            firstName: first_name,
+                                                            lastName: last_name
+                                                        }
+                                                    });
+                                                    
+                                                } catch(error) {
+                                                    adminNotice.setNoticeText(error.response.data.error);
+                                                    adminNotice.setNoticeState('error');
+                                                } finally {
+                                                    adminNotice.setNoticeTimestamp(Date.now());
+                                                }
+                                            }
+                                    } />
+                                </div>
+                        }
                     </div>
                 </div>
             </section>

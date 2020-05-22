@@ -19,6 +19,11 @@ button.Button {
     &.dark--red {
         background-color: var(--dark-red);
     }
+    &.loading {
+        background-color: rgba(0, 0, 0, 0.2);
+        cursor: not-allowed;
+        box-shadow: none;
+    }
 
     &[data-button-type=text] {
         width: auto;
