@@ -4,6 +4,7 @@ import Error from '../../../../components/Error/Error';
 
 import AdminTasksAvailableList from './AdminTasksAvailableList/AdminTasksAvailableList';
 import AdminTasksAvailableView from './AdminTasksAvailableView/AdminTasksAvailableView';
+import AdminTasksAvailableSendChips from './AdminTasksAvailableSendChips/AdminTasksAvailableSendChips';
 
 function AdminTasksAvailable() {
     return (
@@ -11,6 +12,7 @@ function AdminTasksAvailable() {
             <Route exact path="/dashboard/tasks" component={AdminTasksAvailableList} />
             <Route exact path="/dashboard/tasks/available/" component={AdminTasksAvailableList} />
             <Route path ="/dashboard/tasks/available/view/:request_type/:id" component={AdminTasksAvailableView} />
+            <Route path ="/dashboard/tasks/available/send-chips/:id" component={AdminTasksAvailableSendChips} />
             <Route path="*" render={() => <Error />} />
         </Switch>
     )

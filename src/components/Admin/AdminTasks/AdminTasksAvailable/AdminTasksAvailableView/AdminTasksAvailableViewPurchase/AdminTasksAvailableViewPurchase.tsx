@@ -531,7 +531,14 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                                             backgroundColor="accent--three"
                                             width="190px"
                                             clickCallback={
-                                                () => console.log('complete')
+                                                async () => {
+                                                    try {
+                                                        const response = await axios.get(`/v1/purchase_requests/${request.id}/verify_screenshot`);
+                                                        history.replace(`/dashboard/tasks/available/send-chips/${response.data.id}`);
+                                                    } catch(error) {
+                                                        console.log(error.response);
+                                                    }
+                                                }
                                             }
                                         />
 
@@ -539,7 +546,7 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                                             text="Flag" 
                                             color="#fff"
                                             waveColor="rgba(0, 0, 0, 0.2)"
-                                            backgroundColor="accent--three"
+                                            backgroundColor="accent--two"
                                             width="190px"
                                             clickCallback={
                                                 () => console.log('complete')
@@ -550,7 +557,7 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                                             text="Ask Telegram" 
                                             color="#fff"
                                             waveColor="rgba(0, 0, 0, 0.2)"
-                                            backgroundColor="accent--three"
+                                            backgroundColor="dark--red"
                                             width="190px"
                                             clickCallback={
                                                 () => console.log('complete')

@@ -4,6 +4,9 @@ button.Button {
     border: none;
     box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
     transition: background-color 700ms ease-in-out;
+    &.accent--two {
+        background-color: var(--accent-two-shade-two);
+    }
     &.accent--three {
         background-color: var(--accent-three-shade-one);
     }

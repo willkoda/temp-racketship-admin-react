@@ -13,6 +13,8 @@ import {AdminNoticeContext} from '../../../AdminNoticeProvider';
 import {useHistory} from 'react-router-dom';
 import {formatName} from '../../../../../auxiliary/functions/format-name';
 
+import chip from '../../../../../assets/images/chip.svg';
+
 import {
     AttachMoney as AttachMoneyIcon,
     SyncAlt as SyncAltIcon,
@@ -137,20 +139,26 @@ function AdminTasksAvailableList(props: Props) {
                                 })(),
                                 (() => {
                                     const fullName = formatName(el.request.user.first_name, el.request.user.last_name);
+                                    const textWithIcon = {
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        color: 'var(--status--success--color)'
+                                    }
                                     switch (el.request.status) {
                                         case 'requested':
                                             return `Verify bank transfer screenshot from ${fullName}`
                                         case 'locked':
                                             return `Verify bank transfer screenshot from ${fullName}`
                                         case 'verified':
-                                            return `Send chips to ${fullName}`
+                                            return (
+                                                <span style={textWithIcon}>
+                                                    <img src={chip} alt="" style={{height: '24px'}} className="margin-right-5"/>
+                                                    <span>{`Send chips to ${fullName}`}</span>
+                                                </span>
+                                            )
                                         case 'chips_sent':
                                             return (
-                                                <span style={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    color: 'var(--status--success--color)'
-                                                }}>
+                                                <span style={textWithIcon}>
                                                     <CheckCircleIcon className="margin-right-5" />
                                                     <span>Mark Complete</span>
                                                 </span>

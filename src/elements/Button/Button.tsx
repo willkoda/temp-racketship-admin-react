@@ -4,7 +4,7 @@ import {waveAnimation} from '../../auxiliary/animation/wave-animation';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface Props {
-    backgroundColor: 'accent--three' | 'dark--red' | 'status--approved' | 'status--requested' | 'status--success';
+    backgroundColor: 'accent--two' | 'accent--three' | 'dark--red' | 'status--approved' | 'status--requested' | 'status--success';
     borderRadius?: string;
     buttonType?: 'text';
     clickCallback?(): void;

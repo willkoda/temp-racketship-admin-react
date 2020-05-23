@@ -123,6 +123,10 @@ export interface RequestData {
         firstName: string;
         lastName: string;
     };
+    linkedAccount?: {
+        gameId: string;
+        userName: string;
+    }
     imageUrl: string;
     notes: string;
     user: {
