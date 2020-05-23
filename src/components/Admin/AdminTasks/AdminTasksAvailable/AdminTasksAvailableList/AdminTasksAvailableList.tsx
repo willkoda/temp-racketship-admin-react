@@ -184,7 +184,13 @@ function AdminTasksAvailableList(props: Props) {
                                         waveColor="rgba(0, 0, 0, 0.2)"
                                         iconElement={<VisibilityIcon />} 
                                         clickHandler={() => {
-                                            history.push(`/dashboard/tasks/available/view/${el.type}/${el.request.id}`)
+                                            switch (el.request.status) {
+                                                case 'verified':
+                                                    history.push(`/dashboard/tasks/available/send-chips/${el.request.id}`);
+                                                    break;
+                                                default:
+                                                    history.push(`/dashboard/tasks/available/view/${el.type}/${el.request.id}`);        
+                                            }
                                         }} />
 
                                     <IconButton
@@ -223,7 +229,13 @@ function AdminTasksAvailableList(props: Props) {
                         }
                         tableRowClickHandler={(rowIndex: number) => {
                             const targetTask = tasks.tasks[rowIndex];
-                            history.push(`/dashboard/tasks/available/view/${targetTask.type}/${targetTask.request.id}`);
+                            switch (targetTask.request.status) {
+                                case 'verified':
+                                    history.push(`/dashboard/tasks/available/send-chips/${targetTask.request.id}`);
+                                    break;
+                                default:
+                                    history.push(`/dashboard/tasks/available/view/${targetTask.type}/${targetTask.request.id}`);        
+                            }
                         }}
                         nextPageClickHandler={
                             async () => {

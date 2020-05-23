@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import axios from '../../../../../auxiliary/axios';
 import Container from '../../../../../elements/Container/Container';
 import {useParams, useHistory} from 'react-router-dom';
@@ -6,10 +6,13 @@ import {RequestData} from '../../AdminTasksAvailable/AdminTasksAvailableView/Adm
 import {formatName} from '../../../../../auxiliary/functions/format-name';
 import Button from '../../../../../elements/Button/Button';
 
+import {AdminNoticeContext} from '../../../AdminNoticeProvider';
+
 function AdminTasksAvailableSendChips() {
     const {id} = useParams();
     const history = useHistory();
     const [purchaseRequest, setPurchaseRequest] = useState<Partial<RequestData>>(null!)
+    const adminNotice = useContext(AdminNoticeContext);
 
     useEffect(() => {
         if (!id) {
@@ -102,6 +105,20 @@ function AdminTasksAvailableSendChips() {
                                 text="Complete Task"
                                 width="120px"
                                 margin="margin-top-20"
+                                clickCallback={
+                                    async () => {
+                                        try {
+                                            await axios.get(`/v1/purchase_requests/${id}/send_chips`);
+                                            history.replace(`/dashboard/tasks`);
+
+                                            adminNotice.setNoticeText('The chips have been successfully sent.');
+                                            adminNotice.setNoticeState('success');
+                                            adminNotice.setNoticeTimestamp(Date.now());
+                                        } catch(error) {
+                                            console.log(error.response);
+                                        }
+                                    }
+                                }
                             />
                         </div>
                     </div>
