@@ -491,7 +491,9 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                         </div>
                     </div>
 
-                    <div className="box padding--bottom-10">
+                    
+                    <div className="admin--actions" style={{flex: '0 1 49%'}}>
+                        <div className="box padding-bottom-10">
                         <h3 className="box--heading">
                             <span>Actions</span>
                             {
@@ -607,7 +609,63 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                                 </div>
                         }
                     </div>
+                        <div className="box padding-bottom-10">
+                            <h3 className="box--heading" style={{
+                                backgroundColor: 'var(--primary)',
+                                borderTopLeftRadius: '4px',
+                                borderTopRightRadius: '4px',
+                            }}>
+                                <span style={{color: '#fff'}}>Administrator Actions</span>
+                            </h3>
+                            <div className="box--details">
+                                <Button
+                                    text="Mark as Success"
+                                    waveColor="rgba(0, 0, 0, 0.2)"
+                                    backgroundColor="status--success"
+                                    width="130px"
+                                    margin="margin-right-10"
+                                    clickCallback={
+                                        async () => {
+                                            try {
+                                                const response = await axios.get(`/v1/purchase_requests/${request.id}/complete`);
+                                                console.log(response);
+                                            } catch(error) {
+                                                console.log(error.response)
+                                                adminModal.setModalData({
+                                                    header: 'Notice',
+                                                    content: (
+                                                        <div className="padding-top-bottom-20">
+                                                            <p className="padding-left-right-20 padding-bottom-20">Please perform any of the above actions before marking this task.</p>
+                                                            <div className="button--container padding-top-20" style={{borderTop: '1px solid rgba(0, 0, 0, 0.2)'}}>
+                                                                <Button
+                                                                    text="Ok"
+                                                                    waveColor="rgba(0, 0, 0, 0.2)"
+                                                                    backgroundColor="status--approved"
+                                                                    width="120px"
+                                                                    clickCallback={() => { adminModal.hideModal()}}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    ),
+                                                    confirmationText: 'Ok'
+                                                });
+                                                adminModal.toggleModal();
+                                            }
+                                        }
+                                    }
+                                />
+
+                                <Button
+                                    text="Mark as Failure"
+                                    waveColor="rgba(0, 0, 0, 0.2)"
+                                    backgroundColor="dark--red"
+                                    width="130px"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </section>
         </div>
     )
