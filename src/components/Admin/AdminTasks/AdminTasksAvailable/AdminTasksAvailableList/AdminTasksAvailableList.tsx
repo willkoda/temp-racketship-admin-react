@@ -10,7 +10,7 @@ import withStoreConnection from '../../../../../hoc/withStoreConnection';
 import {UserStateInterface} from '../../../../../redux/reducers/user-reducer';
 
 import {AdminNoticeContext} from '../../../AdminNoticeProvider';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import {formatName} from '../../../../../auxiliary/functions/format-name';
 
 import chip from '../../../../../assets/images/chip.svg';
@@ -63,10 +63,10 @@ function AdminTasksAvailableList(props: Props) {
     const initialData = {pagination: {pages: 1, count:  0, current: 1}, tasks: [], progressIndicatorVisible: true};
     const [tasks, setTasks] = useState<{pagination: Pagination, tasks: Array<Tasks>,  progressIndicatorVisible: boolean}>({...initialData});
     const history = useHistory();
-
+    const {page} = useParams();
     useEffect(() => {
         (async function () {
-            const response = await axios.get('/v1/tasks?page=1');
+            const response = await axios.get(`/v1/tasks?page=${page ? page : '1'}`);
             const {tasks, pagination} = response.data;
             if (componentRef.current) setTasks({tasks: tasks, pagination: pagination, progressIndicatorVisible: false});
         })()
@@ -244,6 +244,7 @@ function AdminTasksAvailableList(props: Props) {
                                 const {pagination} = response.data;
                                 if (componentRef.current) {
                                     setTasks({pagination: pagination, tasks: response.data.tasks, progressIndicatorVisible: false});
+                                    history.replace(`/dashboard/tasks/available/${tasks.pagination.current + 1}`)
                                 }
                             }
                         }
@@ -254,6 +255,7 @@ function AdminTasksAvailableList(props: Props) {
                                 const {pagination} = response.data;
                                 if (componentRef.current) {
                                     setTasks({pagination: pagination, tasks: response.data.tasks, progressIndicatorVisible: false});
+                                    history.replace(`/dashboard/tasks/available/${tasks.pagination.current - 1}`)
                                 }
                             }
                         }

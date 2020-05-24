@@ -10,7 +10,7 @@ function AdminTasksAvailable() {
     return (
         <Switch>
             <Route exact path="/dashboard/tasks" component={AdminTasksAvailableList} />
-            <Route exact path="/dashboard/tasks/available/" component={AdminTasksAvailableList} />
+            <Route exact path="/dashboard/tasks/available/:page" component={AdminTasksAvailableList} />
             <Route path ="/dashboard/tasks/available/view/:request_type/:id" component={AdminTasksAvailableView} />
             <Route path ="/dashboard/tasks/available/send-chips/:id" component={AdminTasksAvailableSendChips} />
             <Route path="*" render={() => <Error />} />
