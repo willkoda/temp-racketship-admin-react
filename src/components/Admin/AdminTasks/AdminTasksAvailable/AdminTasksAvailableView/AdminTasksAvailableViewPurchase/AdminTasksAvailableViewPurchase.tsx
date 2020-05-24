@@ -492,7 +492,7 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                     </div>
 
                     
-                    <div className="admin--actions" style={{flex: '0 1 49%'}}>
+                    <div className="admin--actions">
                         <div className="box padding-bottom-10">
                         <h3 className="box--heading">
                             <span>Actions</span>

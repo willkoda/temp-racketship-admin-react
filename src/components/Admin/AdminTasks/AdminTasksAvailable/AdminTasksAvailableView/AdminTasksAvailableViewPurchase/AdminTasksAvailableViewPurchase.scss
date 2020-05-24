@@ -1,5 +1,6 @@
 div.AdminTasksAvailableViewPurchase {
-    div.request--details {
+    div.request--details,
+    div.admin--actions {
         flex: 0 1 49%;
         @media (max-width: 1100px) {
             flex: 0 1 100%;
