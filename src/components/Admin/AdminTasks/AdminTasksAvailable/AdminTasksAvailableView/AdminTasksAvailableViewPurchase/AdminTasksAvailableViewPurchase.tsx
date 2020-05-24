@@ -549,7 +549,14 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                                             backgroundColor="accent--two"
                                             width="190px"
                                             clickCallback={
-                                                () => console.log('complete')
+                                                () => {
+                                                    adminModal.setModalData({
+                                                        header: 'Flag Request',
+                                                        content: <AdminTasksAvailableViewPurchaseNote updateNotesCallback={callbacks.updateNote} request={request} />,
+                                                        confirmationText: 'Submit'
+                                                    })
+                                                    adminModal.toggleModal();
+                                                }
                                             }
                                         />
 
