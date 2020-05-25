@@ -2,7 +2,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import axios from '../../../../../auxiliary/axios';
 import Container from '../../../../../elements/Container/Container';
 import {useParams, useHistory} from 'react-router-dom';
-import {RequestData} from '../../AdminTasksAvailable/AdminTasksAvailableView/AdminTasksAvailableView';
+import {RequestData} from '../../AdminTasks';
 import {formatName} from '../../../../../auxiliary/functions/format-name';
 import Button from '../../../../../elements/Button/Button';
 

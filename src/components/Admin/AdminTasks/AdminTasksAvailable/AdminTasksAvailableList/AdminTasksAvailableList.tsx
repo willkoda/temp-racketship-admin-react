@@ -13,6 +13,8 @@ import {AdminNoticeContext} from '../../../AdminNoticeProvider';
 import {useHistory, useParams} from 'react-router-dom';
 import {formatName} from '../../../../../auxiliary/functions/format-name';
 
+import {Task, Pagination} from '../../AdminTasks';
+
 import chip from '../../../../../assets/images/chip.svg';
 
 import {
@@ -24,35 +26,6 @@ import {
     CheckCircle as CheckCircleIcon
 } from '@material-ui/icons';
 
-interface Pagination {
-    pages: number;
-    count: number;
-    current: number;
-}
-
-interface Tasks {
-    id: number;
-    type: string;
-    request: {
-        id: number;
-        created_at: string;
-        status: string;
-        notes: string;
-        handler: {
-                id: number;
-                first_name: string;
-                last_name: string;
-        } | undefined;
-        organization: {
-            name: string;
-        };
-        user: {
-            first_name: string;
-            last_name: string;
-        }
-    }
-}
-
 interface Props {
     user: UserStateInterface
 }
@@ -61,7 +34,7 @@ function AdminTasksAvailableList(props: Props) {
     const adminNoticeContext = useContext(AdminNoticeContext);
     const componentRef = useRef<HTMLDivElement>(null!);
     const initialData = {pagination: {pages: 1, count:  0, current: 1}, tasks: [], progressIndicatorVisible: true};
-    const [tasks, setTasks] = useState<{pagination: Pagination, tasks: Array<Tasks>,  progressIndicatorVisible: boolean}>({...initialData});
+    const [tasks, setTasks] = useState<{pagination: Pagination, tasks: Array<Task>,  progressIndicatorVisible: boolean}>({...initialData});
     const history = useHistory();
     const {page} = useParams();
     useEffect(() => {
@@ -70,7 +43,7 @@ function AdminTasksAvailableList(props: Props) {
             const {tasks, pagination} = response.data;
             if (componentRef.current) setTasks({tasks: tasks, pagination: pagination, progressIndicatorVisible: false});
         })()
-    }, [])
+    }, [page])
 
     const getDateMonth = (month: number) => {
         switch(month) {

@@ -102,7 +102,7 @@ function AdminMenu() {
 
             <li className="accordion--menu">
                 <Accordion
-                    expandedInitially={location.pathname === '/dashboard/tasks'}
+                    expandedInitially={location.pathname.includes('/dashboard/tasks')}
                     header={
                         <div className="padding-left-20" style={{display: 'flex', alignItems: 'center'}}>
                             <FormatListNumberedIcon className="margin-right-40" />

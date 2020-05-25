@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import Button from '../../../../../../../elements/Button/Button';
 import axios from '../../../../../../../auxiliary/axios';
-import {RequestData} from '../../AdminTasksAvailableView';
+import {RequestData} from '../../../../AdminTasks';
 import {Note} from '../AdminTasksAvailableViewPurchase';
 
 interface Props {

@@ -2,7 +2,7 @@ import React, {useContext, useRef} from 'react';
 import './AdminTasksAvailableViewPurchaseNote.scss';
 import Button from '../../../../../../../elements/Button/Button';
 import axios from '../../../../../../../auxiliary/axios';
-import {RequestData} from '../../AdminTasksAvailableView'
+import {RequestData} from '../../../../AdminTasks';
 import {AdminModalContext} from '../../../../../AdminModalProvider';
 import {AdminNoticeContext} from '../../../../../AdminNoticeProvider';
 

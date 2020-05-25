@@ -3,6 +3,7 @@ import './AdminTasksAvailableView.scss';
 import {useParams, useHistory} from 'react-router-dom';
 import axios from '../../../../../auxiliary/axios';
 import Container from '../../../../../elements/Container/Container';
+import {RequestData} from '../../AdminTasks';
 
 import AdminTasksAvailableViewPurchase from './AdminTasksAvailableViewPurchase/AdminTasksAvailableViewPurchase';
 
@@ -106,55 +107,6 @@ function AdminTasksAvailableView() {
             {renderTemplate()}
         </Container>
     )
-}
-
-export interface RequestData {
-    id: number;
-    amount: number;
-    referenceNumber: string;
-    bankAccount: {
-        id: number;
-        accountName: string;
-        accountNumber: string;
-        bankName: string;
-    };
-    handler?: {
-        id: number;
-        firstName: string;
-        lastName: string;
-    };
-    linkedAccount?: {
-        gameId: string;
-        userName: string;
-    }
-    imageUrl: string;
-    notes: string;
-    user: {
-        id: number;
-        email: string;
-        firstName: string;
-        lastName: string;
-        mobileNumber: string;
-        transactionHistory: {
-            failed: {
-                count: number;
-                total: number;
-            }
-            success: {
-                count: number;
-                total: number;
-            }
-            unconfirmed: {
-                count: number;
-                total: number;
-            }
-        }
-    };
-    organization: {
-        id: number;
-        identifier: string;
-        name: string;
-    };
 }
 
 export default AdminTasksAvailableView;

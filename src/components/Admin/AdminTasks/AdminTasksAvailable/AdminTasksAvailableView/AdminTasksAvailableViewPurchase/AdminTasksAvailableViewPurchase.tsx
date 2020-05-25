@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import './AdminTasksAvailableViewPurchase.scss';
-import {RequestData} from '../AdminTasksAvailableView';
+import {RequestData} from '../../../AdminTasks';
 import {formatName} from '../../../../../../auxiliary/functions/format-name';
 import Button from '../../../../../../elements/Button/Button';
 import axios from '../../../../../../auxiliary/axios';
@@ -518,7 +518,11 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                                                     try {
                                                         await axios.get(`/v1/purchase_requests/${request.id}/verify_screenshot`);
                                                         await axios.get(`/v1/purchase_requests/${request.id}/send_chips`);
-                                                        history.push('/dashboard/tasks');
+                                                        adminNotice.setNoticeText('The screenshot has been verified successfully');
+                                                        adminNotice.setNoticeState('success');
+                                                        adminNotice.setNoticeTimestamp(Date.now());
+                                                        history.goBack();
+                                                        
                                                     } catch(error) {
                                                         console.log(error.response)
                                                     }
@@ -627,8 +631,11 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                                     clickCallback={
                                         async () => {
                                             try {
-                                                const response = await axios.get(`/v1/purchase_requests/${request.id}/complete`);
-                                                console.log(response);
+                                                await axios.get(`/v1/purchase_requests/${request.id}/complete`);
+                                                adminNotice.setNoticeText('The task has been marked as a success.');
+                                                adminNotice.setNoticeState('success');
+                                                adminNotice.setNoticeTimestamp(Date.now());
+                                                history.goBack();
                                             } catch(error) {
                                                 console.log(error.response)
                                                 adminModal.setModalData({
@@ -660,6 +667,37 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                                     waveColor="rgba(0, 0, 0, 0.2)"
                                     backgroundColor="dark--red"
                                     width="130px"
+                                    clickCallback={
+                                        async () => {
+                                            try {
+                                                await axios.get(`/v1/purchase_requests/${request.id}/fail`);
+                                                adminNotice.setNoticeText('The task has been marked as a failure.');
+                                                adminNotice.setNoticeState('success');
+                                                adminNotice.setNoticeTimestamp(Date.now());
+                                                history.goBack();
+                                            } catch(error) {
+                                                adminModal.setModalData({
+                                                    header: 'Notice',
+                                                    content: (
+                                                        <div className="padding-top-bottom-20">
+                                                            <p className="padding-left-right-20 padding-bottom-20">Please lock this task before marking it as a failure.</p>
+                                                            <div className="button--container padding-top-20" style={{borderTop: '1px solid rgba(0, 0, 0, 0.2)'}}>
+                                                                <Button
+                                                                    text="Ok"
+                                                                    waveColor="rgba(0, 0, 0, 0.2)"
+                                                                    backgroundColor="status--approved"
+                                                                    width="120px"
+                                                                    clickCallback={() => { adminModal.hideModal()}}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    ),
+                                                    confirmationText: 'Ok'
+                                                });
+                                                adminModal.toggleModal();
+                                            }
+                                        }
+                                    }
                                 />
                             </div>
                         </div>
