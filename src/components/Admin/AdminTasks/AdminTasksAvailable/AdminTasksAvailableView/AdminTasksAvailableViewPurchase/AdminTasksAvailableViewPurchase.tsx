@@ -63,7 +63,7 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
             if (request) {
                 const response = await axios.get(`/v1/organizations/${request.organization.id}/members/${request.user.id}/player_notes?page=${1}`);
                 const {notes} = response.data;
-                setPlayerNotes(notes)
+                setPlayerNotes(notes);
             }
         })()
     }, [request])

@@ -8,18 +8,18 @@ import {RequestData} from '../../AdminTasks';
 import AdminTasksAvailableViewPurchase from './AdminTasksAvailableViewPurchase/AdminTasksAvailableViewPurchase';
 
 function AdminTasksAvailableView() {
-    const {request_type, id} = useParams();
+    const {requestType, id} = useParams();
     const history = useHistory();
     const [request, setRequest] = useState<RequestData>(null!);
     useEffect(() => {
         const requestTypes = ['withdrawal_request', 'purchase_request'];
-        if (!requestTypes.includes(request_type) || !id) {
+        if (!requestTypes.includes(requestType) || !id) {
             history.replace('/error');
         }
 
-        (async () => {
+        (async () => { // refactor
             try {
-                const response = await axios.get(`/v1/${request_type}s/${id}`);
+                const response = await axios.get(`/v1/${requestType}s/${id}`);
                 const {amount, reference_number, bank_account, user, organization, handler, notes, image_url} = response.data;
                 const transactionHistory = user.transaction_history ? user.transaction_history : {
                     failed: {count: 'N/A', total: 'N/A'},
@@ -76,13 +76,13 @@ function AdminTasksAvailableView() {
                 history.replace('/error');
             }
         })()
-    }, [request_type, id, history])
+    }, [requestType, id, history])
 
     const renderTemplate = () => {
-        return request_type === 'purchase_request' ? 
+        return requestType === 'purchase_request' ? 
             <AdminTasksAvailableViewPurchase 
                 request={request}
-                requestType={request_type}
+                requestType={requestType}
                 callbacks={{
                     lockTask: (lockedRequest) => {
                         setRequest({

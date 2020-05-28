@@ -1,0 +1,64 @@
+div.Timeline {
+
+    div.timeline--item {
+        position: relative;
+        border-left: 2px solid var(--background-color);
+        min-height: 90px;
+        text-align: left;
+        display: flex;
+        align-items: flex-start;
+
+
+
+        &:last-of-type {
+            border-left-color: transparent;
+            min-height: 42px;
+        }
+
+        div.icon--container {
+            background-color: #fff;
+            left: -25px;
+            position: absolute;
+            border: 2px solid #ecf0f3;
+            min-width: 50px;
+            min-height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            svg {
+                width: 20px;
+                height: 20px;
+                color: var(--dark-red);
+            }
+
+            img {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        div.timeline--content {
+            color: var(--medium-grey);
+            font-weight: 300;
+            font-size: 13px;
+            position: relative;
+            top: 15px;
+            span.date {
+                position: absolute;
+                left: 0;
+                top: -15px;
+                font-size: 12px;
+                font-weight: 400;
+                color: var(--status--approved--color);
+                white-space: nowrap;
+            }
+            span.text {
+                text-align: left;
+                display: inline-block;
+                position: relative;
+            }
+        }
+    }
+}

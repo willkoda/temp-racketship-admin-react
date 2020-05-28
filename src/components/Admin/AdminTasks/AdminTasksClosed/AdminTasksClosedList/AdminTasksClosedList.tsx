@@ -122,13 +122,8 @@ function AdminTasksClosedList(props: Props) {
                         }
                         tableRowClickHandler={(rowIndex: number) => {
                             const targetTask = tasks.tasks[rowIndex];
-                            switch (targetTask.request.status) {
-                                case 'verified':
-                                    history.push(`/dashboard/tasks/available/send-chips/${targetTask.request.id}`);
-                                    break;
-                                default:
-                                    history.push(`/dashboard/tasks/available/view/${targetTask.type}/${targetTask.request.id}`);        
-                            }
+                            const {type, request} = targetTask;
+                            history.push(`/dashboard/tasks/closed/view/${type}/${request.id}`);
                         }}
                         nextPageClickHandler={
                             async () => {

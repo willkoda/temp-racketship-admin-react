@@ -29,7 +29,10 @@ const getDateMonth = (month: number) => {
     }
 }
 
-export const formatDate = (dateString: string) => {
+export const formatDate = (dateString: string, options?: {showTime: boolean}) => {
     const date = new Date(dateString);
-    return `${getDateMonth(date.getMonth() + 1)} ${date.getDate()}, ${date.getFullYear()}`;
+    
+    const completeDate = `${getDateMonth(date.getMonth() + 1)} ${date.getDate()}, ${date.getFullYear()}`;
+    const time = date.toLocaleTimeString();
+    return options ? `${completeDate}, ${time}` : completeDate;
 }
