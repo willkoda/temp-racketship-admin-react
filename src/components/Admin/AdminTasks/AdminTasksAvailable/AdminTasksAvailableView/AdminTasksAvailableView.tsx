@@ -24,8 +24,8 @@ function AdminTasksAvailableView() {
                 const {
                     amount, chips, reference_number, bank_account,
                     user, organization, handler, notes, image_url,
-                    linked_account, status} = response.data;
-                console.log(response.data)
+                    linked_account, status
+                } = response.data;
                 const transactionHistory = user.transaction_history ? user.transaction_history : {
                     failed: {count: 'N/A', total: 'N/A'},
                     success: {count: 'N/A', total: 'N/A'},

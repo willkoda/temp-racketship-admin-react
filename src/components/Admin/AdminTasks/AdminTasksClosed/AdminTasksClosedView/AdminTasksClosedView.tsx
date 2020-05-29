@@ -5,13 +5,15 @@ import Timeline from '../../../../../elements/Timeline/Timeline';
 import axios from '../../../../../auxiliary/axios';
 
 import {useParams, useHistory} from 'react-router-dom';
-import {RequestData} from '../../AdminTasks';
+import {RequestData, Activity} from '../../AdminTasks';
 import {formatName} from '../../../../../auxiliary/functions/format-name';
 
 import camera from '../../../../../assets/images/camera.svg';
 import chip from '../../../../../assets/images/chip.svg';
 import lock from '../../../../../assets/images/lock.svg';
 import unlock from '../../../../../assets/images/unlock.svg';
+import hand from '../../../../../assets/images/hand.svg';
+import safetyDepositBox from '../../../../../assets/images/safety-deposit-box.svg';
 
 import { 
     VerifiedUser as VerifiedUserIcon,
@@ -19,18 +21,6 @@ import {
     Close as CloseIcon,
     Flag as FlagIcon
 } from '@material-ui/icons';
-
-interface Activity {
-    id: number;
-    key: string;
-    owner: {
-        id: number;
-        first_name: string;
-        last_name: string;
-        role: string;
-    }
-    timestamp: string;
-}
 
 function AdminTasksClosedView() {
     const {requestType, id} = useParams();
@@ -177,6 +167,9 @@ function AdminTasksClosedView() {
                                                 case 'chips sent':
                                                     iconElement = <img src={chip} alt="chips sent" />
                                                     break;
+                                                case 'chips taken':
+                                                    iconElement = <img src={hand} alt="take chips" />
+                                                    break;
                                                 case 'completed':
                                                     iconElement = <CheckIcon style={{color: 'var(--status--success--color)'}} />
                                                     break;
@@ -185,6 +178,9 @@ function AdminTasksClosedView() {
                                                     break;
                                                 case 'locked':
                                                     iconElement = <img src={lock} alt="locked" />
+                                                    break;
+                                                case 'deposit sent':
+                                                    iconElement = <img src={safetyDepositBox} alt="safety-deposit-box" />
                                                     break;
                                                 case 'set as failed':
                                                     iconElement = <CloseIcon />

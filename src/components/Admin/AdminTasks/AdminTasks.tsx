@@ -18,6 +18,18 @@ function AdminTasks() {
     )
 }
 
+export interface Activity {
+    id: number;
+    key: string;
+    owner: {
+        id: number;
+        first_name: string;
+        last_name: string;
+        role: string;
+    }
+    timestamp: string;
+}
+
 export interface RequestData {
     id: number;
     amount: number;
