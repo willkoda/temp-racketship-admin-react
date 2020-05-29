@@ -217,6 +217,26 @@ function AdminTasksAvailableViewWithdrawal({request, callbacks}: Props) {
                     
                                                                             } catch(error) {
                                                                                 console.log(error.response)
+                                                                                adminModal.setModalData({
+                                                                                    header: 'Notice',
+                                                                                    content: (
+                                                                                        <div className="padding-top-bottom-20">
+                                                                                            <p className="padding-left-right-20 padding-bottom-20">Please lock this task before performing the action.</p>
+                                                                                            <div className="button--container padding-top-20" style={{borderTop: '1px solid rgba(0, 0, 0, 0.2)'}}>
+                                                                                                <Button
+                                                                                                    text="Ok"
+                                                                                                    waveColor="rgba(0, 0, 0, 0.2)"
+                                                                                                    backgroundColor="status--approved"
+                                                                                                    width="120px"
+                                                                                                    clickCallback={() => { adminModal.hideModal()}}
+                                                                                                />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    ),
+                                                                                    confirmationText: 'Ok'
+                                                                                });
+                                                                                adminModal.toggleModal();
+
                                                                             } finally {
                                                                                 setPageLoading(false);
                                                                             }
@@ -241,6 +261,26 @@ function AdminTasksAvailableViewWithdrawal({request, callbacks}: Props) {
                                                                                 adminNotice.setNoticeTimestamp(Date.now());
                                                                             } catch(error) {
                                                                                 console.log(error.response)
+
+                                                                                adminModal.setModalData({
+                                                                                    header: 'Notice',
+                                                                                    content: (
+                                                                                        <div className="padding-top-bottom-20">
+                                                                                            <p className="padding-left-right-20 padding-bottom-20">Please lock this task before performing the action.</p>
+                                                                                            <div className="button--container padding-top-20" style={{borderTop: '1px solid rgba(0, 0, 0, 0.2)'}}>
+                                                                                                <Button
+                                                                                                    text="Ok"
+                                                                                                    waveColor="rgba(0, 0, 0, 0.2)"
+                                                                                                    backgroundColor="status--approved"
+                                                                                                    width="120px"
+                                                                                                    clickCallback={() => { adminModal.hideModal()}}
+                                                                                                />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    ),
+                                                                                    confirmationText: 'Ok'
+                                                                                });
+                                                                                adminModal.toggleModal();
                                                                             } finally {
                                                                                 setPageLoading(false);
                                                                             }
@@ -323,7 +363,7 @@ function AdminTasksAvailableViewWithdrawal({request, callbacks}: Props) {
                                                         header: 'Notice',
                                                         content: (
                                                             <div className="padding-top-bottom-20">
-                                                                <p className="padding-left-right-20 padding-bottom-20">Please perform any of the above actions before marking this task.</p>
+                                                                <p className="padding-left-right-20 padding-bottom-20">Please lock this task before marking it as a success.</p>
                                                                 <div className="button--container padding-top-20" style={{borderTop: '1px solid rgba(0, 0, 0, 0.2)'}}>
                                                                     <Button
                                                                         text="Ok"

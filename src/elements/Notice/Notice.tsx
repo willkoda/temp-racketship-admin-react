@@ -8,6 +8,7 @@ import {
 interface Props {
     margin?: string;
     noticeState: string;
+    padding?: string;
     text: string;
     timeStamp: number;
 }
@@ -49,10 +50,12 @@ function Notice(props: Props) {
 
     return (
         <div className={`Notice ${props.margin}`} ref={noticeRef}>
-            <div className={`notice--content padding-left-right-15 padding-top-bottom-10 ${props.noticeState}`} onClick={close} ref={noticeContentRef}>
-                <ErrorIcon className="notice--icon" />
-                <span className="notice--text ">{props.text}</span>
-                <CloseIcon className="notice--close--icon" />
+            <div className={`${props.padding || ''}`} ref={noticeContentRef}>
+                <div className={`notice--content padding-left-right-15 padding-top-bottom-10 ${props.noticeState}`} onClick={close}>
+                    <ErrorIcon className="notice--icon" />
+                    <span className="notice--text ">{props.text}</span>
+                    <CloseIcon className="notice--close--icon" />
+                </div>
             </div>
         </div>
     )

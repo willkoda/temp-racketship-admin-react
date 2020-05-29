@@ -98,7 +98,8 @@ function Admin(props: Props) {
                     <div className="admin--content" ref={adminContentRef}>
                         <AdminNoticeContext.Consumer>
                             {(noticeContext) => {
-                                return <Notice 
+                                return <Notice
+                                    padding="padding-top-20 padding-left-20 padding-right-20"
                                     text={noticeContext.noticeText}
                                     noticeState={noticeContext.noticeState}
                                     timeStamp={noticeContext.noticeTimeStamp}
