@@ -1,4 +1,4 @@
-import React, {useEffect,  useState, useRef, useContext} from 'react';
+import React, {useEffect,  useState, useRef} from 'react';
 import Container from '../../../../../elements/Container/Container';
 import axios from '../../../../../auxiliary/axios';
 import Table from '../../../../../elements/Table/Table';
@@ -6,7 +6,6 @@ import {useParams, useHistory} from 'react-router-dom';
 import {Task, Pagination} from '../../AdminTasks';
 import {formatDate} from '../../../../../auxiliary/functions/format-date';
 import {formatName} from '../../../../../auxiliary/functions/format-name';
-import {AdminNoticeContext} from '../../../AdminNoticeProvider';
 
 import {compose} from 'redux';
 import {user} from '../../../../../auxiliary/state';
@@ -25,7 +24,6 @@ interface Props {
 }
 
 function AdminTasksClosedList(props: Props) {
-    const adminNotice = useContext(AdminNoticeContext);
     const initialData = {pagination: {pages: 1, count:  0, current: 1}, tasks: [], progressIndicatorVisible: true};
     const [tasks, setTasks] = useState<{pagination: Pagination, tasks: Array<Task>,  progressIndicatorVisible: boolean}>({...initialData});
     const componentRef = useRef<HTMLDivElement>(null!);

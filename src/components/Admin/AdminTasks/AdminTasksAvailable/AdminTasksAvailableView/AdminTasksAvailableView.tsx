@@ -6,6 +6,7 @@ import Container from '../../../../../elements/Container/Container';
 import {RequestData} from '../../AdminTasks';
 
 import AdminTasksAvailableViewPurchase from './AdminTasksAvailableViewPurchase/AdminTasksAvailableViewPurchase';
+import AdminTasksAvailableViewWithdrawal from './AdminTasksAvailableViewWithdrawal/AdminTasksAvailableViewWithdrawal';
 
 function AdminTasksAvailableView() {
     const {requestType, id} = useParams();
@@ -20,7 +21,11 @@ function AdminTasksAvailableView() {
         (async () => { // refactor
             try {
                 const response = await axios.get(`/v1/${requestType}s/${id}`);
-                const {amount, reference_number, bank_account, user, organization, handler, notes, image_url} = response.data;
+                const {
+                    amount, chips, reference_number, bank_account,
+                    user, organization, handler, notes, image_url,
+                    linked_account, status} = response.data;
+                console.log(response.data)
                 const transactionHistory = user.transaction_history ? user.transaction_history : {
                     failed: {count: 'N/A', total: 'N/A'},
                     success: {count: 'N/A', total: 'N/A'},
@@ -30,6 +35,7 @@ function AdminTasksAvailableView() {
                 setRequest({
                     id: response.data.id,
                     amount: amount,
+                    chips: chips,
                     referenceNumber: reference_number,
                     bankAccount: {
                         id: bank_account.id,
@@ -42,6 +48,10 @@ function AdminTasksAvailableView() {
                         firstName: handler.first_name,
                         lastName: handler.last_name
                     } : undefined,
+                    linkedAccount: {
+                        gameId: linked_account.game_id,
+                        userName: linked_account.username
+                    },
                     imageUrl: image_url,
                     notes: notes,
                     user: {
@@ -69,7 +79,8 @@ function AdminTasksAvailableView() {
                         id: organization.id,
                         identifier: organization.identifier,
                         name: organization.name
-                    }
+                    },
+                    status: status
                 })
             } catch(error) {
                 console.log(error)
@@ -99,7 +110,23 @@ function AdminTasksAvailableView() {
                 }}
                 /> 
                 :
-            <div>withdrawal request under construction</div>
+            <AdminTasksAvailableViewWithdrawal
+                request={request}
+                callbacks={{
+                    lockTask: (lockedRequest) => {
+                        setRequest({
+                            ...request,
+                            handler: lockedRequest.handler
+                        })
+                    },
+                    updateRequestStatus: (newStatus) => {
+                        setRequest({
+                            ...request,
+                            status: newStatus
+                        })
+                    }
+                }}
+            />
     }
 
     return (

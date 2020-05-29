@@ -1,5 +1,12 @@
 div.AdminUsersOverview,
 div.AdminTasks {
+    div.admin--actions {
+        flex: 0 1 49%;
+        @media (max-width: 1100px) {
+            flex: 0 1 100%;
+        }
+    }
+
     div.table--name {
         background-color: #fff;
         text-align: left;

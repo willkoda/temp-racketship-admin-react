@@ -500,7 +500,7 @@ function AdminTasksAvailableViewPurchase({requestType, request, callbacks}: Prop
                                 request?.handler ? 
                                     <span className="sub--heading">This task is locked by {formatName(request?.handler.firstName, request?.handler.lastName)}.</span> 
                                         : 
-                                    <span className="sub--heading">This task has not been locked by anyone. Please lock this task before performing any of the actions below.</span>
+                                    <span className="sub--heading">Please lock this task before performing any of the actions below.</span>
                             }
                         </h3>
                         {

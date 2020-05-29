@@ -21,6 +21,7 @@ function AdminTasks() {
 export interface RequestData {
     id: number;
     amount: number;
+    chips?: number;
     referenceNumber: string;
     bankAccount: {
         id: number;
@@ -65,6 +66,7 @@ export interface RequestData {
         identifier: string;
         name: string;
     };
+    status?: string;
 }
 
 export interface Task {
