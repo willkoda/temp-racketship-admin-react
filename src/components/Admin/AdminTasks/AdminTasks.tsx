@@ -3,6 +3,7 @@ import './AdminTasks.scss';
 import {Switch, Route} from 'react-router-dom';
 import AdminTasksAvailable from './AdminTasksAvailable/AdminTasksAvailable';
 import AdminTasksClosed from './AdminTasksClosed/AdminTasksClosed';
+import AdminTasksNewVerifications from './AdminTasksNewVerifications/AdminTasksNewVerifications';
 import Error from '../../../components/Error/Error';
 
 function AdminTasks() {
@@ -12,6 +13,8 @@ function AdminTasks() {
                 <Route exact path="/dashboard/tasks" component={AdminTasksAvailable}/>
                 <Route path="/dashboard/tasks/available" component={AdminTasksAvailable}/>
                 <Route path="/dashboard/tasks/closed" render={AdminTasksClosed} />
+                <Route path="/dashboard/tasks/new-verifications/:page" component={AdminTasksNewVerifications} />
+                <Route path="/dashboard/tasks/new-verifications/" component={AdminTasksNewVerifications} />
                 <Route path="*" render={() => <Error />} />
             </Switch>
         </div>
@@ -107,6 +110,30 @@ export interface Task {
             last_name: string;
         }
     }
+}
+
+export interface User {
+    id: number;
+    created_at: string;
+    email: string;
+    first_name: string;
+    last_name: string;
+    mobile_number: string;
+    verification_code: string;
+    user: string;
+    role: string;
+    organization: {
+        id: number;
+        identifier: string;
+        name: string;
+        owner_id: number;
+        url: string;
+    }
+}
+
+export interface Verification {
+    id: number;
+    user: User
 }
 
 export interface Pagination {

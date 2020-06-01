@@ -51,7 +51,7 @@ function AdminUsersListDelete({currentUser, users, storeSetUsers}: Props) {
                             modalContext.hideModal();
                         }
                     }
-                     />
+                    />
                 <Button 
                     text="Yes" 
                     backgroundColor="dark--red"
@@ -82,7 +82,7 @@ function AdminUsersListDelete({currentUser, users, storeSetUsers}: Props) {
                             }
                         }
                     }
-                    />
+                />
             </div>
         </div>
     )

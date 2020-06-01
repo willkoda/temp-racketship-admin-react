@@ -42,4 +42,12 @@ div.Modal {
             font-size: 13px;
         }
     }
+
+    div.confirmation--buttons {
+        display: flex;
+        justify-content: space-between;
+        button {
+            flex: 0 1 48%;
+        }
+    }
 }

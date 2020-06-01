@@ -95,9 +95,10 @@ div.Table {
                     text-align: left;
                 }
                 th {
+                    font-size: 13px;
                     z-index: 5;
                     font-weight: 400;
-                    color: var(--dark-text);
+                    color: rgba(0, 0, 0, 0.6);
                     position: sticky;
                     top: 0;
                     background-color: #fff;
